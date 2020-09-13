@@ -45,4 +45,8 @@ const (
 	DefalutServerName   = "CSO2-Server[1/1]"
 	DefalutChannelName1 = "CSO2-Channel[1/2]"
 	DefalutChannelName2 = "CSO2-Channel[2/2]"
+
+	//貌似非3以外的都被客户端认为是战队频道
+	ChannelServerTypeNormal = 1
+	ChannelServerTypeTeam   = 3
 )

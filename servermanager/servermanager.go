@@ -68,7 +68,7 @@ func NewChannelServer(name []byte) ChannelServer {
 	chlsrv := ChannelServer{
 		GetNewChannelServerID(),
 		1,
-		3,
+		ChannelServerTypeNormal,
 		name,
 		0,
 		[]*ChannelInfo{},

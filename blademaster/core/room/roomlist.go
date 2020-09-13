@@ -75,10 +75,6 @@ func BuildRoomList(seq *uint8, p PacketData, chl ChannelInfo) []byte {
 			DebugInfo(1, "Waring! here is a null room in channelID", chl.ChannelID)
 			continue
 		}
-		// name, err := GbkToUtf8(chl.rooms[i].setting.roomName)
-		// if err != nil {
-		// 	continue
-		// }
 		roombuf := make([]byte, 512)
 		offset := 0
 		WriteUint16(&roombuf, v.Id, &offset)
