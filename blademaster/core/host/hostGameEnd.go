@@ -71,15 +71,20 @@ func BuildHostStop() []byte {
 	return []byte{HostStop}
 }
 func BuildGameResult(u *User) []byte {
-	buf := make([]byte, 40)
+	buf := make([]byte, 128)
 	offset := 0
 	WriteUint64(&buf, u.CurrentExp, &offset) //now total EXP
 	WriteUint64(&buf, u.Points, &offset)     //now total point
-	WriteUint8(&buf, 0, &offset)             //unk18
-	WriteString(&buf, []byte("unk19"), &offset)
-	WriteString(&buf, []byte("unk20"), &offset)
-	WriteUint16(&buf, 0, &offset) //unk21 ，maybe 2 bytes
-	WriteUint16(&buf, 0, &offset) //unk22 ，maybe 2 bytes
+	WriteUint8(&buf, 1, &offset)             //unk18
+	WriteString(&buf, []byte("Good"), &offset)
+	WriteString(&buf, []byte("Good"), &offset)
+	WriteUint8(&buf, 1, &offset)     //num of gifts
+	WriteUint32(&buf, 2008, &offset) //item id
+	WriteUint16(&buf, 1, &offset)    //item count
+	WriteUint64(&buf, 0, &offset)    //unk22
+	WriteUint16(&buf, 0, &offset)    //unk23 ，maybe 2 bytes
+	WriteUint8(&buf, 1, &offset)     //unk24
+	WriteUint16(&buf, 0, &offset)    //unk25 ，maybe 2 bytes
 	return buf[:offset]
 }
 
