@@ -45,9 +45,17 @@ CSOL2 服务器 v0.3.3
     8.由于房间用户与主管理器的用户重复，可能造成性能浪费
     9.房间ID和房间NUM在多频道下可能冲突（虽然目前是单频道）
 
-### 七、使用方法
+### 七、客户端下载
 
-1.需要有CSOL2客户端，同时使用第三方启动器， [点击韩服端下载](https://pan.baidu.com/s/13wEMinbj6E2Z9lds20NU3A) 提取码：picf       [点击2017年国服端下载](https://pan.baidu.com/s/1_aY2vsTEWcffsq1S8JMb3A)  提取码：aw06  [2017年单独启动器下载](https://pan.baidu.com/s/1QGyRmjw24eJ5ycrFjorv_g) 提取码：amys
+  [点击2017年国服端下载](https://pan.baidu.com/s/1tTtks0fwROk0WUueC2gnOQ)  提取码：o9hd
+
+  [2017年单独启动器下载](https://pan.baidu.com/s/1QGyRmjw24eJ5ycrFjorv_g)  提取码：amys
+
+  [点击韩服端下载](https://pan.baidu.com/s/13wEMinbj6E2Z9lds20NU3A) 提取码：picf     
+
+### 八、使用方法
+
+1.需要有CSOL2客户端，同时使用第三方启动器
 
 2.进入本项目的release页面下载最新版本的程序（ https://github.com/KouKouChan/CSO2-Server/releases ）
 
@@ -70,7 +78,7 @@ START ./bin/launcher.exe -masterip IP地址 -enablecustom -username 用户名 -p
 - 如果你想开启邮箱注册，那么你需要一个邮箱账号并且申请到了密钥，将密钥填入配置文件，同时开启EnableMail。
 - 如果你是和别人联机玩，那么即使你的电脑运行着服务端也**不能**在bat文件里填127.0.0.1，不然对方无法通过你的ip连接你。
 
-### 八、自定义文件方法
+### 九、自定义文件方法
 
 1.下载CSOL2解包工具，[点击这里下载](https://pan.baidu.com/s/14q1SoIdHwp1casMWG2OS-w) 提取码：41bs
 
@@ -80,7 +88,7 @@ START ./bin/launcher.exe -masterip IP地址 -enablecustom -username 用户名 -p
 
 4.将文件放入csol2目录的custom文件夹下，打开游戏
 
-### 九、Docker下使用方法
+### 十、Docker下使用方法
 
 1.首先你需要拥有Docker,请下载并安装Docker,同时配置好Docker,比如Docker源
 
@@ -98,7 +106,7 @@ docker run -p 30001:30001 -p 30002:30002 koukouchan/cso2-server:latest
 
 4.接下来打开客户端，连接服务器
 
-### 十、编译环境
+### 十一、编译环境
 
 *Go 1.14.2*
 
@@ -106,7 +114,7 @@ docker run -p 30001:30001 -p 30002:30002 koukouchan/cso2-server:latest
 
 貌似建立互联网服务器需要双方玩家都能内网穿透，实测局域网能够连接，互联网无法房间内加入主机，可能需要架设虚拟局域网。
 
-### 十一、编译方法
+### 十二、编译方法
 
 ```shell
 1. 下载最新版Release的源码并解压
@@ -115,7 +123,7 @@ docker run -p 30001:30001 -p 30002:30002 koukouchan/cso2-server:latest
 4. 运行生成的可执行文件即可
 ```
 
-### 十二、Docker下编译方法
+### 十三、Docker下编译方法
 
 1.首先你需要拥有Docker,请下载并安装Docker,同时配置好Docker,比如Docker源
 
@@ -135,7 +143,7 @@ docker run -p 30001:30001 -p 30002:30002 cso2-server
 
 *声明：Counter-Strike Online 2 归 NEXON 所有 ，本程序仅用于学习之用*
 
-### 十三、图片
+### 十四、图片
 
 ![Image](./photos/main.png)
 

@@ -12,9 +12,9 @@ func NewChannelInfo(name []byte, chlsrv ChannelServer) ChannelInfo {
 	return ChannelInfo{
 		GetNewChannelID(chlsrv),
 		name,
-		4,
-		0x1F4,
-		1,
+		0xff,
+		0xff,
+		0xff,
 		ChannelTypeFree,
 		ChannelStatusNormal,
 		1,
