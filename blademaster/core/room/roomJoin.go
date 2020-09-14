@@ -74,7 +74,7 @@ func OnJoinRoom(p *PacketData, client net.Conn) {
 	ustatus := BuildUserReadyStatus(uPtr)
 	uplayjoin := BuildPlayerJoin(uPtr)
 	for _, v := range rm.Users {
-		rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeRoom), BuildUserReadyStatus(v))
+		rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeRoom), BuildUserReadyStatus(v))
 		SendPacket(rst, uPtr.CurrentConnection)
 		if v.Userid != uPtr.Userid {
 			//发送给其他玩家该玩家信息

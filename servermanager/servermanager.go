@@ -67,7 +67,7 @@ func AddChannelServer(dest *ServerManager, src *ChannelServer) bool {
 func NewChannelServer(name []byte) ChannelServer {
 	chlsrv := ChannelServer{
 		GetNewChannelServerID(),
-		1,
+		3,
 		ChannelServerTypeNormal,
 		name,
 		0,
@@ -183,8 +183,8 @@ func BuildChannelList(num uint8, channels []*ChannelInfo) []byte {
 		WriteUint16(&temp, channels[i].Unk00, &offset)
 		WriteUint16(&temp, channels[i].Unk01, &offset)
 		WriteUint8(&temp, channels[i].Unk02, &offset)
-		WriteUint8(&temp, channels[i].Unk03, &offset)
-		WriteUint8(&temp, channels[i].Unk04, &offset)
+		WriteUint8(&temp, channels[i].ChannelType, &offset)
+		WriteUint8(&temp, channels[i].ChannelStatus, &offset)
 		list = BytesCombine(list, temp[:offset])
 	}
 	return list

@@ -138,7 +138,6 @@ func BuildCreateAndJoin(rm *Room) []byte {
 	WriteUint8(&buf, 0, &offset)
 	WriteUint8(&buf, 0, &offset)
 	WriteUint8(&buf, 3, &offset)
-	// special class end?
 	WriteUint8(&buf, rm.NumPlayers, &offset)
 	buf = buf[:offset]
 	for k, v := range rm.Users {
