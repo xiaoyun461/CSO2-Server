@@ -19,7 +19,7 @@ func OnRoomRequest(p *PacketData, client net.Conn) {
 			OnJoinRoom(p, client)
 		case LeaveRoomRequest:
 			//log.Println("Recived a leave room request from", client.RemoteAddr().String())
-			OnLeaveRoom(p, client)
+			OnLeaveRoom(client, false)
 		case ToggleReadyRequest:
 			//log.Println("Recived a ready request from", client.RemoteAddr().String())
 			OnToggleReady(p, client)

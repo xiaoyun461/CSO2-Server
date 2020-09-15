@@ -4,7 +4,7 @@
 
 ### 一、介绍
 
-CSOL2 服务器 v0.3.3
+CSOL2 服务器 v0.3.4
 
 数据库：SQLite
 
@@ -51,7 +51,7 @@ CSOL2 服务器 v0.3.3
 
   [2017年单独启动器下载](https://pan.baidu.com/s/1QGyRmjw24eJ5ycrFjorv_g)  提取码：amys
 
-  [点击韩服端下载](https://pan.baidu.com/s/13wEMinbj6E2Z9lds20NU3A) 提取码：picf     
+  [点击2018韩服端下载](https://pan.baidu.com/s/13wEMinbj6E2Z9lds20NU3A) 提取码：picf     
 
 ### 八、使用方法
 

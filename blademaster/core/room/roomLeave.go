@@ -9,7 +9,7 @@ import (
 	. "github.com/KouKouChan/CSO2-Server/verbose"
 )
 
-func OnLeaveRoom(p *PacketData, client net.Conn) {
+func OnLeaveRoom(client net.Conn, end bool) {
 	//找到玩家
 	uPtr := GetUserFromConnection(client)
 	if uPtr == nil ||
@@ -23,7 +23,7 @@ func OnLeaveRoom(p *PacketData, client net.Conn) {
 		uPtr.GetUserRoomID())
 	if rm == nil ||
 		rm.Id <= 0 {
-		DebugInfo(2, "Error : User", string(uPtr.Username), "try to leave a null room !")
+		//DebugInfo(2, "Error : User", string(uPtr.Username), "try to leave a null room !")
 		return
 	}
 	//检查玩家游戏状态，准备情况下并且开始倒计时了，那么就不允许离开房间
@@ -45,16 +45,13 @@ func OnLeaveRoom(p *PacketData, client net.Conn) {
 		SentUserLeaveMes(uPtr, rm)
 	}
 	//设置玩家状态
-	p.Data = make([]byte, 3)
-	p.Length = 3
-	p.Data[1] = uPtr.GetUserChannelServerID()
-	p.Data[2] = uPtr.GetUserChannelID()
-	p.CurOffset = 1
 	uPtr.QuitRoom()
+	//发送房间列表给玩家
+	if !end {
+		OnRoomList(&PacketData{[]byte{0, uPtr.GetUserChannelServerID(), uPtr.GetUserChannelID()}, 0, 3, PacketTypeRoomList, 1}, client)
+	}
 	//房间状态
 	rm.CheckIngameStatus()
-	//发送房间列表给玩家
-	OnRoomList(p, client)
 	DebugInfo(2, "User", string(uPtr.Username), "id", uPtr.Userid, "left room", string(rm.Setting.RoomName), "id", rm.Id)
 }
 func SentUserLeaveMes(uPtr *User, rm *Room) {
@@ -75,14 +72,16 @@ func SentUserLeaveMes(uPtr *User, rm *Room) {
 			break
 		}
 		numInGame := 0
+		leave := BuildUserLeave(uPtr.Userid)
+		sethost := BuildSetHost(rm.HostUserID)
 		for _, v := range rm.Users {
 			if v.CurrentIsIngame {
 				numInGame++
 			}
 			rst1 := append(BuildHeader(v.CurrentSequence, PacketTypeRoom), OUTPlayerLeave)
-			rst1 = BytesCombine(rst1, BuildUserLeave(uPtr.Userid))
+			rst1 = BytesCombine(rst1, leave)
 			rst2 := append(BuildHeader(v.CurrentSequence, PacketTypeRoom), OUTSetHost)
-			rst2 = BytesCombine(rst2, BuildSetHost(rm.HostUserID))
+			rst2 = BytesCombine(rst2, sethost)
 			SendPacket(rst1, v.CurrentConnection)
 			SendPacket(rst2, v.CurrentConnection)
 		}
@@ -96,9 +95,10 @@ func SentUserLeaveMes(uPtr *User, rm *Room) {
 		}
 		DebugInfo(2, "Sent a set roomHost packet to other users")
 	} else {
+		leave := BuildUserLeave(uPtr.Userid)
 		for _, v := range rm.Users {
 			rst1 := append(BuildHeader(v.CurrentSequence, PacketTypeRoom), OUTPlayerLeave)
-			rst1 = BytesCombine(rst1, BuildUserLeave(uPtr.Userid))
+			rst1 = BytesCombine(rst1, leave)
 			SendPacket(rst1, v.CurrentConnection)
 		}
 		DebugInfo(2, "Sent a leave room packet to other users")

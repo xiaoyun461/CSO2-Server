@@ -24,22 +24,6 @@ func DelUserWithConn(con net.Conn) bool {
 	for k, v := range UsersManager.Users {
 		if v.CurrentConnection == con {
 			CheckErr(UpdateUserToDB(v))
-			rm := GetRoomFromID(v.GetUserChannelServerID(),
-				v.GetUserChannelID(),
-				v.GetUserRoomID())
-			if rm != nil &&
-				rm.Id > 0 {
-				rm.RoomRemoveUser(v.Userid)
-				if rm.NumPlayers <= 0 {
-					DelChannelRoom(rm.Id,
-						v.GetUserChannelID(),
-						v.GetUserChannelServerID())
-
-				} else {
-					//p.id = TypeRoom
-					//SentUserLeaveMes(&v, rm, p)
-				}
-			}
 			UsersManager.Lock.Lock()
 			defer UsersManager.Lock.Unlock()
 			delete(UsersManager.Users, k)

@@ -32,7 +32,7 @@ import (
 
 var (
 	//SERVERVERSION 版本号
-	SERVERVERSION = "v0.3.3"
+	SERVERVERSION = "v0.3.4"
 	Redis         redis.Conn
 )
 
@@ -193,6 +193,7 @@ func RecvMessage(client net.Conn) {
 			fmt.Println("Client", client.RemoteAddr().String(), "suffered a fault !")
 			fmt.Println(err)
 			fmt.Println("Fault end!")
+			OnLeaveRoom(client, true)
 			DelUserWithConn(client)
 		}
 	}()
@@ -255,6 +256,7 @@ func RecvMessage(client net.Conn) {
 
 close:
 	DebugInfo(1, "client", client.RemoteAddr().String(), "closed the connection")
+	OnLeaveRoom(client, true)
 	DelUserWithConn(client)
 	return
 }
