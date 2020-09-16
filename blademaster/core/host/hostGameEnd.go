@@ -34,7 +34,7 @@ func OnHostGameEnd(p *PacketData, client net.Conn) {
 	}
 	//修改房间信息
 	rm.SetStatus(StatusWaiting)
-	header := BuildGameResultHeader(*rm)
+	header := BuildGameResultHeader(rm)
 	for _, v := range rm.Users {
 		//修改用户状态
 		v.SetUserStatus(UserNotReady)
@@ -76,19 +76,20 @@ func BuildGameResult(u *User) []byte {
 	WriteUint64(&buf, u.CurrentExp, &offset) //now total EXP
 	WriteUint64(&buf, u.Points, &offset)     //now total point
 	WriteUint8(&buf, 0, &offset)             //unk18
-	WriteString(&buf, []byte("Good"), &offset)
-	WriteString(&buf, []byte("Good"), &offset)
-	WriteUint8(&buf, 1, &offset)     //num of gifts
-	WriteUint32(&buf, 2008, &offset) //item id
-	WriteUint16(&buf, 1, &offset)    //item count
-	WriteUint64(&buf, 0, &offset)    //unk22
-	WriteUint16(&buf, 0, &offset)    //unk23 ，maybe 2 bytes
-	WriteUint8(&buf, 0, &offset)     //unk24
-	WriteUint16(&buf, 0, &offset)    //unk25 ，maybe 2 bytes
+	WriteString(&buf, []byte(""), &offset)
+	WriteString(&buf, []byte(""), &offset)
+	WriteUint32(&buf, 0, &offset)
+	// WriteUint8(&buf, 1, &offset)     //num of gifts
+	// WriteUint32(&buf, 2008, &offset) //item id
+	// WriteUint16(&buf, 1, &offset)    //item count
+	// WriteUint64(&buf, 0, &offset)    //unk22
+	// WriteUint16(&buf, 0, &offset)    //unk23 ，maybe 2 bytes
+	// WriteUint8(&buf, 0, &offset)     //unk24
+	// WriteUint16(&buf, 0, &offset)    //unk25 ，maybe 2 bytes
 	return buf[:offset]
 }
 
-func BuildGameResultHeader(rm Room) []byte {
+func BuildGameResultHeader(rm *Room) []byte {
 	buf := make([]byte, 30)
 	offset := 0
 	WriteUint8(&buf, OUTSetGameResult, &offset)
@@ -140,21 +141,28 @@ func BuildGameResultHeader(rm Room) []byte {
 			WriteUint16(&temp, 0, &offset)                  //unk05 ，maybe 2 bytes
 			WriteUint16(&temp, 0, &offset)                  //unk06 ，maybe 2 bytes 0x56 = 86
 			WriteUint16(&temp, 0, &offset)                  //unk07 ，maybe 2 bytes 0x2b = 43
-			WriteUint64(&temp, 100, &offset)                //gained EXP
-			WriteUint32(&temp, 0, &offset)                  //unk08 ，maybe 4 bytes
-			WriteUint16(&temp, 0, &offset)                  //unk09 ，maybe 2 bytes
-			WriteUint8(&temp, 0, &offset)                   //unk10 ，maybe 1 bytes
-			WriteUint64(&temp, 100, &offset)                //gained point
-			WriteUint32(&temp, 0, &offset)                  //unk11 ，maybe 4 bytes
-			WriteUint16(&temp, 0, &offset)                  //unk12 ，maybe 2 bytes
-			WriteUint8(&temp, 0, &offset)                   //unk13 ，maybe 1 bytes
-			WriteUint8(&temp, uint8(v.Level), &offset)      //current level ?
-			WriteUint8(&temp, uint8(v.Level), &offset)      //next level ？
-			WriteUint8(&temp, 0, &offset)                   //unk15
-			WriteUint8(&temp, uint8(k+1), &offset)          //rank
-			WriteUint16(&temp, v.CurrentKillNum, &offset)   //连续击杀数
-			WriteUint32(&temp, 0, &offset)                  //unk16 ，maybe 4 bytes
-			WriteUint8(&temp, v.CurrentTeam, &offset)       //user team
+			gainexp := GetGainExp(v, rm.Setting.AreBotsEnabled)
+			WriteUint64(&temp, gainexp, &offset) //gained EXP
+			WriteUint32(&temp, 0, &offset)       //unk08 ，maybe 4 bytes
+			WriteUint16(&temp, 0, &offset)       //unk09 ，maybe 2 bytes
+			WriteUint8(&temp, 0, &offset)        //unk10 ，maybe 1 bytes
+			points := GetGainPoints(v, rm.Setting.AreBotsEnabled)
+			WriteUint64(&temp, points, &offset)        //gained point
+			WriteUint32(&temp, 0, &offset)             //unk11 ，maybe 4 bytes
+			WriteUint16(&temp, 0, &offset)             //unk12 ，maybe 2 bytes
+			WriteUint8(&temp, 0, &offset)              //unk13 ，maybe 1 bytes
+			WriteUint8(&temp, uint8(v.Level), &offset) //current level ?
+			v.GetExp(gainexp)
+			v.GetPoints(points)
+			v.GetKills(uint32(v.CurrentKillNum))
+			v.GetDeathes(uint32(v.CurrentDeathNum))
+			v.GetAssists(uint32(v.CurrentAssistNum))
+			WriteUint8(&temp, uint8(v.Level), &offset)    //next level ？
+			WriteUint8(&temp, 0, &offset)                 //unk15
+			WriteUint8(&temp, uint8(k+1), &offset)        //rank
+			WriteUint16(&temp, v.CurrentKillNum, &offset) //连续击杀数
+			WriteUint32(&temp, 0, &offset)                //unk16 ，maybe 4 bytes
+			WriteUint8(&temp, v.CurrentTeam, &offset)     //user team
 			switch rm.Setting.GameModeID {
 			case ModeOriginal, ModePig:
 				WriteUint32(&temp, 0, &offset) //unk17
@@ -169,4 +177,26 @@ func BuildGameResultHeader(rm Room) []byte {
 		}
 	}
 	return buf
+}
+
+func GetGainExp(u *User, bot uint8) uint64 {
+	if bot != 0 {
+		exp := uint64(u.CurrentKillNum*100 + u.CurrentAssistNum*30 - u.CurrentDeathNum*50)
+		if exp > 100 {
+			return exp
+		}
+		return 100
+	}
+	return 100
+}
+
+func GetGainPoints(u *User, bot uint8) uint64 {
+	if bot != 0 {
+		points := uint64(u.CurrentKillNum*100 + u.CurrentAssistNum*60 - u.CurrentDeathNum*30)
+		if points > 400 {
+			return points
+		}
+		return 400
+	}
+	return 400
 }

@@ -44,6 +44,8 @@ func OnLeaveRoom(client net.Conn, end bool) {
 		//向其他玩家发送离开信息
 		SentUserLeaveMes(uPtr, rm)
 	}
+	//扣除1000points
+	uPtr.PunishPoints()
 	//设置玩家状态
 	uPtr.QuitRoom()
 	//发送房间列表给玩家

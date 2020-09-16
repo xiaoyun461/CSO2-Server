@@ -32,7 +32,7 @@ import (
 
 var (
 	//SERVERVERSION 版本号
-	SERVERVERSION = "v0.3.4"
+	SERVERVERSION = "v0.3.5"
 	Redis         redis.Conn
 )
 

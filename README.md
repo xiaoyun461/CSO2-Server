@@ -4,15 +4,15 @@
 
 ### 一、介绍
 
-CSOL2 服务器 v0.3.4
+CSOL2 服务器 v0.3.5
 
 数据库：SQLite
 
-*用于韩版 Counter-Strike Online 2 和 旧版国服端
+用于 **2017年国服 Counter-Strike Online 2** 和 **韩服 Counter-Strike Online 2** 
 
 目前客户端请使用L-Leite的启动器。
 
-这是我的第一个Go语言项目，用来练习，不知道会不会弄下去，参考了L-Leite的数据结构。
+基于L-Leite的cso2-master-server。
 
 如果大家有什么建议或问题，欢迎提出。
 
@@ -49,7 +49,7 @@ CSOL2 服务器 v0.3.4
 
   [点击2017年国服端下载](https://pan.baidu.com/s/1tTtks0fwROk0WUueC2gnOQ)  提取码：o9hd
 
-  [2017年单独启动器下载](https://pan.baidu.com/s/1QGyRmjw24eJ5ycrFjorv_g)  提取码：amys
+  [2017年单独启动器下载，如果你已有客户端](https://pan.baidu.com/s/1QGyRmjw24eJ5ycrFjorv_g)  提取码：amys
 
   [点击2018韩服端下载](https://pan.baidu.com/s/13wEMinbj6E2Z9lds20NU3A) 提取码：picf     
 

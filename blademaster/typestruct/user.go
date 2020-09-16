@@ -1,8 +1,11 @@
 package typestruct
 
 import (
+	"math"
 	"net"
 	"sync"
+
+	. "github.com/KouKouChan/CSO2-Server/blademaster/Exp"
 )
 
 type (
@@ -373,7 +376,7 @@ func GetNewUser() User {
 		1,               //level
 		0,               //rank
 		0,               //rankframe
-		0x7AF3,          //points
+		10000,           //points
 		0,               //curEXP
 		1000,            //maxEXP
 		0,               //playermatchs
@@ -460,5 +463,90 @@ func GetNewUser() User {
 		},
 		CreateNewUserInventory(), //仓库
 		&mutex,
+	}
+}
+
+func (u *User) PunishPoints() {
+	if u == nil {
+		return
+	}
+	u.UserMutex.Lock()
+	defer u.UserMutex.Unlock()
+	u.Points = u.Points - 1000
+	if u.Points < 0 {
+		u.Points = 0
+	}
+}
+
+func (u *User) GetPoints(num uint64) {
+	if u == nil {
+		return
+	}
+	u.UserMutex.Lock()
+	defer u.UserMutex.Unlock()
+	if math.MaxUint64-num < u.Points {
+		u.Points = math.MaxUint64
+	} else {
+		u.Points += num
+	}
+}
+
+func (u *User) GetExp(num uint64) {
+	if u == nil {
+		return
+	}
+	u.UserMutex.Lock()
+	defer u.UserMutex.Unlock()
+	for num > 0 {
+		if LevelExp[u.Level-1]-u.CurrentExp <= num { //能升级
+			num -= LevelExp[u.Level-1] - u.CurrentExp
+			u.Level++
+			u.CurrentExp = 0
+		} else { //不能升级
+			u.CurrentExp += num
+			num = 0
+		}
+		if u.Level > 40 {
+			u.Level = 40
+		}
+	}
+}
+
+func (u *User) GetKills(num uint32) {
+	if u == nil {
+		return
+	}
+	u.UserMutex.Lock()
+	defer u.UserMutex.Unlock()
+	if math.MaxUint32-u.Kills <= num { //能升级
+		u.Kills = math.MaxUint32
+	} else { //不能升级
+		u.Kills += num
+	}
+}
+
+func (u *User) GetDeathes(num uint32) {
+	if u == nil {
+		return
+	}
+	u.UserMutex.Lock()
+	defer u.UserMutex.Unlock()
+	if math.MaxUint32-u.Deaths <= num { //能升级
+		u.Deaths = math.MaxUint32
+	} else { //不能升级
+		u.Deaths += num
+	}
+}
+
+func (u *User) GetAssists(num uint32) {
+	if u == nil {
+		return
+	}
+	u.UserMutex.Lock()
+	defer u.UserMutex.Unlock()
+	if math.MaxUint32-u.Assists <= num { //能升级
+		u.Assists = math.MaxUint32
+	} else { //不能升级
+		u.Assists += num
 	}
 }
