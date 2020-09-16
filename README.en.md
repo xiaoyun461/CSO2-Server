@@ -10,7 +10,7 @@ DataBase:SQLite
 
 ***This project is incomplete right now !***
 
-***Part of my code is based on CSO2-master-server by l-leite.***
+***Based on [cso2-master-server](https://github.com/L-Leite/cso2-master-server) by l-leite.***
 
 ### 0x02 Plan
 

@@ -8,11 +8,11 @@ CSOL2 服务器 v0.3.5
 
 数据库：SQLite
 
-用于 **2017年国服 Counter-Strike Online 2** 和 **韩服 Counter-Strike Online 2** 
+用于 **2017年国服 Counter-Strike Online 2** 和 **2018年韩服 Counter-Strike Online 2** 
 
 目前客户端请使用L-Leite的启动器。
 
-基于L-Leite的cso2-master-server。
+基于L-Leite的[cso2-master-server](https://github.com/L-Leite/cso2-master-server)。
 
 如果大家有什么建议或问题，欢迎提出。
 
