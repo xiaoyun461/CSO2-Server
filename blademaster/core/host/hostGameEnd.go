@@ -3,6 +3,7 @@ package host
 import (
 	"net"
 
+	. "github.com/KouKouChan/CSO2-Server/blademaster/Exp"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/room"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/typestruct"
 	. "github.com/KouKouChan/CSO2-Server/kerlong"
@@ -38,6 +39,7 @@ func OnHostGameEnd(p *PacketData, client net.Conn) {
 	for _, v := range rm.Users {
 		//修改用户状态
 		v.SetUserStatus(UserNotReady)
+		v.AddMatches()
 		//发送房间状态
 		rst := BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeRoom), BuildRoomSetting(rm, 0xFFFFFFFFFFFFFFFF))
 		SendPacket(rst, v.CurrentConnection)
@@ -57,6 +59,9 @@ func OnHostGameEnd(p *PacketData, client net.Conn) {
 	//给每个人发送房间内所有人的准备状态
 	for _, v := range rm.Users {
 		rst := BuildUserReadyStatus(v)
+		//UserInfo部分
+		rst = BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeUserInfo), BuildUserInfo(0XFFFFFFFF, NewUserInfo(v), v.Userid, true))
+		SendPacket(rst, v.CurrentConnection)
 		for _, k := range rm.Users {
 			rst = BytesCombine(BuildHeader(k.CurrentSequence, PacketTypeRoom), rst)
 			SendPacket(rst, k.CurrentConnection)
@@ -73,11 +78,11 @@ func BuildHostStop() []byte {
 func BuildGameResult(u *User) []byte {
 	buf := make([]byte, 128)
 	offset := 0
-	WriteUint64(&buf, u.CurrentExp, &offset) //now total EXP
-	WriteUint64(&buf, u.Points, &offset)     //now total point
-	WriteUint8(&buf, 0, &offset)             //unk18
-	WriteString(&buf, []byte(""), &offset)
-	WriteString(&buf, []byte(""), &offset)
+	WriteUint64(&buf, u.CurrentExp+LevelExpTotal[u.Level-1], &offset) //now total EXP
+	WriteUint64(&buf, u.Points, &offset)                              //now total point
+	WriteUint8(&buf, 0, &offset)                                      //unk18
+	WriteString(&buf, []byte("Good"), &offset)
+	WriteString(&buf, []byte("Good"), &offset)
 	WriteUint32(&buf, 0, &offset)
 	// WriteUint8(&buf, 1, &offset)     //num of gifts
 	// WriteUint32(&buf, 2008, &offset) //item id
@@ -141,22 +146,29 @@ func BuildGameResultHeader(rm *Room) []byte {
 			WriteUint16(&temp, 0, &offset)                  //unk05 ，maybe 2 bytes
 			WriteUint16(&temp, 0, &offset)                  //unk06 ，maybe 2 bytes 0x56 = 86
 			WriteUint16(&temp, 0, &offset)                  //unk07 ，maybe 2 bytes 0x2b = 43
+
 			gainexp := GetGainExp(v, rm.Setting.AreBotsEnabled)
 			WriteUint64(&temp, gainexp, &offset) //gained EXP
 			WriteUint32(&temp, 0, &offset)       //unk08 ，maybe 4 bytes
 			WriteUint16(&temp, 0, &offset)       //unk09 ，maybe 2 bytes
 			WriteUint8(&temp, 0, &offset)        //unk10 ，maybe 1 bytes
+
 			points := GetGainPoints(v, rm.Setting.AreBotsEnabled)
 			WriteUint64(&temp, points, &offset)        //gained point
 			WriteUint32(&temp, 0, &offset)             //unk11 ，maybe 4 bytes
 			WriteUint16(&temp, 0, &offset)             //unk12 ，maybe 2 bytes
 			WriteUint8(&temp, 0, &offset)              //unk13 ，maybe 1 bytes
 			WriteUint8(&temp, uint8(v.Level), &offset) //current level ?
+
 			v.GetExp(gainexp)
 			v.GetPoints(points)
 			v.GetKills(uint32(v.CurrentKillNum))
 			v.GetDeathes(uint32(v.CurrentDeathNum))
 			v.GetAssists(uint32(v.CurrentAssistNum))
+			if v.CurrentTeam == rm.WinnerTeam {
+				v.AddWins()
+			}
+
 			WriteUint8(&temp, uint8(v.Level), &offset)    //next level ？
 			WriteUint8(&temp, 0, &offset)                 //unk15
 			WriteUint8(&temp, uint8(k+1), &offset)        //rank

@@ -378,7 +378,7 @@ func GetNewUser() User {
 		0,               //rankframe
 		10000,           //points
 		0,               //curEXP
-		1000,            //maxEXP
+		LevelExp[0],     //maxEXP
 		0,               //playermatchs
 		0,               //wins
 		0,               //kills
@@ -498,16 +498,21 @@ func (u *User) GetExp(num uint64) {
 	u.UserMutex.Lock()
 	defer u.UserMutex.Unlock()
 	for num > 0 {
-		if LevelExp[u.Level-1]-u.CurrentExp <= num { //能升级
-			num -= LevelExp[u.Level-1] - u.CurrentExp
-			u.Level++
+		if u.MaxExp-u.CurrentExp <= num { //能升级
+			num -= u.MaxExp - u.CurrentExp
 			u.CurrentExp = 0
-		} else { //不能升级
+			u.Level++
+			if u.Level >= MAXLEVEL {
+				u.Level = MAXLEVEL
+				num = 0
+			} else {
+				u.MaxExp = LevelExp[u.Level-1]
+			}
+		} else if u.Level < MAXLEVEL { //不能升级
 			u.CurrentExp += num
 			num = 0
-		}
-		if u.Level > 40 {
-			u.Level = 40
+		} else { //已经满级
+			num = 0
 		}
 	}
 }
@@ -548,5 +553,27 @@ func (u *User) GetAssists(num uint32) {
 		u.Assists = math.MaxUint32
 	} else { //不能升级
 		u.Assists += num
+	}
+}
+
+func (u *User) AddMatches() {
+	if u == nil {
+		return
+	}
+	u.UserMutex.Lock()
+	defer u.UserMutex.Unlock()
+	if u.PlayedMatches < math.MaxUint32 {
+		u.PlayedMatches++
+	}
+}
+
+func (u *User) AddWins() {
+	if u == nil {
+		return
+	}
+	u.UserMutex.Lock()
+	defer u.UserMutex.Unlock()
+	if u.Wins < math.MaxUint32 {
+		u.Wins++
 	}
 }

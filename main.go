@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"syscall"
 
+	. "github.com/KouKouChan/CSO2-Server/blademaster/Exp"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/holepunch"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/host"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/inventory"
@@ -145,6 +146,7 @@ func main() {
 
 	//Init MainServer Info
 	MainServer = NewMainServer()
+	InitExpTotal()
 
 	//Start UDP Server
 	go StartHolePunchServer(strconv.Itoa(int(Conf.HolePunchPort)), holepunchserver)

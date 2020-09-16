@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"sync"
 
+	. "github.com/KouKouChan/CSO2-Server/blademaster/Exp"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/typestruct"
 	. "github.com/KouKouChan/CSO2-Server/kerlong"
 	. "github.com/KouKouChan/CSO2-Server/verbose"
@@ -59,6 +60,7 @@ func GetUserFromDatabase(loginname, passwd []byte) (*User, int) {
 			//设置战队...
 			DebugInfo(1, "User", string(u.Username), "data found !")
 			u.SetID(GetNewUserID())
+			u.MaxExp = LevelExp[u.Level-1]
 			return &u, USER_LOGIN_SUCCESS
 			// u.setID(getNewUserID())
 			// u.setUserName(p)
@@ -203,7 +205,7 @@ func AddUserToDB(u *User) error {
 
 func UpdateUserToDB(u *User) error {
 	if DB == nil {
-		return errors.New("DataBase not connected")
+		return errors.New("DataBase not connected,can't save user's data !")
 	}
 	stmt, err := DB.Prepare(`Update userinfo set Level=?, 
 		Rank=?, RankFrame=?, Points=?, CurrentExp=?, PlayedMatches=?, Wins=?, Kills=?,	

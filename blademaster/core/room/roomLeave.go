@@ -14,7 +14,7 @@ func OnLeaveRoom(client net.Conn, end bool) {
 	uPtr := GetUserFromConnection(client)
 	if uPtr == nil ||
 		uPtr.Userid <= 0 {
-		DebugInfo(2, "Error : Client from", client.RemoteAddr().String(), "try to leave room but not in server !")
+		//DebugInfo(2, "Error : Client from", client.RemoteAddr().String(), "try to leave room but not in server !")
 		return
 	}
 	//找到玩家的房间
