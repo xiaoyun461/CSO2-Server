@@ -49,7 +49,7 @@ CSOL2 服务器 v0.3.5
 
   [点击2017年国服端下载](https://pan.baidu.com/s/1tTtks0fwROk0WUueC2gnOQ)  提取码：o9hd
 
-  [2017年单独启动器下载，如果你已有客户端](https://pan.baidu.com/s/1QGyRmjw24eJ5ycrFjorv_g)  提取码：amys
+  [单独启动器下载，如果你已有客户端](https://pan.baidu.com/s/1QGyRmjw24eJ5ycrFjorv_g)  提取码：amys
 
   [点击2018韩服端下载](https://pan.baidu.com/s/13wEMinbj6E2Z9lds20NU3A) 提取码：picf     
 

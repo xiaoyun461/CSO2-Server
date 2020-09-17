@@ -48,7 +48,10 @@ func OnLeaveRoom(client net.Conn, end bool) {
 	//扣除1000points
 	if uPtr.CurrentIsIngame {
 		uPtr.PunishPoints()
-		OnSendMessage(uPtr.CurrentSequence, uptr.CurrentConnection, DialogBox, GAME_ROOM_LEAVE_EARLY)
+		OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, DialogBox, GAME_ROOM_LEAVE_EARLY)
+		//UserInfo部分
+		rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeUserInfo), BuildUserInfo(0XFFFFFFFF, NewUserInfo(uPtr), uPtr.Userid, true))
+		SendPacket(rst, uPtr.CurrentConnection)
 	}
 	//设置玩家状态
 	uPtr.QuitRoom()
