@@ -3,6 +3,7 @@ package room
 import (
 	"net"
 
+	. "github.com/KouKouChan/CSO2-Server/blademaster/core/message"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/typestruct"
 	. "github.com/KouKouChan/CSO2-Server/kerlong"
 	. "github.com/KouKouChan/CSO2-Server/servermanager"
@@ -45,7 +46,10 @@ func OnLeaveRoom(client net.Conn, end bool) {
 		SentUserLeaveMes(uPtr, rm)
 	}
 	//扣除1000points
-	uPtr.PunishPoints()
+	if uPtr.CurrentIsIngame {
+		uPtr.PunishPoints()
+		OnSendMessage(uPtr.CurrentSequence, uptr.CurrentConnection, DialogBox, GAME_ROOM_LEAVE_EARLY)
+	}
 	//设置玩家状态
 	uPtr.QuitRoom()
 	//发送房间列表给玩家

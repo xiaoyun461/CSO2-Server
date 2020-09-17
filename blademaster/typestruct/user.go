@@ -433,7 +433,7 @@ func GetNewUser() User {
 			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3E, 0x00, 0x00}, // unlockedAvatars
 		0,        //viplevel
 		0,        //vipXp
-		0x02FB,   //skillHumanCurXp
+		0,        //skillHumanCurXp
 		0x19AC,   //skillHumanMaxXp
 		0,        //skillHumanPoints
 		0,        //skillZombieCurXp
