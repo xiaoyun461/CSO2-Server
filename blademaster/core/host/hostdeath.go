@@ -16,6 +16,7 @@ func OnHostDeathPacket(p *PacketData, client net.Conn) {
 		return
 	}
 	//找到对应用户
+	DebugInfo(2, "DeadID", pkt.DeadID)
 	uPtr := GetUserFromID(pkt.DeadID)
 	if uPtr == nil ||
 		uPtr.Userid <= 0 {

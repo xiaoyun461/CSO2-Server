@@ -81,7 +81,7 @@ func (conf *CSO2Conf) InitConf(path string) {
 	conf.LogFile = ini_parser.IniGetUint32("Debug", "LogFile")
 	conf.EnableConsole = ini_parser.IniGetUint32("Debug", "EnableConsole")
 	conf.EnableRegister = ini_parser.IniGetUint32("Register", "EnableRegister")
-	conf.EnableMail = ini_parser.IniGetUint32("Register", "EnableEmail")
+	conf.EnableMail = ini_parser.IniGetUint32("Register", "EnableMail")
 	conf.REGPort = ini_parser.IniGetUint32("Register", "REGPort")
 	conf.REGEmail = ini_parser.IniGetString("Register", "REGEmail")
 	conf.REGPassWord = ini_parser.IniGetString("Register", "REGPassWord")

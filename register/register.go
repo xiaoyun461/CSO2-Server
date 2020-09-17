@@ -49,6 +49,11 @@ func OnRegister() {
 	http.HandleFunc("/", Register)
 	http.HandleFunc("/bg.jpg", OnJpg)
 	fmt.Println("Web is running at", "[AnyAdapter]:"+strconv.Itoa(int(Conf.REGPort)))
+	if Conf.EnableMail != 0 {
+		fmt.Println("Mail Service is enabled !")
+	} else {
+		fmt.Println("Mail Service is disabled !")
+	}
 	err := http.ListenAndServe(":"+strconv.Itoa(int(Conf.REGPort)), nil)
 	if err != nil {
 		DebugInfo(1, "ListenAndServe:", err)
