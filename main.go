@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"net"
 	"os"
 	"os/signal"
@@ -87,10 +88,15 @@ func main() {
 	//read configure
 	Conf.InitConf(path)
 
-	//set verbose
+	//set val
 	Level = Conf.DebugLevel
 	LogFile = Conf.LogFile
 	IsConsole = Conf.EnableConsole
+	if Conf.MaxUsers <= 0 {
+		MaxUsers = math.MaxUint32
+	} else {
+		MaxUsers = Conf.MaxUsers
+	}
 
 	//init Logger
 	if LogFile != 0 {

@@ -21,6 +21,7 @@ var (
 		map[uint32]*User{},
 		usersManagerLock,
 	}
+	MaxUsers uint32 = 0
 )
 
 const (
