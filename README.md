@@ -8,9 +8,9 @@ CSOL2 服务器 v0.3.6
 
 数据库：SQLite
 
-用于 **2017年国服 Counter-Strike Online 2** 和 **2018年韩服 Counter-Strike Online 2** 
+用于 **2017年国服 Counter-Strike Online 2** 和 **2018年韩服 Counter-Strike Online 2**  
 
-目前客户端请使用L-Leite的启动器。
+目前客户端请使用L-Leite的启动器,**韩服端竞技模式有问题的请下载最新的汉化包**。
 
 基于L-Leite的[cso2-master-server](https://github.com/L-Leite/cso2-master-server)。
 
@@ -44,6 +44,7 @@ CSOL2 服务器 v0.3.6
     7.可能存在多协程共享变量不安全的问题
     8.由于房间用户与主管理器的用户重复，可能造成性能浪费
     9.房间ID和房间NUM在多频道下可能冲突（虽然目前是单频道）
+    10.竞技模式下默认添加电脑
 
 ### 七、客户端下载
 
@@ -51,7 +52,7 @@ CSOL2 服务器 v0.3.6
 
   [单独启动器下载，如果你已有客户端](https://pan.baidu.com/s/1QGyRmjw24eJ5ycrFjorv_g)  提取码：amys
 
-  [点击2018韩服端下载](https://pan.baidu.com/s/13wEMinbj6E2Z9lds20NU3A) 提取码：picf     
+  [点击2018韩服端下载](https://pan.baidu.com/s/1NGHisLeTB1nXH4zCtR6FSA) 提取码：5vca  
 
 ### 八、使用方法
 
