@@ -54,6 +54,8 @@ CSOL2 服务器 v0.3.6
 
   [点击2018韩服端下载](https://pan.baidu.com/s/1NGHisLeTB1nXH4zCtR6FSA) 提取码：5vca  
 
+  [韩服端汉化包GoogleDrive](https://drive.google.com/file/d/1aaoKSBrAKgO30w-BCf1VJG6n6PUiS-88/view?usp=sharing)
+
 ### 八、使用方法
 
 1.需要有CSOL2客户端，同时使用第三方启动器
