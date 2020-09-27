@@ -120,7 +120,7 @@ docker run -p 30001:30001 -p 30002:30002 koukouchan/cso2-server:latest
 ### 十二、编译方法
 
 ```shell
-1. 下载最新版Release的源码并解压
+1. 在shell中执行 go get github.com/KouKouChan/CSO2-Server
 2. 进入目录
 3. 执行命令 go build
 4. 运行生成的可执行文件即可
