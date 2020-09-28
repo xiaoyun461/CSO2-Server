@@ -4,9 +4,9 @@
 
 ### 一、介绍
 
-CSOL2 服务器 v0.3.6
+CSOL2 服务器 v0.3.7
 
-数据库：SQLite
+数据库：SQLite    ，可使用相应工具打开.db文件
 
 用于 **2017年国服 Counter-Strike Online 2** 和 **2018年韩服 Counter-Strike Online 2**  
 
@@ -19,7 +19,8 @@ CSOL2 服务器 v0.3.6
 ### 二、项目计划
 
     1.先实现基本的游戏游玩功能和联机功能 √
-    2.重构代码 ...(进行中)
+    2.重构代码 √
+    3.主要实现偏单机的功能 ...(进行中)
 
 ### 三、基本已完成的功能
 
@@ -27,11 +28,12 @@ CSOL2 服务器 v0.3.6
 
 ### 四、正在编写的功能
 
-    玩家积分、聊天
+    玩家积分、聊天、武器解锁、Redis、Json储存数据
 
 ### 五、已知问题
 
     1.房主离开后，其余玩家会卡住直到炸出房间
+    2.服务端目前还未适配2017国服端的部分数据包，所以结算界面数据显示存在错误
 
 ### 六、大概已修复的问题
 
@@ -48,13 +50,13 @@ CSOL2 服务器 v0.3.6
 
 ### 七、客户端下载
 
-  [点击2017年国服端下载](https://pan.baidu.com/s/1tTtks0fwROk0WUueC2gnOQ)  提取码：o9hd
-
-  [单独启动器下载，如果你已有客户端](https://pan.baidu.com/s/1QGyRmjw24eJ5ycrFjorv_g)  提取码：amys
-
   [点击2018韩服端下载](https://pan.baidu.com/s/1NGHisLeTB1nXH4zCtR6FSA) 提取码：5vca  
 
   [韩服端汉化包GoogleDrive](https://drive.google.com/file/d/1aaoKSBrAKgO30w-BCf1VJG6n6PUiS-88/view?usp=sharing)
+
+  [点击2017年国服端下载](https://pan.baidu.com/s/1tTtks0fwROk0WUueC2gnOQ)  提取码：o9hd
+
+  [单独启动器下载，如果你已有客户端](https://pan.baidu.com/s/1QGyRmjw24eJ5ycrFjorv_g)  提取码：amys
 
 ### 八、使用方法
 

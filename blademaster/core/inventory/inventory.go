@@ -5,6 +5,10 @@ import (
 	. "github.com/KouKouChan/CSO2-Server/kerlong"
 )
 
+var (
+	FullInventoryReply = BuildFullInventoryInfo()
+)
+
 func BuildInventoryInfo(u *User) []byte {
 	buf := make([]byte, 5+u.Inventory.NumOfItem*19)
 	offset := 0
@@ -21,8 +25,24 @@ func BuildInventoryInfo(u *User) []byte {
 	return buf[:offset]
 }
 
+func BuildFullInventoryInfo() []byte {
+	buf := make([]byte, 5+uint16(len(FullInventoryItem))*19)
+	offset := 0
+	WriteUint16(&buf, uint16(len(FullInventoryItem)), &offset)
+	for k, v := range FullInventoryItem {
+		WriteUint16(&buf, uint16(k), &offset)
+		WriteUint8(&buf, 1, &offset)
+		WriteUint32(&buf, v.Id, &offset)
+		WriteUint16(&buf, v.Count, &offset)
+		WriteUint8(&buf, 1, &offset)
+		WriteUint8(&buf, 0, &offset)
+		WriteUint64(&buf, 0, &offset)
+	}
+	return buf[:offset]
+}
+
 func BuildDefaultInventoryInfo() []byte {
-	DeafaultInventoryItem := CreateDeafaultInventoryItem()
+	DeafaultInventoryItem := CreateDefaultInventoryItem()
 	buf := make([]byte, 5+len(DeafaultInventoryItem)*19)
 	offset := 0
 	WriteUint16(&buf, 25, &offset)

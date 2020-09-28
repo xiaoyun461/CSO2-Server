@@ -12,7 +12,20 @@ type UserBuyMenu struct {
 	Equipment   []uint32
 }
 
-func CreateNewUserBuyMenu() UserBuyMenu {
+func CreateDefaultUserBuyMenu() UserBuyMenu {
+	return UserBuyMenu{
+		[]uint32{2, 15, 0, 0, 0, 0, 0, 0, 0},    //pistol
+		[]uint32{19, 101, 0, 0, 0, 0, 0, 0, 0},  //shotgun
+		[]uint32{6, 21, 0, 0, 0, 0, 0, 0, 0},    //smgs
+		[]uint32{13, 14, 128, 0, 0, 0, 0, 0, 0}, //rifles
+		[]uint32{3, 0, 0, 0, 0, 0, 0, 0, 0},     //sniper
+		[]uint32{18, 0, 0, 0, 0, 0, 0, 0, 0},    //machinegun
+		[]uint32{27, 80, 0, 0, 0, 0, 0, 0, 0},   //melee
+		[]uint32{36, 37, 23, 4, 8, 34, 0, 0, 0}, //equipment
+	}
+}
+
+func CreateFullUserBuyMenu() UserBuyMenu {
 	return UserBuyMenu{
 		[]uint32{5280, 5279, 5337, 5356, 5294, 5360, 5262, 103, 106},
 		[]uint32{5130, 5293, 5306, 5261, 5242, 5264, 5265, 5230, 137},

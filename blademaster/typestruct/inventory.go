@@ -27,6 +27,10 @@ type (
 	}
 )
 
+var (
+	FullInventoryItem = CreateFullInventoryItem()
+)
+
 func WriteItem(num uint32, curitem *uint8) []byte {
 	buf := make([]byte, 5)
 	offset := 0
@@ -39,6 +43,25 @@ func WriteItem(num uint32, curitem *uint8) []byte {
 func CreateNewUserInventory() UserInventory {
 	Inv := UserInventory{
 		0,
+		CreateDefaultInventoryItem(),
+		1001,
+		1004,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		CreateDefaultUserBuyMenu(),
+		CreateDefaultLoadout(),
+	}
+	Inv.NumOfItem = uint16(len(Inv.Items))
+	return Inv
+}
+
+func CreateFullUserInventory() UserInventory {
+	Inv := UserInventory{
+		0,
 		//createDeafaultInventoryItem(),
 		CreateFullInventoryItem(),
 		1047,
@@ -49,15 +72,25 @@ func CreateNewUserInventory() UserInventory {
 		0,
 		0,
 		42001,
-		CreateNewUserBuyMenu(),
-		CreateNewLoadout(),
+		CreateFullUserBuyMenu(),
+		CreateFullLoadout(),
 	}
 	Inv.NumOfItem = uint16(len(Inv.Items))
 	return Inv
 }
 
-func CreateDeafaultInventoryItem() []UserInventoryItem {
+func CreateDefaultInventoryItem() []UserInventoryItem {
 	items := []UserInventoryItem{}
+	var i uint32
+	//默认角色
+	for i = 1001; i <= 1004; i++ {
+		items = append(items, UserInventoryItem{i, 1})
+	}
+	//添加默认武器
+	number := []uint32{2, 3, 4, 6, 8, 13, 14, 15, 18, 19, 21, 23, 27, 34, 36, 37, 80, 128, 101, 49009, 49004}
+	for _, v := range number {
+		items = append(items, UserInventoryItem{v, 1})
+	}
 
 	return items
 }
@@ -66,11 +99,11 @@ func CreateFullInventoryItem() []UserInventoryItem {
 	items := []UserInventoryItem{}
 	var i uint32
 	//用户角色
-	for i = 1005; i <= 1058; i++ {
+	for i = 1001; i <= 1058; i++ {
 		items = append(items, UserInventoryItem{i, 1})
 	}
 	//添加默认武器
-	number := []uint32{2, 3, 4, 6, 8, 13, 14, 15, 18, 19, 21, 23, 27, 34, 36, 37, 80, 128, 101, 1001, 1002, 1003, 1004, 49009, 49004}
+	number := []uint32{2, 3, 4, 6, 8, 13, 14, 15, 18, 19, 21, 23, 27, 34, 36, 37, 80, 128, 101, 49009, 49004}
 	for _, v := range number {
 		items = append(items, UserInventoryItem{v, 1})
 	}

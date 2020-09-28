@@ -62,8 +62,13 @@ func OnLogin(seq *uint8, dataPacket *PacketData, client net.Conn) {
 	//OnServerList(u.CurrentConnection)
 
 	//Inventory部分
-	rst = BytesCombine(BuildHeader(u.CurrentSequence, PacketTypeInventory_Create),
-		BuildInventoryInfo(u))
+	if Conf.UnlockAllWeapons == 0 {
+		rst = BytesCombine(BuildHeader(u.CurrentSequence, PacketTypeInventory_Create),
+			BuildInventoryInfo(u))
+	} else {
+		rst = BytesCombine(BuildHeader(u.CurrentSequence, PacketTypeInventory_Create),
+			FullInventoryReply)
+	}
 	SendPacket(rst, u.CurrentConnection)
 
 	//unlock
