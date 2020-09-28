@@ -47,7 +47,7 @@ func BuildUnlockReply() []byte {
 	for _, v := range UnlockFullList {
 		WriteUint32(&buf, v.Itemid, &offset)
 		WriteUint32(&buf, v.Seq, &offset)
-		WriteUint8(&buf, v.FeeType, &offset)
+		WriteUint8(&buf, v.CostType, &offset)
 		WriteUint32(&buf, v.Price, &offset)
 	}
 	WriteUint16(&buf, 0, &offset) //kill num of weapons

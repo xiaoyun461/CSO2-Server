@@ -1,10 +1,10 @@
 package typestruct
 
 type UnlockItem struct {
-	Itemid  uint32
-	Seq     uint32
-	FeeType uint8
-	Price   uint32
+	Itemid   uint32
+	Seq      uint32
+	CostType uint8
+	Price    uint32
 }
 
 type UnlockKillNum struct {
