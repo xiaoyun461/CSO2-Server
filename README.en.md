@@ -1,5 +1,7 @@
 ## Counter-Strike Online 2 Server 
 
+[![Build status](https://ci.appveyor.com/api/projects/status/a4pj1il9li5s08k5?svg=true)](https://ci.appveyor.com/project/KouKouChan/cso2-server)
+
 ### 0x01 Description
 
 Counter-Strike Online 2 Server

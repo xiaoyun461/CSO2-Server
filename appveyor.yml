@@ -1,0 +1,42 @@
+version: 0.3.7-{build}
+pull_requests:
+  do_not_increment_build_number: true
+image: Visual Studio 2015
+clone_folder: c:\gopath\src\github.com\KouKouChan\CSO2-Server
+environment:
+  GOPATH: c:\gopath
+build_script:
+- cmd: >-
+    path=%path%;C:\mingw-w64\x86_64-7.2.0-posix-seh-rt_v5-rev1\mingw64\bin
+
+    gcc --version
+
+    go version
+
+    go build
+test_script:
+- cmd: >-
+    move .\CSO2-Server.exe ..\
+
+    move .\configure\server.conf ..\
+
+    move .\cso2.db ..\
+
+    cd ..
+
+    7z a .\CSO2-Server-0.3.7-Win64.7z .\CSO2-Server.exe
+
+    7z a .\CSO2-Server-0.3.7-Win64.7z .\server.conf
+
+    7z a .\CSO2-Server-0.3.7-Win64.7z .\cso2.db
+
+    7z a .\CSO2-Server-0.3.7-Win64.7z .\CSO2-Server\assert\bg.jpg CSO2-Server\assert\bg.jpg
+
+    7z a .\CSO2-Server-0.3.7-Win64.7z .\CSO2-Server\assert\register.html CSO2-Server\assert\register.html
+
+    mv .\CSO2-Server-0.3.7-Win64.7z .\CSO2-Server\
+
+    cd .\CSO2-Server\
+artifacts:
+- path: CSO2-Server-*-Win64.7z
+  name: win64
