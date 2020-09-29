@@ -30,9 +30,9 @@ test_script:
 
     7z a .\CSO2-Server-0.3.7-Win64.7z .\cso2.db
 
-    7z a .\CSO2-Server-0.3.7-Win64.7z .\CSO2-Server\assert\bg.jpg CSO2-Server\assert\bg.jpg
+    7z a .\CSO2-Server-0.3.7-Win64.7z CSO2-Server\assert\bg.jpg
 
-    7z a .\CSO2-Server-0.3.7-Win64.7z .\CSO2-Server\assert\register.html CSO2-Server\assert\register.html
+    7z a .\CSO2-Server-0.3.7-Win64.7z CSO2-Server\assert\register.html
 
     mv .\CSO2-Server-0.3.7-Win64.7z .\CSO2-Server\
 
