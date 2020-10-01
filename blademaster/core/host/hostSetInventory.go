@@ -4,6 +4,7 @@ import (
 	"net"
 
 	. "github.com/KouKouChan/CSO2-Server/blademaster/typestruct"
+	. "github.com/KouKouChan/CSO2-Server/configure"
 	. "github.com/KouKouChan/CSO2-Server/kerlong"
 	. "github.com/KouKouChan/CSO2-Server/servermanager"
 	. "github.com/KouKouChan/CSO2-Server/verbose"
@@ -55,6 +56,19 @@ func OnHostSetUserInventory(p *PacketData, client net.Conn) {
 
 //BuildSetUserInventory 建立要发给主机的玩家装备信息，按理来说应该是所有玩家的装备，待定，L-Leite是发的主机的装备加普通用户ID
 func BuildSetUserInventory(u *User, destid uint32) []byte {
+	if Conf.UnlockAllWeapons != 0 {
+		buf := make([]byte, 10+6*len(FullInventoryItem))
+		offset := 0
+		WriteUint8(&buf, SetInventory, &offset)
+		WriteUint32(&buf, destid, &offset)
+		WriteUint8(&buf, 0, &offset)
+		WriteUint16(&buf, uint16(len(FullInventoryItem)), &offset)
+		for _, v := range FullInventoryItem {
+			WriteUint32(&buf, v.Id, &offset)
+			WriteUint16(&buf, v.Count, &offset)
+		}
+		return buf[:offset]
+	}
 	buf := make([]byte, 10+6*u.Inventory.NumOfItem)
 	offset := 0
 	WriteUint8(&buf, SetInventory, &offset)
