@@ -23,5 +23,5 @@ func OnSaveBuyMenu(p *PacketData, client net.Conn) {
 	}
 	//修改数据
 	uPtr.SetBuyMenu(pkt.Buymenu)
-	DebugInfo(1, "User", string(uPtr.Username), "updated buymenu ...")
+	DebugInfo(1, "User", string(uPtr.UserName), "updated buymenu ...")
 }

@@ -10,6 +10,7 @@ import (
 	"syscall"
 
 	. "github.com/KouKouChan/CSO2-Server/blademaster/Exp"
+	. "github.com/KouKouChan/CSO2-Server/blademaster/core/chat"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/holepunch"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/host"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/inventory"
@@ -34,7 +35,7 @@ import (
 
 var (
 	//SERVERVERSION 版本号
-	SERVERVERSION = "v0.3.7"
+	SERVERVERSION = "v0.3.8"
 	Redis         redis.Conn
 )
 
@@ -197,7 +198,7 @@ func RecvMessage(client net.Conn) {
 	defer client.Close() //关闭con
 	defer func() {
 		if err := recover(); err != nil {
-			OnSendMessage(&seq, client, DialogBox, GAME_SERVER_ERROR)
+			OnSendMessage(&seq, client, MessageDialogBox, GAME_SERVER_ERROR)
 			fmt.Println("Client", client.RemoteAddr().String(), "suffered a fault !")
 			fmt.Println(err)
 			fmt.Println("Fault end!")
@@ -257,6 +258,8 @@ func RecvMessage(client net.Conn) {
 			OnOption(&dataPacket, client)
 		case PacketTypePlayerInfo:
 			OnPlayerInfo(&dataPacket, client)
+		case PacketTypeChat:
+			OnChat(&dataPacket, client)
 		default:
 			DebugInfo(2, "Unknown packet", dataPacket.Id, "from", client.RemoteAddr().String())
 		}

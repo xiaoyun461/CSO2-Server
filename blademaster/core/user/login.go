@@ -23,19 +23,19 @@ func OnLogin(seq *uint8, dataPacket *PacketData, client net.Conn) {
 	switch result {
 	case USER_PASSWD_ERROR:
 		DebugInfo(2, "Error : User", string(pkt.NexonUsername), "from", client.RemoteAddr().String(), "login failed with error password !")
-		OnSendMessage(seq, client, DialogBox, GAME_LOGIN_BAD_PASSWORD)
+		OnSendMessage(seq, client, MessageDialogBox, GAME_LOGIN_BAD_PASSWORD)
 		return
 	case USER_ALREADY_LOGIN:
 		DebugInfo(2, "Error : User", string(pkt.NexonUsername), "from", client.RemoteAddr().String(), "already logged in !")
-		OnSendMessage(seq, client, DialogBox, GAME_LOGIN_ALREADY)
+		OnSendMessage(seq, client, MessageDialogBox, GAME_LOGIN_ALREADY)
 		return
 	case USER_NOT_FOUND:
 		DebugInfo(2, "Error : User", string(pkt.NexonUsername), "from", client.RemoteAddr().String(), "not registered !")
-		OnSendMessage(seq, client, DialogBox, GAME_LOGIN_BAD_USERNAME)
+		OnSendMessage(seq, client, MessageDialogBox, GAME_LOGIN_BAD_USERNAME)
 		return
 	case USER_UNKOWN_ERROR:
 		DebugInfo(2, "Error : User", string(pkt.NexonUsername), "from", client.RemoteAddr().String(), "login but suffered a error !")
-		OnSendMessage(seq, client, DialogBox, GAME_LOGIN_ERROR)
+		OnSendMessage(seq, client, MessageDialogBox, GAME_LOGIN_ERROR)
 		return
 	default:
 	}
@@ -52,7 +52,7 @@ func OnLogin(seq *uint8, dataPacket *PacketData, client net.Conn) {
 	//UserStart部分
 	rst := BytesCombine(BuildHeader(u.CurrentSequence, PacketTypeUserStart), BuildUserStart(u))
 	SendPacket(rst, u.CurrentConnection)
-	DebugInfo(1, "User", string(u.NexonUsername), "from", client.RemoteAddr().String(), "logged in !")
+	DebugInfo(1, "User", string(u.UserName), "from", client.RemoteAddr().String(), "logged in !")
 
 	//UserInfo部分
 	rst = BytesCombine(BuildHeader(u.CurrentSequence, PacketTypeUserInfo), BuildUserInfo(0XFFFFFFFF, NewUserInfo(u), u.Userid, true))
@@ -98,11 +98,11 @@ func OnLogin(seq *uint8, dataPacket *PacketData, client net.Conn) {
 // holepunchPort
 func BuildUserStart(u *User) []byte {
 	//暂时都取GameUsername
-	userbuf := make([]byte, 9+int(len(u.NexonUsername))+int(len(u.Username)))
+	userbuf := make([]byte, 9+int(len(u.UserName))+int(len(u.IngameName)))
 	offset := 0
 	WriteUint32(&userbuf, u.Userid, &offset)
-	WriteString(&userbuf, u.NexonUsername, &offset)
-	WriteString(&userbuf, u.Username, &offset)
+	WriteString(&userbuf, u.UserName, &offset)
+	WriteString(&userbuf, u.IngameName, &offset)
 	WriteUint8(&userbuf, 1, &offset)
 	WriteUint16(&userbuf, uint16(Conf.HolePunchPort), &offset)
 	return userbuf

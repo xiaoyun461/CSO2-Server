@@ -286,7 +286,7 @@ func NewUserInfo(u *User) UserInfo {
 	}
 	return UserInfo{
 		0x2241158F,
-		u.Username,
+		u.IngameName,
 		u.Level,
 		u.CurrentExp,
 		u.MaxExp,

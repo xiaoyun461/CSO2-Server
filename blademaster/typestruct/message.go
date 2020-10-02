@@ -1,11 +1,11 @@
 package typestruct
 
 const (
-	Congratulate    = 11
-	SystemImportant = 20
-	DialogBox       = 21
-	System          = 22
-	DialogBoxExit   = 60
+	MessageCongratulate    = 11
+	MessageSystemImportant = 20
+	MessageDialogBox       = 21
+	MessageSystem          = 22
+	MessageDialogBoxExit   = 60
 )
 
 var (

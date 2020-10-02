@@ -311,7 +311,7 @@ func (rm Room) GetFreeSlots() int {
 func (rm *Room) JoinUser(u *User) bool {
 	destTeam := rm.FindDesirableTeam()
 	if destTeam <= 0 {
-		DebugInfo(2, "Error : Cant add User", string(u.Username), "to room", string(rm.Setting.RoomName))
+		DebugInfo(2, "Error : Cant add User", string(u.UserName), "to room", string(rm.Setting.RoomName))
 		return false
 	}
 	rm.RoomMutex.Lock()
@@ -340,7 +340,7 @@ func (rm Room) FindDesirableTeam() int {
 		} else if v.GetUserTeam() == UserForceCounterTerrorist {
 			ctNum++
 		} else {
-			DebugInfo(2, "Error : User", string(v.Username), "is in Unknown team in room", string(rm.Setting.RoomName))
+			DebugInfo(2, "Error : User", string(v.UserName), "is in Unknown team in room", string(rm.Setting.RoomName))
 			return 0
 		}
 	}
@@ -364,7 +364,7 @@ func (rm Room) FindDesirableTeam() int {
 				return UserForceTerrorist
 			}
 		} else {
-			DebugInfo(2, "Error : Host", string(u.Username), "is in Unknown team in room", string(rm.Setting.RoomName))
+			DebugInfo(2, "Error : Host", string(u.UserName), "is in Unknown team in room", string(rm.Setting.RoomName))
 			return 0
 		}
 	}
@@ -448,7 +448,7 @@ func (rm *Room) SetRoomHost(u *User) {
 	rm.RoomMutex.Lock()
 	defer rm.RoomMutex.Unlock()
 	rm.HostUserID = u.Userid
-	rm.HostUserName = u.Username
+	rm.HostUserName = u.IngameName
 }
 
 func (rm *Room) ResetRoomWinner() {

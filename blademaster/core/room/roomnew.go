@@ -26,21 +26,21 @@ func OnNewRoom(p *PacketData, client net.Conn) {
 	}
 	//检索玩家当前房间
 	if uPtr.CurrentRoomId > 0 {
-		DebugInfo(2, "Error :", string(uPtr.Username), "request a new room but already in a room!")
+		DebugInfo(2, "Error :", string(uPtr.UserName), "request a new room but already in a room!")
 		uPtr.QuitRoom()
 		return
 	}
 	//创建房间
 	rm := CreateRoom(roompkt, uPtr)
 	if rm.Id <= 0 {
-		DebugInfo(2, "Error :", string(uPtr.Username), "cannot create a new room !")
+		DebugInfo(2, "Error :", string(uPtr.UserName), "cannot create a new room !")
 		return
 	}
 	//修改用户相关信息
 
 	rm.SetRoomHost(uPtr)
 	if !rm.JoinUser(uPtr) {
-		DebugInfo(2, "Error :", string(uPtr.Username), "cannot join a new room !")
+		DebugInfo(2, "Error :", string(uPtr.UserName), "cannot join a new room !")
 		return
 	}
 
@@ -64,11 +64,11 @@ func OnNewRoom(p *PacketData, client net.Conn) {
 	rst := append(BuildHeader(uPtr.CurrentSequence, PacketTypeRoom), OUTCreateAndJoin)
 	rst = BytesCombine(rst, BuildCreateAndJoin(&rm))
 	SendPacket(rst, uPtr.CurrentConnection)
-	DebugInfo(2, "Sent a new room packet to", string(uPtr.Username))
+	DebugInfo(2, "Sent a new room packet to", string(uPtr.UserName))
 	//生成房间设置数据包
 	rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, p.Id), BuildRoomSetting(&rm, 0XFFFFFFFFFFFFFFFF))
 	SendPacket(rst, uPtr.CurrentConnection)
-	DebugInfo(2, "Sent a room setting packet to", string(uPtr.Username))
+	DebugInfo(2, "Sent a room setting packet to", string(uPtr.UserName))
 }
 
 func BuildCreateAndJoin(rm *Room) []byte {

@@ -15,7 +15,7 @@ func OnSendMessage(seq *uint8, client net.Conn, tp uint8, msg []byte) {
 }
 
 func BuildMessage(msg []byte, tp uint8) []byte {
-	if tp == Congratulate {
+	if tp == MessageCongratulate {
 		buf := make([]byte, 1)
 		buf[0] = 0
 		return BytesCombine(buf, BuildString(msg))

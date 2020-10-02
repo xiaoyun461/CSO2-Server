@@ -26,7 +26,7 @@ func OnJoinRoom(p *PacketData, client net.Conn) {
 	}
 	//检索玩家房间
 	if uPtr.CurrentRoomId != 0 {
-		DebugInfo(2, "Error : User", string(uPtr.Username), "try to join room but in another room !")
+		DebugInfo(2, "Error : User", string(uPtr.UserName), "try to join room but in another room !")
 		return
 	}
 	//找到对应房间
@@ -35,30 +35,30 @@ func OnJoinRoom(p *PacketData, client net.Conn) {
 		uint16(pkt.RoomId))
 	if rm == nil ||
 		rm.Id <= 0 {
-		OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, DialogBox,
+		OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageDialogBox,
 			GAME_ROOM_JOIN_FAILED_CLOSED)
-		DebugInfo(2, "Error : User", string(uPtr.Username), "try to join a null room !")
+		DebugInfo(2, "Error : User", string(uPtr.UserName), "try to join a null room !")
 		return
 	}
 	//检索密码
 	if rm.Setting.LenOfPassWd > 0 {
 		if !CompareBytes(pkt.PassWord, rm.Setting.PassWd) {
-			OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, DialogBox,
+			OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageDialogBox,
 				GAME_ROOM_JOIN_FAILED_BAD_PASSWORD)
-			DebugInfo(2, "User", string(uPtr.Username), "try to join a room with error password!")
+			DebugInfo(2, "User", string(uPtr.UserName), "try to join a room with error password!")
 			return
 		}
 	}
 	//检索房间状态
 	if rm.GetFreeSlots() <= 0 {
-		OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, DialogBox,
+		OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageDialogBox,
 			GAME_ROOM_JOIN_FAILED_FULL)
-		DebugInfo(2, "User", string(uPtr.Username), "try to join a full room !")
+		DebugInfo(2, "User", string(uPtr.UserName), "try to join a full room !")
 		return
 	}
 	//玩家加进房间
 	if !rm.JoinUser(uPtr) {
-		OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, DialogBox,
+		OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageDialogBox,
 			GAME_ROOM_JOIN_ERROR)
 		return
 	}
@@ -66,10 +66,10 @@ func OnJoinRoom(p *PacketData, client net.Conn) {
 	rst := append(BuildHeader(uPtr.CurrentSequence, PacketTypeRoom), OUTCreateAndJoin)
 	rst = BytesCombine(rst, BuildCreateAndJoin(rm))
 	SendPacket(rst, uPtr.CurrentConnection)
-	DebugInfo(2, "User", string(uPtr.Username), "joined room", string(rm.Setting.RoomName), "id", rm.Id)
+	DebugInfo(2, "User", string(uPtr.UserName), "joined room", string(rm.Setting.RoomName), "id", rm.Id)
 	rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeRoom), BuildRoomSetting(rm, 0XFFFFFFFFFFFFFFFF))
 	SendPacket(rst, client)
-	DebugInfo(2, "Sent a room setting packet to", string(uPtr.Username))
+	DebugInfo(2, "Sent a room setting packet to", string(uPtr.UserName))
 	//发送玩家状态
 	ustatus := BuildUserReadyStatus(uPtr)
 	uplayjoin := BuildPlayerJoin(uPtr)

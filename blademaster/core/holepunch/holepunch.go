@@ -67,7 +67,7 @@ func RecvHolePunchMessage(data []byte, len int, client *net.UDPAddr, server *net
 	//更新netinfo
 	index := uPtr.UpdateHolepunch(p.PortId, p.Port, uint16(client.Port))
 	if index == 0xFFFF {
-		DebugInfo(2, "Error : User", uPtr.Username, "update Holepunch failed !")
+		DebugInfo(2, "Error : User", uPtr.UserName, "update Holepunch failed !")
 		return
 	}
 	uPtr.NetInfo.ExternalIpAddress = externalIPAddress

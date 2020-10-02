@@ -55,7 +55,7 @@ func GetNewUserID() uint32 {
 func GetUserByLogin(account, passwd []byte) (*User, int) {
 	//查看是否有已经登陆的同名用户
 	for _, v := range UsersManager.Users {
-		if string(v.NexonUsername) == string(account) {
+		if string(v.UserName) == string(account) {
 			return nil, USER_ALREADY_LOGIN
 		}
 	}
@@ -83,6 +83,19 @@ func GetUserFromID(id uint32) *User {
 	}
 	if v, ok := UsersManager.Users[id]; ok {
 		return v
+	}
+	return nil
+}
+
+//通过name获取用户
+func GetUserFromIngameName(name []byte) *User {
+	if UsersManager.UserNum <= 0 {
+		return nil
+	}
+	for _, v := range UsersManager.Users {
+		if CompareBytes(v.IngameName, name) {
+			return v
+		}
 	}
 	return nil
 }

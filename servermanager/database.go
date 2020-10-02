@@ -29,7 +29,7 @@ func GetUserFromDatabase(loginname, passwd []byte) (*User, int) {
 			var inventory []byte
 			var clanID uint32
 			dblock.Lock()
-			err = query.QueryRow(loginname).Scan(&u.NexonUsername, &u.Username, &u.Password, &u.Level, &u.Rank,
+			err = query.QueryRow(loginname).Scan(&u.UserName, &u.IngameName, &u.Password, &u.Level, &u.Rank,
 				&u.RankFrame, &u.Points, &u.CurrentExp, &u.PlayedMatches, &u.Wins, &u.Kills,
 				&u.Headshots, &u.Deaths, &u.Assists, &u.Accuracy, &u.SecondsPlayed, &u.NetCafeName,
 				&u.Cash, &clanID, &u.WorldRank, &u.Mpoints, &u.TitleId, &u.UnlockedTitles, &u.Signature,
@@ -58,7 +58,7 @@ func GetUserFromDatabase(loginname, passwd []byte) (*User, int) {
 			//设置仓库
 			u.Inventory = praseInventory(inventory)
 			//设置战队...
-			DebugInfo(1, "User", string(u.Username), "data found !")
+			DebugInfo(1, "User", string(u.UserName), "data found !")
 			u.SetID(GetNewUserID())
 			u.MaxExp = LevelExp[u.Level-1]
 			return &u, USER_LOGIN_SUCCESS
@@ -189,7 +189,7 @@ func AddUserToDB(u *User) error {
 	}
 	defer stmt.Close()
 	dblock.Lock()
-	_, err = stmt.Exec(u.NexonUsername, u.Username, u.Password, u.Level, u.Rank,
+	_, err = stmt.Exec(u.UserName, u.IngameName, u.Password, u.Level, u.Rank,
 		u.RankFrame, u.Points, u.CurrentExp, u.PlayedMatches, u.Wins, u.Kills,
 		u.Headshots, u.Deaths, u.Assists, u.Accuracy, u.SecondsPlayed, u.NetCafeName,
 		u.Cash, 0, u.WorldRank, u.Mpoints, u.TitleId, u.UnlockedTitles, u.Signature,
@@ -225,7 +225,7 @@ func UpdateUserToDB(u *User) error {
 		u.Cash, 0, u.WorldRank, u.Mpoints, u.TitleId, u.UnlockedTitles, u.Signature,
 		u.BestGamemode, u.BestMap, u.UnlockedAchievements, u.Avatar, u.UnlockedAvatars,
 		u.VipLevel, u.VipXp, u.SkillHumanCurXp, u.SkillHumanPoints, u.SkillZombieCurXp,
-		u.SkillZombiePoints, InventoryToBytes(&u.Inventory), u.NexonUsername)
+		u.SkillZombiePoints, InventoryToBytes(&u.Inventory), u.UserName)
 	dblock.Unlock()
 	if err != nil {
 		return err

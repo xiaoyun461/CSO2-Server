@@ -27,7 +27,7 @@ func OnSetAvatar(p *PacketData, client net.Conn) {
 	//发送数据包
 	rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeUserInfo), BuildSetAvatarPacket(uPtr.Userid, pkt.AvatarId))
 	SendPacket(rst, uPtr.CurrentConnection)
-	DebugInfo(2, "User", string(uPtr.Username), "Set Avatar to", pkt.AvatarId)
+	DebugInfo(2, "User", string(uPtr.UserName), "Set Avatar to", pkt.AvatarId)
 	//如果是在房间内
 }
 

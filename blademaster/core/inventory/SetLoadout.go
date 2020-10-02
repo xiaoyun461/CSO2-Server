@@ -26,11 +26,11 @@ func OnFavoriteSetLoadout(p *PacketData, client net.Conn) {
 	//设置武器
 	if pkt.Loadout > 2 ||
 		pkt.WeaponSlot > 6 {
-		DebugInfo(2, "Error : User", string(uPtr.Username), "try to SetLoadout with invalid data !")
+		DebugInfo(2, "Error : User", string(uPtr.UserName), "try to SetLoadout with invalid data !")
 		return
 	}
 	uPtr.Inventory.Loadouts[pkt.Loadout].Items[pkt.WeaponSlot] = pkt.ItemId
-	DebugInfo(1, "Setting User", string(uPtr.Username), "new weapon", pkt.ItemId, "to slot", pkt.WeaponSlot, "in loadout", pkt.Loadout)
+	DebugInfo(1, "Setting User", string(uPtr.UserName), "new weapon", pkt.ItemId, "to slot", pkt.WeaponSlot, "in loadout", pkt.Loadout)
 }
 func BuildLoadout(inventory *UserInventory) []byte {
 	buf := make([]byte, 5+len(inventory.Loadouts)*96)

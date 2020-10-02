@@ -34,7 +34,7 @@ func (dest *UManager) AddUser(src *User) bool {
 		return false
 	}
 	if src.Userid <= 0 {
-		DebugInfo(2, "Usermanager Error : ID of User", (*src).Username, "is ", src.Userid)
+		DebugInfo(2, "Usermanager Error : ID of User", (*src).UserName, "is ", src.Userid)
 		return false
 	}
 	if dest.UserNum > MAXUSERNUM {
@@ -57,7 +57,7 @@ func (dest *UManager) DelUser(src *User) bool {
 		return false
 	}
 	if src.Userid <= 0 {
-		DebugInfo(2, "Usermanager Error : ID of User", (*src).Username, "is illegal !")
+		DebugInfo(2, "Usermanager Error : ID of User", (*src).UserName, "is illegal !")
 		return false
 	}
 	if dest.UserNum <= 0 {

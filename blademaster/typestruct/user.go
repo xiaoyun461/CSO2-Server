@@ -12,9 +12,10 @@ type (
 	User struct {
 		//个人信息
 		Userid               uint32
-		NexonUsername        []byte //暂时两个name使用一个值
-		Username             []byte
+		UserName             []byte //暂时两个name使用一个值
+		IngameName           []byte
 		Password             []byte
+		Gm                   uint8
 		Level                uint16
 		Rank                 uint8
 		RankFrame            uint8
@@ -119,8 +120,8 @@ func (u *User) SetUserName(loginName, username []byte) {
 	}
 	u.UserMutex.Lock()
 	defer u.UserMutex.Unlock()
-	u.NexonUsername = loginName
-	u.Username = username
+	u.UserName = loginName
+	u.IngameName = username
 }
 
 func (u *User) SetUserChannelServer(id uint8) {
@@ -373,6 +374,7 @@ func GetNewUser() User {
 		[]byte{},        //loginname
 		[]byte{},        //username,looks can change it to another name
 		[]byte{},        //passwd
+		0,               //Gm
 		1,               //level
 		0,               //rank
 		0,               //rankframe

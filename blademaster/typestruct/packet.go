@@ -81,6 +81,14 @@ type (
 		IsEnableBot uint8
 	}
 
+	InChatPacket struct {
+		Type           uint8
+		DestinationLen uint8
+		Destination    []byte
+		MessageLen     uint16
+		Message        []byte
+	}
+
 	//InNewRoomPacket 新建房间时传进来的数据包
 	InNewRoomPacket struct {
 		LenOfName  uint8
@@ -829,6 +837,22 @@ func (p *PacketData) PraseSetUserInventoryPacket(dest *InHostSetInventoryPacket)
 		return false
 	}
 	dest.UserID = ReadUint32(p.Data, &p.CurOffset)
+	return true
+}
+
+func (p *PacketData) PraseInChatPacket(dest *InChatPacket) bool {
+	//id + type + len = 4 bytes
+	if dest == nil ||
+		p.Length < 5 {
+		return false
+	}
+	dest.Type = ReadUint8(p.Data, &p.CurOffset)
+	if dest.Type == ChatDirectMessage {
+		dest.DestinationLen = ReadUint8(p.Data, &p.CurOffset)
+		dest.Destination = ReadString(p.Data, &p.CurOffset, int(dest.DestinationLen))
+	}
+	dest.MessageLen = ReadUint16(p.Data, &p.CurOffset)
+	dest.Message = ReadString(p.Data, &p.CurOffset, int(dest.MessageLen))
 	return true
 }
 

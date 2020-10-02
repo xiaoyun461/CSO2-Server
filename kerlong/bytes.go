@@ -96,8 +96,7 @@ func WriteUint64BE(b *[]byte, i uint64, offset *int) {
 //WriteString 写入字符串，包括长度
 func WriteString(dest *[]byte, src []byte, offset *int) int {
 	l := len(src)
-	(*dest)[*offset] = uint8(l)
-	(*offset)++
+	WriteUint8(dest, uint8(l), offset)
 	if l == 0 {
 		return 1
 	}
@@ -106,6 +105,20 @@ func WriteString(dest *[]byte, src []byte, offset *int) int {
 		(*offset)++
 	}
 	return l + 1
+}
+
+//WriteLongString 写入字符串，包括2字节长度
+func WriteLongString(dest *[]byte, src []byte, offset *int) int {
+	l := len(src)
+	WriteUint16(dest, uint16(l), offset)
+	if l == 0 {
+		return 2
+	}
+	for i := 0; i < l; i++ {
+		(*dest)[*offset] = src[i]
+		(*offset)++
+	}
+	return l + 2
 }
 
 //WriteUint32Array 写入uint32数组

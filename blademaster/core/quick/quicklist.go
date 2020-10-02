@@ -26,7 +26,7 @@ func OnQuickList(p *PacketData, client net.Conn) {
 	//发送房间数据,暂时发送空数据
 	rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, p.Id), BuildQuickList(pkt))
 	SendPacket(rst, uPtr.CurrentConnection)
-	DebugInfo(2, "Sent a null quickList to User", string(uPtr.Username))
+	DebugInfo(2, "Sent a null quickList to User", string(uPtr.UserName))
 }
 
 func BuildQuickList(pkt InQuickList) []byte {
