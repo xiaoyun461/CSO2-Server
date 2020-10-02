@@ -36,7 +36,7 @@ func OnChatChannelMessage(p *InChatPacket, client net.Conn) {
 			SendPacket(BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeChat), msg), v.CurrentConnection)
 		}
 	}
-	DebugInfo(2, "User", string(uPtr.IngameName), "say <", string(p.Message), "> in channel", chl.ChannelID, "channelserver", chlsrv.ServerIndex)
+	DebugInfo(1, "User", string(uPtr.IngameName), "say <", string(p.Message), "> in channel", chl.ChannelID, "channelserver", chlsrv.ServerIndex)
 }
 
 func BuildChannelMessage(sender *User, p *InChatPacket) []byte {

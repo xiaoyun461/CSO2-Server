@@ -47,7 +47,6 @@ func OnToggleReady(p *PacketData, client net.Conn) {
 	//设置新的状态
 	if uPtr.Currentstatus == UserReady {
 		uPtr.SetUserStatus(UserNotReady)
-		uPtr.SetUserIngame(false)
 		DebugInfo(2, "User", string(uPtr.UserName), "unreadied in room", string(curroom.Setting.RoomName), "id", curroom.Id)
 	} else {
 		uPtr.SetUserStatus(UserReady)

@@ -35,7 +35,7 @@ func OnChatDirectMessage(p *InChatPacket, client net.Conn) {
 	//发送数据
 	SendPacket(BuildDirectMessage(uPtr, reciver, 0, p), uPtr.CurrentConnection)
 	SendPacket(BuildDirectMessage(uPtr, reciver, 1, p), reciver.CurrentConnection)
-	DebugInfo(2, "User", string(uPtr.IngameName), "say <", string(p.Message), "> to User", string(reciver.UserName))
+	DebugInfo(1, "User", string(uPtr.IngameName), "say <", string(p.Message), "> to User", string(reciver.UserName))
 }
 
 func BuildDirectMessage(sender *User, reciver *User, isReciver uint8, p *InChatPacket) []byte {

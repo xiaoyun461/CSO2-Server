@@ -16,11 +16,11 @@ func OnChat(p *PacketData, client net.Conn) {
 		case ChatChannel:
 			OnChatChannelMessage(&pkt, client)
 		case ChatRoom:
-
+			OnChatRoomMessage(&pkt, client)
 		case ChatIngameGlobal:
-
+			OnChatGlobalMessage(&pkt, client)
 		case ChatIngameTeam:
-
+			OnChatTeamMessage(&pkt, client)
 		default:
 			DebugInfo(2, "Unknown chat packet", pkt.Type, "from", client.RemoteAddr().String())
 		}
