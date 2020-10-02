@@ -158,7 +158,7 @@ func CreateRoom(pkt InNewRoomPacket, u *User) Room {
 		rm.Id = 0
 		return rm
 	}
-	chl := GetChannelWithID(u.GetUserChannelID(), *srv)
+	chl := GetChannelWithID(u.GetUserChannelID(), srv)
 	if chl.ChannelID <= 0 {
 		rm.Id = 0
 		return rm

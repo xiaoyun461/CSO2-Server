@@ -48,7 +48,10 @@ func GetNewChannelID(chlsrv ChannelServer) uint8 {
 }
 
 //通过ID获取频道
-func GetChannelWithID(id uint8, chlsrv ChannelServer) *ChannelInfo {
+func GetChannelWithID(id uint8, chlsrv *ChannelServer) *ChannelInfo {
+	if chlsrv == nil {
+		return nil
+	}
 	count := chlsrv.ChannelCount
 	for i := 0; i < int(count); i++ {
 		if chlsrv.Channels[i] == nil {
@@ -68,7 +71,7 @@ func AddChannelRoom(room *Room, chlid uint8, chlsrvid uint8) bool {
 		DebugInfo(2, "Add room to a null channelServer!")
 		return false
 	}
-	chl := GetChannelWithID(chlid, *chlsrv)
+	chl := GetChannelWithID(chlid, chlsrv)
 	if chl.ChannelID <= 0 {
 		DebugInfo(2, "Add room to a null channel!")
 		return false
@@ -109,7 +112,7 @@ func DelChannelRoom(roomid uint16, chlid uint8, chlsrvid uint8) bool {
 		DebugInfo(2, "Remove room to a null channelServer!")
 		return false
 	}
-	chl := GetChannelWithID(chlid, *chlsrv)
+	chl := GetChannelWithID(chlid, chlsrv)
 	if chl.ChannelID <= 0 {
 		DebugInfo(2, "Remove room to a null channel!")
 		return false
@@ -164,7 +167,7 @@ func GetRoomFromID(chlsrvID uint8, chlID uint8, roomID uint16) *Room {
 	if chlsrv.ServerIndex <= 0 {
 		return nil
 	}
-	chl := GetChannelWithID(chlID, *chlsrv)
+	chl := GetChannelWithID(chlID, chlsrv)
 	if chl.ChannelID <= 0 || chl.RoomNum <= 0 {
 		return nil
 	}

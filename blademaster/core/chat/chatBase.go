@@ -14,7 +14,7 @@ func OnChat(p *PacketData, client net.Conn) {
 		case ChatDirectMessage:
 			OnChatDirectMessage(&pkt, client)
 		case ChatChannel:
-
+			OnChatChannelMessage(&pkt, client)
 		case ChatRoom:
 
 		case ChatIngameGlobal:

@@ -1,7 +1,6 @@
 package chat
 
 import (
-	"log"
 	"net"
 
 	. "github.com/KouKouChan/CSO2-Server/blademaster/typestruct"
@@ -20,22 +19,23 @@ func OnChatDirectMessage(p *InChatPacket, client net.Conn) {
 	uPtr := GetUserFromConnection(client)
 	if uPtr == nil ||
 		uPtr.Userid <= 0 {
-		log.Println("Error : Client from", client.RemoteAddr().String(), "sent DirectMessage but not in server !")
+		DebugInfo(2, "Error : Client from", client.RemoteAddr().String(), "sent DirectMessage but not in server !")
 		return
 	}
 	if CompareBytes(uPtr.IngameName, p.Destination) {
-		log.Println("Error : User", string(uPtr.UserName), "sent DirectMessage to self !")
+		DebugInfo(2, "Error : User", string(uPtr.UserName), "sent DirectMessage to self !")
 		return
 	}
 	reciver := GetUserFromIngameName(p.Destination)
 	if reciver == nil ||
 		reciver.Userid <= 0 {
-		log.Println("Error : User", string(uPtr.UserName), "sent DirectMessage but reciver not in server !")
+		DebugInfo(2, "Error : User", string(uPtr.UserName), "sent DirectMessage but reciver not in server !")
 		return
 	}
 	//发送数据
 	SendPacket(BuildDirectMessage(uPtr, reciver, 0, p), uPtr.CurrentConnection)
 	SendPacket(BuildDirectMessage(uPtr, reciver, 1, p), reciver.CurrentConnection)
+	DebugInfo(2, "User", string(uPtr.IngameName), "say <", string(p.Message), "> to User", string(reciver.UserName))
 }
 
 func BuildDirectMessage(sender *User, reciver *User, isReciver uint8, p *InChatPacket) []byte {
