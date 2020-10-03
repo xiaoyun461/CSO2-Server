@@ -20,6 +20,8 @@ CSOL2 服务器 v0.3.10
 
 如果大家有什么建议或问题，欢迎提出。
 
+欢迎大家帮忙本地化文件，具体见下方第七部分。
+
 ### 二、项目计划
 
     1.先实现基本的游戏游玩功能和联机功能 √
@@ -52,7 +54,17 @@ CSOL2 服务器 v0.3.10
     9.房间ID和房间NUM在多频道下可能冲突（虽然目前是单频道）
     10.竞技模式下默认添加电脑
 
-### 七、客户端下载
+### 七、部分数据本地化方法
+
+```
+1.打开server.conf
+2.修改LocaleFile选项，将其改为你的语种的文件名，比如 zh-cn.ini
+3.进入 CSO2-Server\locales\ 目录
+4.创建相同文件名文件，比如 zh-cn.ini
+5.根据 zh-cn.ini 中的内容相应修改
+```
+
+### 八、客户端下载
 
   [点击2018韩服端下载](https://pan.baidu.com/s/1NGHisLeTB1nXH4zCtR6FSA) 提取码：5vca  
 
@@ -62,7 +74,7 @@ CSOL2 服务器 v0.3.10
 
   [单独启动器下载，如果你已有客户端](https://pan.baidu.com/s/1QGyRmjw24eJ5ycrFjorv_g)  提取码：amys
 
-### 八、使用方法
+### 九、使用方法
 
 1.需要有CSOL2客户端，同时使用第三方启动器
 
@@ -87,7 +99,7 @@ START ./bin/launcher.exe -masterip IP地址 -enablecustom -username 用户名 -p
 - 如果你想开启邮箱注册，那么你需要一个邮箱账号并且申请到了密钥，将密钥填入配置文件，同时开启EnableMail。
 - 如果你是和别人联机玩，那么即使你的电脑运行着服务端也**不能**在bat文件里填127.0.0.1，不然对方无法通过你的ip连接你。
 
-### 九、自定义文件方法
+### 十、自定义文件方法
 
 1.下载CSOL2解包工具，[点击这里下载](https://pan.baidu.com/s/14q1SoIdHwp1casMWG2OS-w) 提取码：41bs
 
@@ -97,7 +109,7 @@ START ./bin/launcher.exe -masterip IP地址 -enablecustom -username 用户名 -p
 
 4.将文件放入csol2目录的custom文件夹下，打开游戏
 
-### 十、Docker下使用方法
+### 十一、Docker下使用方法
 
 1.首先你需要拥有Docker,请下载并安装Docker,同时配置好Docker,比如Docker源
 
@@ -115,7 +127,7 @@ docker run -p 30001:30001 -p 30002:30002 koukouchan/cso2-server:latest
 
 4.接下来打开客户端，连接服务器
 
-### 十一、编译环境
+### 十二、编译环境
 
 *Go 1.14.2*
 
@@ -123,7 +135,7 @@ docker run -p 30001:30001 -p 30002:30002 koukouchan/cso2-server:latest
 
 貌似建立互联网服务器需要双方玩家都能内网穿透，实测局域网能够连接，互联网无法房间内加入主机，可能需要架设虚拟局域网。
 
-### 十二、编译方法
+### 十三、编译方法
 
 ```shell
 1. 在shell中执行 go get github.com/KouKouChan/CSO2-Server
@@ -132,7 +144,7 @@ docker run -p 30001:30001 -p 30002:30002 koukouchan/cso2-server:latest
 4. 运行生成的可执行文件即可
 ```
 
-### 十三、Docker下编译方法
+### 十四、Docker下编译方法
 
 1.首先你需要拥有Docker,请下载并安装Docker,同时配置好Docker,比如Docker源
 
@@ -152,7 +164,7 @@ docker run -p 30001:30001 -p 30002:30002 cso2-server
 
 *声明：Counter-Strike Online 2 归 NEXON 所有 ，本程序仅用于学习之用*
 
-### 十四、图片
+### 十五、图片
 
 ![Image](./photos/main.png)
 
