@@ -16,14 +16,14 @@ DataBase:SQLite
 
 ***Based on [cso2-master-server](https://github.com/L-Leite/cso2-master-server) by l-leite.***
 
-***Localization files are welcome！See part 7***.
+***Localization files are welcome！See part 3.***
 
 ### 0x02 Plan
 
     1. Basic game play √
     2. Refactoring code ...
 
-### 0x03 Play
+### 0x03 Localize
 
 ```
 1. Create a localization file in CSO2-Server\locales\ folder,such as en-us.ini
@@ -39,7 +39,7 @@ DataBase:SQLite
     4. Start game server and use bat file to launch your game.
     5. Have fun!
 
-attention!
+**Attention**!
 
 - If you want to enable registration , you should modify server.conf file , and set EnableRegister to 1 , and you must set your email smtp server and your email code.then you can open localhost:1314 with your browser.
 
