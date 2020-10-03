@@ -183,7 +183,7 @@ func TCPServer(server net.Listener) {
 	for {
 		client, err := server.Accept()
 		if err != nil {
-			DebugInfo(2, "Server Accept data error !\n")
+			DebugInfo(2, "Server accept data error !\n")
 			continue
 		}
 		DebugInfo(2, "Server accept a new connection request at", client.RemoteAddr().String())

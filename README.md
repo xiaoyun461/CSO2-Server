@@ -1,6 +1,7 @@
 ## Counter-Strike Online 2 Server 
 
 [![Build status](https://ci.appveyor.com/api/projects/status/a4pj1il9li5s08k5?svg=true)](https://ci.appveyor.com/project/KouKouChan/cso2-server)
+[![](https://img.shields.io/badge/license-MIT-green)](./blob/master/LICENSE)
 
 [English](./README.en.md)
 
