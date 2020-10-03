@@ -35,7 +35,7 @@ import (
 
 var (
 	//SERVERVERSION 版本号
-	SERVERVERSION = "v0.3.9"
+	SERVERVERSION = "v0.3.10"
 	Redis         redis.Conn
 )
 
@@ -88,6 +88,11 @@ func main() {
 
 	//read configure
 	Conf.InitConf(path)
+
+	//read locales
+	if Locales.InitLocales(path) {
+		SetLocales()
+	}
 
 	//set val
 	Level = Conf.DebugLevel

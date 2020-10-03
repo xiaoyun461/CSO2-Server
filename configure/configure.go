@@ -3,11 +3,8 @@ package configure
 import (
 	"fmt"
 
+	. "github.com/KouKouChan/CSO2-Server/blademaster/typestruct"
 	. "github.com/KouKouChan/CSO2-Server/kerlong"
-)
-
-var (
-	Conf CSO2Conf
 )
 
 type CSO2Conf struct {
@@ -31,16 +28,32 @@ type CSO2Conf struct {
 	REGEmail         string
 	REGPassWord      string
 	REGSMTPaddr      string
+	LocaleFile       string
 }
+
+type CSO2Locales struct {
+	GAME_ROOM_LEAVE_EARLY      string
+	GAME_SERVER_ERROR          string
+	GAME_LOGIN_ALREADY         string
+	GAME_LOGIN_ERROR           string
+	GAME_ROOM_COUNT_MODE_ERROR string
+	GAME_ROOM_JOIN_ERROR       string
+}
+
+var (
+	Conf    CSO2Conf
+	Locales CSO2Locales
+)
 
 func (conf *CSO2Conf) InitConf(path string) {
 	if conf == nil {
 		return
 	}
+	fmt.Printf("Reading configure file ...\n")
 	ini_parser := IniParser{}
 	file := path + "\\server.conf"
 	if err := ini_parser.LoadIni(file); err != nil {
-		fmt.Printf("try load config file error[%s]\n", err.Error())
+		fmt.Printf("Loading config file error[%s]\n", err.Error())
 		fmt.Printf("Using default data ...\n")
 		conf.EnableRedis = 0
 		conf.EnableDataBase = 1
@@ -58,6 +71,7 @@ func (conf *CSO2Conf) InitConf(path string) {
 		conf.EnableConsole = 0
 		conf.EnableRegister = 1
 		conf.EnableMail = 0
+		Conf.LocaleFile = "zh-cn.ini"
 		return
 	}
 	conf.EnableRedis = ini_parser.IniGetUint32("Database", "EnableRedis")
@@ -86,4 +100,36 @@ func (conf *CSO2Conf) InitConf(path string) {
 	conf.REGEmail = ini_parser.IniGetString("Register", "REGEmail")
 	conf.REGPassWord = ini_parser.IniGetString("Register", "REGPassWord")
 	conf.REGSMTPaddr = ini_parser.IniGetString("Register", "REGSMTPaddr")
+	Conf.LocaleFile = ini_parser.IniGetString("Locale", "LocaleFile")
+}
+
+func (locales *CSO2Locales) InitLocales(path string) bool {
+	if locales == nil {
+		return false
+	}
+	fmt.Printf("Reading locale < " + Conf.LocaleFile + " > ...\n")
+	ini_parser := IniParser{}
+	file := path + "\\CSO2-Server\\locales\\" + Conf.LocaleFile
+	if err := ini_parser.LoadIni(file); err != nil {
+		fmt.Printf("Loading locale file error[%s]\n", err.Error())
+		fmt.Printf("Using default data ...\n")
+		return false
+	}
+	locales.GAME_ROOM_LEAVE_EARLY = ini_parser.IniGetString("System", "GAME_ROOM_LEAVE_EARLY")
+	locales.GAME_SERVER_ERROR = ini_parser.IniGetString("System", "GAME_SERVER_ERROR")
+	locales.GAME_LOGIN_ALREADY = ini_parser.IniGetString("System", "GAME_LOGIN_ALREADY")
+	locales.GAME_LOGIN_ERROR = ini_parser.IniGetString("System", "GAME_LOGIN_ERROR")
+	locales.GAME_ROOM_COUNT_MODE_ERROR = ini_parser.IniGetString("System", "GAME_ROOM_COUNT_MODE_ERROR")
+	locales.GAME_ROOM_JOIN_ERROR = ini_parser.IniGetString("System", "GAME_ROOM_JOIN_ERROR")
+	return true
+}
+
+func SetLocales() {
+	fmt.Printf("Setting locale < " + Conf.LocaleFile + " > ...\n")
+	GAME_ROOM_LEAVE_EARLY = []byte(Locales.GAME_ROOM_LEAVE_EARLY)
+	GAME_SERVER_ERROR = []byte(Locales.GAME_SERVER_ERROR)
+	GAME_LOGIN_ALREADY = []byte(Locales.GAME_LOGIN_ALREADY)
+	GAME_LOGIN_ERROR = []byte(Locales.GAME_LOGIN_ERROR)
+	GAME_ROOM_COUNT_MODE_ERROR = []byte(Locales.GAME_ROOM_COUNT_MODE_ERROR)
+	GAME_ROOM_JOIN_ERROR = []byte(Locales.GAME_ROOM_JOIN_ERROR)
 }
