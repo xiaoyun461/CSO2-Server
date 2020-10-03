@@ -4,6 +4,7 @@ import (
 	"net"
 
 	. "github.com/KouKouChan/CSO2-Server/blademaster/typestruct"
+	. "github.com/KouKouChan/CSO2-Server/kerlong"
 	. "github.com/KouKouChan/CSO2-Server/verbose"
 )
 
@@ -27,4 +28,22 @@ func OnChat(p *PacketData, client net.Conn) {
 	} else {
 		DebugInfo(2, "Error : Recived a illegal host packet from", client.RemoteAddr().String())
 	}
+}
+
+func BuildChatMessage(sender *User, p *InChatPacket, chattype uint8) []byte {
+	temp := make([]byte, 10+len(sender.IngameName)+int(p.MessageLen))
+	offset := 0
+	WriteUint8(&temp, chattype, &offset)
+	WriteUint8(&temp, sender.Gm, &offset)
+	WriteString(&temp, sender.IngameName, &offset)
+
+	if sender.IsVIP() {
+		WriteUint8(&temp, 1, &offset)
+	} else {
+		WriteUint8(&temp, 0, &offset)
+	}
+	WriteUint8(&temp, sender.VipLevel, &offset)
+
+	WriteLongString(&temp, p.Message, &offset)
+	return temp[:offset]
 }

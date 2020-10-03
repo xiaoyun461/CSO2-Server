@@ -29,7 +29,7 @@ func OnChatChannelMessage(p *InChatPacket, client net.Conn) {
 		return
 	}
 	//发送数据
-	msg := BuildChannelMessage(uPtr, p)
+	msg := BuildChatMessage(uPtr, p, ChatChannel)
 	for _, v := range UsersManager.Users {
 		if !v.CurrentIsIngame && v.GetUserChannelServerID() == chlsrv.ServerIndex && v.GetUserChannelID() == chl.ChannelID {
 			//DebugInfo(2, v.Userid)
@@ -37,23 +37,4 @@ func OnChatChannelMessage(p *InChatPacket, client net.Conn) {
 		}
 	}
 	DebugInfo(1, "User", string(uPtr.IngameName), "say <", string(p.Message), "> in channel", chl.ChannelID, "channelserver", chlsrv.ServerIndex)
-}
-
-func BuildChannelMessage(sender *User, p *InChatPacket) []byte {
-	temp := make([]byte, 10+len(sender.IngameName)+int(p.MessageLen))
-	offset := 0
-	WriteUint8(&temp, ChatChannel, &offset)
-	WriteUint8(&temp, sender.Gm, &offset)
-	WriteString(&temp, sender.IngameName, &offset)
-
-	if sender.IsVIP() {
-		WriteUint8(&temp, 1, &offset)
-	} else {
-		WriteUint8(&temp, 0, &offset)
-	}
-	WriteUint8(&temp, sender.VipLevel, &offset)
-
-	WriteLongString(&temp, p.Message, &offset)
-	return temp[:offset]
-
 }

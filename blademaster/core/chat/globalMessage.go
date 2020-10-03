@@ -32,30 +32,11 @@ func OnChatGlobalMessage(p *InChatPacket, client net.Conn) {
 		return
 	}
 	//发送数据
-	msg := BuildGlobalMessage(uPtr, p)
+	msg := BuildChatMessage(uPtr, p, ChatIngameGlobal)
 	for _, v := range rm.Users {
 		if v.CurrentIsIngame {
 			SendPacket(BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeChat), msg), v.CurrentConnection)
 		}
 	}
 	DebugInfo(1, "User", string(uPtr.IngameName), "say global message <", string(p.Message), "> in room id", rm.Id)
-}
-
-func BuildGlobalMessage(sender *User, p *InChatPacket) []byte {
-	temp := make([]byte, 10+len(sender.IngameName)+int(p.MessageLen))
-	offset := 0
-	WriteUint8(&temp, ChatIngameGlobal, &offset)
-	WriteUint8(&temp, sender.Gm, &offset)
-	WriteString(&temp, sender.IngameName, &offset)
-
-	if sender.IsVIP() {
-		WriteUint8(&temp, 1, &offset)
-	} else {
-		WriteUint8(&temp, 0, &offset)
-	}
-	WriteUint8(&temp, sender.VipLevel, &offset)
-
-	WriteLongString(&temp, p.Message, &offset)
-	return temp[:offset]
-
 }
