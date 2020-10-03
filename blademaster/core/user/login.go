@@ -2,6 +2,7 @@ package user
 
 import (
 	"net"
+	"strings"
 
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/inventory"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/message"
@@ -13,6 +14,12 @@ import (
 )
 
 func OnLogin(seq *uint8, dataPacket *PacketData, client net.Conn) {
+	clientStr := strings.Split(client.RemoteAddr().String(), ":")[0]
+	if IsLoginTenth(clientStr) {
+		OnSendMessage(seq, client, MessageDialogBox, GAME_LOGIN_TENTH_FAILED)
+		return
+	}
+
 	var pkt InLoginPacket
 	if !dataPacket.PraseLoginPacket(&pkt) {
 		DebugInfo(2, "Error : User from", client.RemoteAddr().String(), "Sent a illegal login packet !")
@@ -23,7 +30,17 @@ func OnLogin(seq *uint8, dataPacket *PacketData, client net.Conn) {
 	switch result {
 	case USER_PASSWD_ERROR:
 		DebugInfo(2, "Error : User", string(pkt.NexonUsername), "from", client.RemoteAddr().String(), "login failed with error password !")
-		OnSendMessage(seq, client, MessageDialogBox, GAME_LOGIN_BAD_PASSWORD)
+		if IsLoginTenth(clientStr) {
+			OnSendMessage(seq, client, MessageDialogBox, GAME_LOGIN_TENTH_FAILED)
+		} else {
+			CountFailLogin(clientStr)
+			if IsLoginTenth(clientStr) {
+				OnSendMessage(seq, client, MessageDialogBox, GAME_LOGIN_TENTH_FAILED)
+				CountTenMinutes(clientStr)
+			} else {
+				OnSendMessage(seq, client, MessageDialogBox, GAME_LOGIN_BAD_PASSWORD)
+			}
+		}
 		return
 	case USER_ALREADY_LOGIN:
 		DebugInfo(2, "Error : User", string(pkt.NexonUsername), "from", client.RemoteAddr().String(), "already logged in !")
@@ -31,7 +48,17 @@ func OnLogin(seq *uint8, dataPacket *PacketData, client net.Conn) {
 		return
 	case USER_NOT_FOUND:
 		DebugInfo(2, "Error : User", string(pkt.NexonUsername), "from", client.RemoteAddr().String(), "not registered !")
-		OnSendMessage(seq, client, MessageDialogBox, GAME_LOGIN_BAD_USERNAME)
+		if IsLoginTenth(clientStr) {
+			OnSendMessage(seq, client, MessageDialogBox, GAME_LOGIN_TENTH_FAILED)
+		} else {
+			CountFailLogin(clientStr)
+			if IsLoginTenth(clientStr) {
+				OnSendMessage(seq, client, MessageDialogBox, GAME_LOGIN_TENTH_FAILED)
+				CountTenMinutes(clientStr)
+			} else {
+				OnSendMessage(seq, client, MessageDialogBox, GAME_LOGIN_BAD_USERNAME)
+			}
+		}
 		return
 	case USER_UNKOWN_ERROR:
 		DebugInfo(2, "Error : User", string(pkt.NexonUsername), "from", client.RemoteAddr().String(), "login but suffered a error !")
@@ -40,6 +67,7 @@ func OnLogin(seq *uint8, dataPacket *PacketData, client net.Conn) {
 	default:
 	}
 
+	ClearCount(clientStr)
 	u.CurrentConnection = client
 	u.CurrentSequence = seq
 

@@ -2,6 +2,8 @@ package servermanager
 
 import (
 	"net"
+	"sync"
+	"time"
 
 	. "github.com/KouKouChan/CSO2-Server/blademaster/typestruct"
 	. "github.com/KouKouChan/CSO2-Server/kerlong"
@@ -14,6 +16,11 @@ const (
 	USER_NOT_FOUND     = 2
 	USER_PASSWD_ERROR  = 3
 	USER_UNKOWN_ERROR  = 4
+)
+
+var (
+	LoginCounter     = map[string]int{}
+	LoginCounterLock sync.Mutex
 )
 
 func DelUserWithConn(con net.Conn) bool {
@@ -98,4 +105,40 @@ func GetUserFromIngameName(name []byte) *User {
 		}
 	}
 	return nil
+}
+
+func CountFailLogin(client string) {
+	LoginCounterLock.Lock()
+	defer LoginCounterLock.Unlock()
+	if _, ok := LoginCounter[client]; ok {
+		LoginCounter[client]++
+	} else {
+		LoginCounter[client] = 1
+	}
+}
+
+func IsLoginTenth(client string) bool {
+	LoginCounterLock.Lock()
+	defer LoginCounterLock.Unlock()
+	if _, ok := LoginCounter[client]; ok && LoginCounter[client] >= 10 {
+		return true
+	}
+	return false
+}
+
+func CountTenMinutes(client string) {
+	timer := time.NewTimer(10 * time.Minute)
+	<-timer.C
+
+	LoginCounterLock.Lock()
+	defer LoginCounterLock.Unlock()
+
+	delete(LoginCounter, client)
+}
+
+func ClearCount(client string) {
+	LoginCounterLock.Lock()
+	defer LoginCounterLock.Unlock()
+
+	delete(LoginCounter, client)
 }
