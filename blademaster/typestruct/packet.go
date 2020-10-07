@@ -704,12 +704,14 @@ func (p *PacketData) PraseSetTitlePacket(dest *InSetTitlePacket) bool {
 }
 
 func (p *PacketData) PraseSetCampaignPacket(dest *InSetCampaignPacket) bool {
-	//id + type + PacketType + campaign = 5 bytes
-	if p.Length < 5 {
+	//id + type + PacketType  = 3 bytes
+	if p.Length < 3 {
 		return false
 	}
 	dest.PacketType = ReadUint8(p.Data, &p.CurOffset)
-	dest.CampaignId = ReadUint16(p.Data, &p.CurOffset)
+	if dest.PacketType == 1 { //完成
+		dest.CampaignId = ReadUint16(p.Data, &p.CurOffset)
+	}
 	return true
 }
 

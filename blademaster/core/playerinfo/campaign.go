@@ -33,10 +33,11 @@ func OnSetCampaign(p *PacketData, client net.Conn) {
 		DebugInfo(1, "User", string(uPtr.UserName), "Started Campaign")
 	case finished:
 		if isMissionCampaignIdValid(pkt.CampaignId) {
+			uPtr.UpdateCampaign(pkt.CampaignId)
 			//发送数据包
 			rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeUserInfo), BuildUserInfo(0x1000, NewUserInfo(uPtr), uPtr.Userid, true))
 			SendPacket(rst, uPtr.CurrentConnection)
-			DebugInfo(1, "User", string(uPtr.UserName), "Updated Campaign ", pkt.CampaignId)
+			DebugInfo(1, "User", string(uPtr.UserName), "finished Campaign ", pkt.CampaignId)
 		} else {
 			DebugInfo(2, "User", string(uPtr.UserName), "sent a invalid SetCampaign packet id", pkt.CampaignId)
 		}

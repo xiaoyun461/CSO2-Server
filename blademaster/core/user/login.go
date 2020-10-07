@@ -86,9 +86,6 @@ func OnLogin(seq *uint8, dataPacket *PacketData, client net.Conn) {
 	rst = BytesCombine(BuildHeader(u.CurrentSequence, PacketTypeUserInfo), BuildUserInfo(0XFFFFFFFF, NewUserInfo(u), u.Userid, true))
 	SendPacket(rst, u.CurrentConnection)
 
-	//ServerList部分
-	//OnServerList(u.CurrentConnection)
-
 	//Inventory部分
 	if Conf.UnlockAllWeapons == 0 {
 		rst = BytesCombine(BuildHeader(u.CurrentSequence, PacketTypeInventory_Create),
@@ -116,6 +113,10 @@ func OnLogin(seq *uint8, dataPacket *PacketData, client net.Conn) {
 	//achievement
 
 	//friends
+
+	//ServerList部分
+	OnServerList(u.CurrentConnection)
+
 }
 
 //BuildUserStart 返回结构
