@@ -39,7 +39,7 @@ func OnRoomRequest(p *PacketData, client net.Conn) {
 			//log.Println("Recived a begin start game request from", client.RemoteAddr().String())
 			OnGameStartCountdown(p, client)
 		default:
-			DebugInfo(2, "Unknown room packet", pkt.InRoomType, "from", client.RemoteAddr().String())
+			DebugInfo(2, "Unknown room packet", pkt.InRoomType, "from", client.RemoteAddr().String(), p.Data)
 		}
 	} else {
 		DebugInfo(2, "Error : Recived a illegal room packet from", client.RemoteAddr().String())

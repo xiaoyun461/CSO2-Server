@@ -1,4 +1,4 @@
-version: 0.3.10-{build}
+version: 0.3.11-{build}
 pull_requests:
   do_not_increment_build_number: true
 image: Visual Studio 2015
@@ -24,19 +24,19 @@ test_script:
 
     cd ..
 
-    7z a .\CSO2-Server-0.3.10-Win64.7z .\CSO2-Server.exe
+    7z a .\CSO2-Server-0.3.11-Win64.7z .\CSO2-Server.exe
 
-    7z a .\CSO2-Server-0.3.10-Win64.7z .\server.conf
+    7z a .\CSO2-Server-0.3.11-Win64.7z .\server.conf
 
-    7z a .\CSO2-Server-0.3.10-Win64.7z .\cso2.db
+    7z a .\CSO2-Server-0.3.11-Win64.7z .\cso2.db
 
-    7z a .\CSO2-Server-0.3.10-Win64.7z CSO2-Server\assert\bg.jpg
+    7z a .\CSO2-Server-0.3.11-Win64.7z CSO2-Server\assert\bg.jpg
 
-    7z a .\CSO2-Server-0.3.10-Win64.7z CSO2-Server\assert\register.html
+    7z a .\CSO2-Server-0.3.11-Win64.7z CSO2-Server\assert\register.html
 
-    7z a .\CSO2-Server-0.3.10-Win64.7z CSO2-Server\locales\
+    7z a .\CSO2-Server-0.3.11-Win64.7z CSO2-Server\locales\
 
-    mv .\CSO2-Server-0.3.10-Win64.7z .\CSO2-Server\
+    mv .\CSO2-Server-0.3.11-Win64.7z .\CSO2-Server\
 
     cd .\CSO2-Server\
 artifacts:

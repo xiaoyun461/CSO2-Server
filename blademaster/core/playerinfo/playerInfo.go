@@ -8,6 +8,7 @@ import (
 )
 
 const (
+	SetCampaign  = 4
 	SetSignature = 5
 	SetTitle     = 6
 	SetAvatar    = 7
@@ -23,6 +24,8 @@ func OnPlayerInfo(p *PacketData, client net.Conn) {
 			OnSetTitle(p, client)
 		case SetAvatar:
 			OnSetAvatar(p, client)
+		case SetCampaign:
+			OnSetCampaign(p, client)
 		default:
 			DebugInfo(2, "Unknown PlayerInfo packet", pkt.InfoType, "from", client.RemoteAddr().String())
 		}

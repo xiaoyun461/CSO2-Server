@@ -10,6 +10,7 @@ import (
 	"syscall"
 
 	. "github.com/KouKouChan/CSO2-Server/blademaster/Exp"
+	. "github.com/KouKouChan/CSO2-Server/blademaster/core/achievement"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/chat"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/holepunch"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/host"
@@ -35,7 +36,7 @@ import (
 
 var (
 	//SERVERVERSION 版本号
-	SERVERVERSION = "v0.3.10"
+	SERVERVERSION = "v0.3.11"
 	Redis         redis.Conn
 )
 
@@ -265,6 +266,10 @@ func RecvMessage(client net.Conn) {
 			OnPlayerInfo(&dataPacket, client)
 		case PacketTypeChat:
 			OnChat(&dataPacket, client)
+		case PacketTypeAchievement:
+			OnAchievement(&dataPacket, client)
+		//case PacketTypeAutomatch:
+		//case PacketTypeFriend:
 		default:
 			DebugInfo(2, "Unknown packet", dataPacket.Id, "from", client.RemoteAddr().String())
 		}

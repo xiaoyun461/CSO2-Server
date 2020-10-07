@@ -26,7 +26,7 @@ func OnChat(p *PacketData, client net.Conn) {
 			DebugInfo(2, "Unknown chat packet", pkt.Type, "from", client.RemoteAddr().String())
 		}
 	} else {
-		DebugInfo(2, "Error : Recived a illegal host packet from", client.RemoteAddr().String())
+		DebugInfo(2, "Error : Recived a illegal chat packet from", client.RemoteAddr().String())
 	}
 }
 

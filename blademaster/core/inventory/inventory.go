@@ -70,8 +70,19 @@ func BuildUnlockReply() []byte {
 		WriteUint8(&buf, v.CostType, &offset)
 		WriteUint32(&buf, v.Price, &offset)
 	}
-	WriteUint16(&buf, 0, &offset) //kill num of weapons
-	WriteUint16(&buf, 0, &offset) //unk
+	WriteUint16(&buf, 1, &offset) //num of weapons
+
+	WriteUint32(&buf, 2, &offset) //前置
+	WriteUint32(&buf, 1, &offset) //当前
+	WriteUint32(&buf, 2, &offset) //杀敌数
+	WriteUint16(&buf, 1, &offset)
+	WriteUint16(&buf, 1, &offset)
+	WriteUint16(&buf, 1, &offset)
+
+	WriteUint16(&buf, 1, &offset) //unk
+
+	WriteUint32(&buf, 1, &offset)
+
 	return buf[:offset]
 }
 

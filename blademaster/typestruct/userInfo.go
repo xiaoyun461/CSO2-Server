@@ -53,7 +53,7 @@ type UserInfo struct {
 	worldRank            uint32
 	unk42                uint32
 	unk43                uint8
-	unk44                uint16
+	campaign             uint16
 	unk45                uint32
 	mPoints              uint32
 	unk47                uint64
@@ -182,12 +182,11 @@ func BuildUserInfo(flags uint32, info UserInfo, id uint32, needID bool) []byte {
 	}
 	if flags&0x1000 != 0 {
 		WriteUint8(&infobuf, info.unk43, &offset)
-		WriteUint16(&infobuf, info.unk44, &offset)
+		WriteUint16(&infobuf, info.campaign, &offset)
 		WriteUint32(&infobuf, info.unk45, &offset)
 
 	}
 	if flags&0x2000 != 0 {
-
 		WriteUint32(&infobuf, info.mPoints, &offset)
 		WriteUint64(&infobuf, info.unk47, &offset)
 	}
@@ -331,7 +330,7 @@ func NewUserInfo(u *User) UserInfo {
 		u.WorldRank,
 		0,
 		0,
-		0xFF,
+		u.Campaign,
 		0,
 		u.Mpoints,
 		0,

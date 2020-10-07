@@ -89,6 +89,14 @@ type (
 		Message        []byte
 	}
 
+	InAchievementPacket struct {
+		Type uint8
+	}
+
+	InAchievementCampaignPacket struct {
+		CampaignId uint16
+	}
+
 	//InNewRoomPacket 新建房间时传进来的数据包
 	InNewRoomPacket struct {
 		LenOfName  uint8
@@ -202,6 +210,11 @@ type (
 		TitleId uint16
 	}
 
+	InSetCampaignPacket struct {
+		PacketType uint8
+		CampaignId uint16
+	}
+
 	InOptionPacket struct {
 		OptionPacketType uint8
 	}
@@ -281,6 +294,24 @@ type (
 		Unk00 uint8
 		Unk01 uint8
 		Unk02 uint8
+	}
+	//OutAchievementCampaign from l-leite
+	OutAchievementCampaign struct {
+		Unk00        uint16
+		Unk01        uint32
+		RewardTitle  uint16
+		RewardIcon   uint16
+		RewardPoints uint32
+		RewardXp     uint32
+		NumOfItems   uint8
+		Items        []OutAchievementCampaignItems
+		Unk02        uint16
+	}
+	//OutAchievementCampaignItems from l-leite
+	OutAchievementCampaignItems struct {
+		ItemId      uint32
+		Ammount     uint16
+		TimeLimited uint16 // 1 and 0
 	}
 )
 
@@ -672,6 +703,16 @@ func (p *PacketData) PraseSetTitlePacket(dest *InSetTitlePacket) bool {
 	return true
 }
 
+func (p *PacketData) PraseSetCampaignPacket(dest *InSetCampaignPacket) bool {
+	//id + type + PacketType + campaign = 5 bytes
+	if p.Length < 5 {
+		return false
+	}
+	dest.PacketType = ReadUint8(p.Data, &p.CurOffset)
+	dest.CampaignId = ReadUint16(p.Data, &p.CurOffset)
+	return true
+}
+
 func (p *PacketData) PraseOptionPacket(dest *InOptionPacket) bool {
 	//id + type = 2 bytes
 	if p.Length < 2 {
@@ -853,6 +894,26 @@ func (p *PacketData) PraseInChatPacket(dest *InChatPacket) bool {
 	}
 	dest.MessageLen = ReadUint16(p.Data, &p.CurOffset)
 	dest.Message = ReadString(p.Data, &p.CurOffset, int(dest.MessageLen))
+	return true
+}
+
+func (p *PacketData) PraseInAchievementPacket(dest *InAchievementPacket) bool {
+	//id + type = 2 bytes
+	if dest == nil ||
+		p.Length < 2 {
+		return false
+	}
+	dest.Type = ReadUint8(p.Data, &p.CurOffset)
+	return true
+}
+
+func (p *PacketData) PraseInAchievementCampaignPacket(dest *InAchievementCampaignPacket) bool {
+	//id + type + campaign = 4 bytes
+	if dest == nil ||
+		p.Length < 4 {
+		return false
+	}
+	dest.CampaignId = ReadUint16(p.Data, &p.CurOffset)
 	return true
 }
 

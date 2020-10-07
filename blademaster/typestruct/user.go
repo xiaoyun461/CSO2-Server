@@ -35,6 +35,7 @@ type (
 		ClanName             []byte
 		ClanMark             uint32
 		WorldRank            uint32
+		Campaign             uint16
 		Mpoints              uint32
 		TitleId              uint16
 		UnlockedTitles       []byte
@@ -358,6 +359,15 @@ func (u *User) SetTitle(id uint16) {
 	u.TitleId = id
 }
 
+func (u *User) UpdateCampaign(id uint16) {
+	if u == nil {
+		return
+	}
+	u.UserMutex.Lock()
+	defer u.UserMutex.Unlock()
+	u.Campaign = u.Campaign | id
+}
+
 func (u *User) SetBuyMenu(menu UserBuyMenu) {
 	if u == nil {
 		return
@@ -394,6 +404,7 @@ func GetNewUser() User {
 		NewNullString(), // clanName
 		0,               // clanMark
 		0,               // worldRank
+		0,               //campaign
 		0,               // mpoints
 		0,               // titleId
 		[]uint8{0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00,
