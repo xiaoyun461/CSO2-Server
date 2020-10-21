@@ -34,6 +34,8 @@ test_script:
 
     7z a .\CSO2-Server-0.3.11-Win64.7z CSO2-Server\assert\register.html
 
+    7z a .\CSO2-Server-0.3.11-Win64.7z CSO2-Server\assert\cstrike\
+
     7z a .\CSO2-Server-0.3.11-Win64.7z CSO2-Server\locales\
 
     mv .\CSO2-Server-0.3.11-Win64.7z .\CSO2-Server\
