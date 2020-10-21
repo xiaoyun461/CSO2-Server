@@ -1,6 +1,4 @@
-;// 무기  , 아이템,ID의, 수정 ,,, 추가, 삭제, 발생시, 클라이언트,팀에,알려,주세요,적용안,할경우,,크래쉬,To ,클라이언트팀,CSWeaponID ,,,, 정의 코드의, 주석 참고 해, 작업해 주세요.
-;// 아이템 아이디,// 아이템 이름 ,// 아이템 설명,// 리소스이름,,,// 아이템 카테고리,// 구입메뉴에서 사용되는 카테고리,// 무기 장착 슬롯,//팀정보,// 사용 가능 모드,"// 활성화 타입: 0 자동, 1 수동","// 활성화 이후 기능: 0 장착, 1 주캐릭터설정, 2 사용, 3 없음","// 아이템 타입 - 0 :기간제 / 1 : 개수제 / 2 : 뉴타입 개수제(만료시간이 있는 개수제아이템, 예시-유리/최지윤 쿠폰) / 3: 뉴타입 기간제(기간과 개수가 서로 합쳐지는 형태의 아이템. 단, 기간이 무제한일 경우는 개수만 합쳐짐. 예시-등급제 총기) / 4: 라이프아이템",// 삭제 유예 기간 (일 단위),// 재구매 할인율,"// User Type 0 normal, 1 clan …",,// 기능 정의 옵션,//보너스 정의 옵션(중첩그룹입력),,,//장착사운드,//보너스 정의 옵션 ExpPointModCategory ExpModPriority ExpMod PointModPriority PointMod PCBangExpMod PCBangPointMod TeamBonusExpOther TeamBonusExpSelf TeamBonusPointOther TeamBonusPointSelf,,
-;ItemID,Name,ItemDesc,resourcename,ResourceVariation,Class,Category,BuyCategory,WeaponSlot,Team,UsableMod,UseType,EquipType,ItemType,WaitAfterExpire,RepurchaseDiscountRate,userType,Level,FunctionOption,PointExpBonusOption,bonusExp,bonusPoint,EquipSound,propAction,ItemOption,;// LicenseRequire
+ItemID,Name,ItemDesc,resourcename,ResourceVariation,Class,Category,BuyCategory,WeaponSlot,Team,UsableMod,UseType,EquipType,ItemType,WaitAfterExpire,RepurchaseDiscountRate,userType,Level,FunctionOption,PointExpBonusOption,bonusExp,bonusPoint,EquipSound,propAction,ItemOption,;// LicenseRequire
 1,#CSO2_ITEM_NAME_p228,#CSO2_ITEM_DESC_P228,p228,default,item,weapon,pistol,1,0,0,0,0,0,5,0,0,0,none,none,0,0,,,,1
 2,#CSO2_ITEM_NAME_GLOCK18,#CSO2_ITEM_DESC_GLOCK18,glock18,default,item,weapon,pistol,1,0,0,0,0,0,5,0,0,0,none,none,0,0,,,,1
 3,#CSO2_ITEM_NAME_scout,#CSO2_ITEM_DESC_SCOUT,scout,default,item,weapon,snip,0,0,0,0,0,0,5,0,0,0,none,none,0,0,,,,1
@@ -308,8 +306,8 @@
 5079,#CSO2_ITEM_NAME_t86_spray1,#CSO2_ITEM_DESC_t86_spray1,t86,spray1,item,weapon,rifle,0,0,0,0,0,3,5,0,0,0,none,none,0,0,,,,0
 5080,#CSO2_ITEM_NAME_acr_spray1,#CSO2_ITEM_DESC_acr_spray1,acr,spray1,item,weapon,rifle,0,3,0,0,0,3,5,0,0,0,none,none,0,0,,,,0
 5081,#CSO2_ITEM_NAME_ak12_spray1,#CSO2_ITEM_DESC_ak12_spray1,ak12,spray1,item,weapon,rifle,0,2,0,0,0,3,5,0,0,0,none,none,0,0,,,,0
-;// 5082,#CSO2_ITEM_NAME_k5_spray1,#CSO2_ITEM_DESC_k5_spray1,k5,spray1,item,weapon,pistol,1,0,0,0,0,3,5,0,0,0,none,none,0,0,,,,0
-;// 5083,#CSO2_ITEM_NAME_K1_spray1,#CSO2_ITEM_DESC_K1_spray1,k1,spray1,item,weapon,smg,0,0,0,0,0,3,5,0,0,0,none,none,0,0,,,,0
+5082,#CSO2_ITEM_NAME_k5_spray1,#CSO2_ITEM_DESC_k5_spray1,k5,spray1,item,weapon,pistol,1,0,0,0,0,3,5,0,0,0,none,none,0,0,,,,0
+5083,#CSO2_ITEM_NAME_K1_spray1,#CSO2_ITEM_DESC_K1_spray1,k1,spray1,item,weapon,smg,0,0,0,0,0,3,5,0,0,0,none,none,0,0,,,,0
 5084,#CSO2_ITEM_NAME_deserteagle_camo1,#CSO2_ITEM_DESC_DESERTEAGLE_camo1,deserteagle,camo1,item,weapon,pistol,1,0,0,0,0,3,5,0,0,0,none,none,0,0,,,,0
 5085,#CSO2_ITEM_NAME_elites_camo1,#CSO2_ITEM_DESC_DUALELITE_camo1,elites,camo1,item,weapon,pistol,1,2,0,0,0,3,5,0,0,0,none,none,0,0,,,,0
 5086,#CSO2_ITEM_NAME_m3_camo1,#CSO2_ITEM_DESC_M3_camo1,m3,camo1,item,weapon,shotgun,0,0,0,0,0,3,5,0,0,0,none,none,0,0,,,,0
@@ -375,7 +373,7 @@
 5150,#CSO2_ITEM_NAME_dbarrel_amethyst1,#CSO2_ITEM_DESC_dbarrel_amethyst1,dbarrel,amethyst1,item,weapon,shotgun,0,0,0,0,0,3,5,0,0,0,none,none,0,0,,,STATUE(AMETHYST),0
 5151,#CSO2_ITEM_NAME_ak12_amethyst1,#CSO2_ITEM_DESC_ak12_amethyst1,ak12,amethyst1,item,weapon,rifle,0,2,0,0,0,3,5,0,0,0,none,none,0,0,,,STATUE(AMETHYST),0
 5152,#CSO2_ITEM_NAME_acr_amethyst1,#CSO2_ITEM_DESC_acr_amethyst1,acr,amethyst1,item,weapon,rifle,0,3,0,0,0,3,5,0,0,0,none,none,0,0,,,STATUE(AMETHYST),0
-;// 5153,#CSO2_ITEM_NAME_qbs09_china1,#CSO2_ITEM_DESC_qbs09_china1,qbs09,china1,item,weapon,shotgun,0,0,0,0,0,3,5,0,0,0,none,none,0,0,,,,0
+5153,#CSO2_ITEM_NAME_qbs09_china1,#CSO2_ITEM_DESC_qbs09_china1,qbs09,china1,item,weapon,shotgun,0,0,0,0,0,3,5,0,0,0,none,none,0,0,,,,0
 5154,#CSO2_ITEM_NAME_AWP_1111,#CSO2_ITEM_DESC_AWP_1111,awp,1111,item,weapon,snip,0,0,0,0,0,3,5,0,0,0,none,none,0,0,,,,0
 5155,#CSO2_ITEM_NAME_m4a1_1111,#CSO2_ITEM_DESC_m4a1_1111,m4a1,1111,item,weapon,rifle,0,3,0,0,0,3,5,0,0,0,none,none,0,0,,,,0
 5156,#CSO2_ITEM_NAME_ak47_1111,#CSO2_ITEM_DESC_ak47_1111,ak47,1111,item,weapon,rifle,0,2,0,0,0,3,5,0,0,0,none,none,0,0,,,,0
@@ -391,9 +389,9 @@
 5166,#CSO2_ITEM_NAME_scarh_silver1,#CSO2_ITEM_DESC_scarh_silver1,scarh,silver1,item,weapon,rifle,0,0,0,0,0,0,5,0,0,0,none,none,0,0,,,"CRITICAL(5,1.3) | WEAPONDROPOFF",0
 5167,#CSO2_ITEM_NAME_heartgrenade,#CSO2_ITEM_DESC_heartgrenade,hegrenade,heart,item,weapon,equip,3,0,0,0,0,0,5,0,0,0,none,none,0,0,,,,0
 5168,#CSO2_ITEM_NAME_heartgrenade2,#CSO2_ITEM_DESC_heartgrenade2,hegrenade,heart2,item,weapon,equip,3,0,0,0,0,0,5,0,0,0,none,none,0,0,,,,0
-;// 5169,#CSO2_ITEM_NAME_aug_opal1,#CSO2_ITEM_DESC_AUG_opal1,aug,opal1,item,weapon,rifle,0,3,0,0,0,0,5,0,0,0,none,none,0,0,,,,0
-;// 5170,#CSO2_ITEM_NAME_sg552_opal1,#CSO2_ITEM_DESC_SG552_opal1,sg552,opal1,item,weapon,rifle,0,2,0,0,0,0,5,0,0,0,none,none,0,0,,,,0
-;// 5171,#CSO2_ITEM_NAME_awp_twgold,#CSO2_ITEM_DESC_awp_twgold,awp,twgold,item,weapon,snip,0,0,0,0,0,3,5,0,0,0,none,none,0,0,,,,0
+5169,#CSO2_ITEM_NAME_aug_opal1,#CSO2_ITEM_DESC_AUG_opal1,aug,opal1,item,weapon,rifle,0,3,0,0,0,0,5,0,0,0,none,none,0,0,,,,0
+5170,#CSO2_ITEM_NAME_sg552_opal1,#CSO2_ITEM_DESC_SG552_opal1,sg552,opal1,item,weapon,rifle,0,2,0,0,0,0,5,0,0,0,none,none,0,0,,,,0
+5171,#CSO2_ITEM_NAME_awp_twgold,#CSO2_ITEM_DESC_awp_twgold,awp,twgold,item,weapon,snip,0,0,0,0,0,3,5,0,0,0,none,none,0,0,,,,0
 5172,#CSO2_ITEM_NAME_smokegrenade_tear,#CSO2_ITEM_DESC_smokegrenade_tear,smokegrenade,tear,item,weapon,equip,4,0,50,0,0,0,5,0,0,0,none,none,0,0,,,WEAPONDROPOFF,0
 5173,#CSO2_ITEM_NAME_smokegrenade_trans,#CSO2_ITEM_DESC_smokegrenade_trans,smokegrenade,trans,item,weapon,equip,4,0,50,0,0,0,5,0,0,0,none,none,0,0,,,WEAPONDROPOFF,0
 5174,#CSO2_ITEM_NAME_smokegrenade_stun,#CSO2_ITEM_DESC_smokegrenade_stun,smokegrenade,stun,item,weapon,equip,4,0,50,0,0,0,5,0,0,0,none,none,0,0,,,WEAPONDROPOFF,0
@@ -1173,4 +1171,3 @@
 999998,#CSO2_ITEM_NAME_PRIAMMO,#CSO2_ITEM_NAME_PRIAMMO,priammo,default,item,item,item,-1,0,0,0,2,1,5,0,0,0,none,none,0,0,,,,0
 999999,#CSO2_ITEM_NAME_SECAMMO,#CSO2_ITEM_NAME_SECAMMO,secammo,default,item,item,item,-1,0,0,0,2,1,5,0,0,0,none,none,0,0,,,,0
 900000,#CSO2_ITEM_NAME_solocompany1,#CSO2_ITEM_DESC_solocompany1,solocompany1,default,item,item,item,-1,0,0,0,3,0,0,0,0,0,none,none,0,0,,,ZZ_TRANSFORM_LIGHT_ZOMBIE,0
-

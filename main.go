@@ -90,6 +90,8 @@ func main() {
 	//read configure
 	Conf.InitConf(path)
 
+	InitCSV(path)
+
 	//read locales
 	if Locales.InitLocales(path) {
 		SetLocales()
