@@ -1,9 +1,0 @@
-texturecaches_manifest
-{
-	 "file" "materials/models/player.texcache"
-	 "file" "materials/models/weapons.texcache"
-}
-
-
-
-
