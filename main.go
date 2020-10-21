@@ -8,6 +8,7 @@ import (
 	"os/signal"
 	"strconv"
 	"syscall"
+	"time"
 
 	. "github.com/KouKouChan/CSO2-Server/blademaster/Exp"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/achievement"
@@ -170,6 +171,9 @@ func main() {
 	//Start TCP Server
 	go TCPServer(server)
 
+	//Start BroadCast Server
+	go BroadcastRoomList()
+
 	//Start Register Server
 	if Conf.EnableRegister != 0 {
 		go OnRegister()
@@ -284,4 +288,18 @@ close:
 	OnLeaveRoom(client, true)
 	DelUserWithConn(client)
 	return
+}
+
+func BroadcastRoomList() {
+	for {
+		timer := time.NewTimer(6 * time.Second)
+		<-timer.C
+
+		for _, v := range UsersManager.Users {
+			if v != nil && v.CurrentChannelIndex > 0 && v.CurrentRoomId <= 0 {
+				OnBroadcastRoomList(v.CurrentChannelServerIndex, v.CurrentChannelIndex, v)
+			}
+		}
+
+	}
 }

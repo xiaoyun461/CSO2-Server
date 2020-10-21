@@ -15,6 +15,7 @@ const (
 	GameScore    = 10 //比分类
 	TeamChanging = 11
 	HostUnk00    = 12 //未知
+	BuyItem      = 14
 	UserRevived  = 20
 	OnGameEnd    = 21
 
@@ -47,19 +48,21 @@ func OnHost(p *PacketData, client net.Conn) {
 		case TeamChanging:
 			OnChangingTeam(p, client)
 		case ItemUsing:
-			//log.Println("Recived a use item packet from", client.RemoteAddr().String())
+			OnHostItemUsing(p, client)
 		case UserKillOne:
 			OnHostKillPacket(p, client)
 		case UserDeath:
 			OnHostDeathPacket(p, client)
 		case UserAssist:
 			OnHostAssistPacket(p, client)
+		case BuyItem:
+			OnHostBuyItem(p, client)
 		case UserRevived:
 			OnHostRevivedPacket(p, client)
 		case GameScore:
 			OnHostGameScorePacket(p, client)
-		case HostUnk00:
-			//fmt.Println("TeamWinPacket", p.data[:p.datalen], "from", client.RemoteAddr().String())
+		//case HostUnk00:
+		//fmt.Println("TeamWinPacket", p.data[:p.datalen], "from", client.RemoteAddr().String())
 		default:
 			DebugInfo(2, "Unknown host packet", pkt.InHostType, "from", client.RemoteAddr().String())
 		}

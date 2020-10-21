@@ -57,7 +57,7 @@ func OnLeaveRoom(client net.Conn, end bool) {
 	uPtr.QuitRoom()
 	//发送房间列表给玩家
 	if !end {
-		OnRoomList(&PacketData{[]byte{0, uPtr.GetUserChannelServerID(), uPtr.GetUserChannelID()}, 0, 3, PacketTypeRoomList, 1}, client)
+		OnBroadcastRoomList(uPtr.GetUserChannelServerID(), uPtr.GetUserChannelID(), uPtr)
 	}
 	//房间状态
 	rm.CheckIngameStatus()

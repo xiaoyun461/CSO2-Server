@@ -44,7 +44,7 @@ func OnHostSetUserLoadout(p *PacketData, client net.Conn) {
 		return
 	}
 	//发送用户背包数据
-	rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, p.Id), BuildSetUserLoadout(dest))
+	rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeHost), BuildSetUserLoadout(dest))
 	SendPacket(rst, uPtr.CurrentConnection)
 	DebugInfo(2, "Send User", string(dest.UserName), "Loadout to host", string(uPtr.UserName))
 }

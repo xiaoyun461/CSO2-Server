@@ -289,6 +289,17 @@ type (
 		UserID uint32
 	}
 
+	InHostItemUsingPacket struct {
+		UserID uint32
+		ItemID uint32
+	}
+
+	InHostBuyItemPacket struct {
+		UserID         uint32
+		NumItemsBought uint8
+		Items          []uint32
+	}
+
 	//未知，用于请求频道
 	OutLobbyJoinRoom struct {
 		Unk00 uint8
@@ -916,6 +927,31 @@ func (p *PacketData) PraseInAchievementCampaignPacket(dest *InAchievementCampaig
 		return false
 	}
 	dest.CampaignId = ReadUint16(p.Data, &p.CurOffset)
+	return true
+}
+
+func (p *PacketData) PraseInHostItemUsingPacket(dest *InHostItemUsingPacket) bool {
+	//id + type + userid + itemid = 10 bytes
+	if dest == nil ||
+		p.Length < 10 {
+		return false
+	}
+	dest.UserID = ReadUint32(p.Data, &p.CurOffset)
+	dest.ItemID = ReadUint32(p.Data, &p.CurOffset)
+	return true
+}
+
+func (p *PacketData) PraseInHostBuyItemPacket(dest *InHostBuyItemPacket) bool {
+	//id + type + userid + itemid = 7 bytes
+	if dest == nil ||
+		p.Length < 7 {
+		return false
+	}
+	dest.UserID = ReadUint32(p.Data, &p.CurOffset)
+	dest.NumItemsBought = ReadUint8(p.Data, &p.CurOffset)
+	for i := 0; i < int(dest.NumItemsBought); i++ {
+		dest.Items = append(dest.Items, ReadUint32(p.Data, &p.CurOffset))
+	}
 	return true
 }
 

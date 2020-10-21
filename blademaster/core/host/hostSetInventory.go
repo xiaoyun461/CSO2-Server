@@ -46,10 +46,10 @@ func OnHostSetUserInventory(p *PacketData, client net.Conn) {
 		return
 	}
 	//发送用户的装备给目标user
-	rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, p.Id), BuildSetUserInventory(dest, dest.Userid))
+	rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeHost), BuildSetUserInventory(dest, dest.Userid))
 	SendPacket(rst, uPtr.CurrentConnection)
 	DebugInfo(2, "Send User", string(dest.UserName), "Inventory to host", string(uPtr.UserName))
-	rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, p.Id), BuildSetUserLoadout(dest))
+	rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeHost), BuildSetUserLoadout(dest))
 	SendPacket(rst, uPtr.CurrentConnection)
 	DebugInfo(2, "Send User", string(dest.UserName), "Loadout to host", string(uPtr.UserName))
 }

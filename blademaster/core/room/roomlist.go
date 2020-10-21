@@ -35,7 +35,7 @@ func OnRoomList(p *PacketData, client net.Conn) {
 			log.Println("Error : Client from", client.RemoteAddr().String(), "request a unknown channel !")
 			return
 		}
-		rst = BuildRoomList(uPtr.CurrentSequence, *p, *chl)
+		rst = BuildRoomList(uPtr.CurrentSequence, chl)
 		SendPacket(rst, uPtr.CurrentConnection)
 		DebugInfo(2, "Sent a roomList packet to", client.RemoteAddr().String())
 
@@ -45,6 +45,27 @@ func OnRoomList(p *PacketData, client net.Conn) {
 	} else {
 		log.Println("Recived a damaged packet from", client.RemoteAddr().String())
 	}
+}
+
+func OnBroadcastRoomList(chlsrvid uint8, chlid uint8, u *User) {
+	if u == nil {
+		return
+	}
+	//发送频道请求返回包
+	chlsrv := GetChannelServerWithID(chlsrvid)
+	if chlsrv == nil {
+		DebugInfo(2, "Error : Client from", u.CurrentConnection.RemoteAddr().String(), "request a unknown channelServer !")
+		return
+	}
+	//发送频道请求所得房间列表
+	chl := GetChannelWithID(chlid, chlsrv)
+	if chl == nil {
+		log.Println("Error : Client from", u.CurrentConnection.RemoteAddr().String(), "request a unknown channel !")
+		return
+	}
+	rst := BuildRoomList(u.CurrentSequence, chl)
+	SendPacket(rst, u.CurrentConnection)
+	DebugInfo(2, "Sent a roomList packet to", u.CurrentConnection.RemoteAddr().String())
 }
 
 func BuildLobbyReply(seq *uint8, p PacketData) []byte {
@@ -62,7 +83,7 @@ func BuildLobbyReply(seq *uint8, p PacketData) []byte {
 }
 
 //暂定
-func BuildRoomList(seq *uint8, p PacketData, chl ChannelInfo) []byte {
+func BuildRoomList(seq *uint8, chl *ChannelInfo) []byte {
 	rst := BuildHeader(seq, PacketTypeRoomList)
 	rst = append(rst,
 		SendFullRoomList,
