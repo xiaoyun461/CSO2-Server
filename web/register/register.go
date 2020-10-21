@@ -84,8 +84,8 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		wth := WebToHtml{Addr: addrtmp}
 		if addrtmp == "" {
 			wth.Tip = "提示：邮箱不能为空！"
-		} else if IsExistsMail([]byte(addrtmp)) {
-			wth.Tip = "提示：该邮箱已注册过！"
+			//} else if IsExistsMail([]byte(addrtmp)) {
+			//	wth.Tip = "提示：该邮箱已注册过！"
 		} else {
 			Vcode := getrand()
 			DebugInfo(2, Vcode)
@@ -128,10 +128,10 @@ func Register(w http.ResponseWriter, r *http.Request) {
 			wth.Tip = "提示：验证码不能为空！"
 			t.Execute(w, wth)
 			return
-		} else if IsExistsMail([]byte(addrtmp)) {
-			wth.Tip = "提示：该邮箱已注册过！"
-			t.Execute(w, wth)
-			return
+			// } else if IsExistsMail([]byte(addrtmp)) {
+			// 	wth.Tip = "提示：该邮箱已注册过！"
+			// 	t.Execute(w, wth)
+			// 	return
 		} else if IsExistsUser([]byte(usernametmp)) {
 			wth.Tip = "提示：用户名已存在！"
 			wth.UserName = ""
