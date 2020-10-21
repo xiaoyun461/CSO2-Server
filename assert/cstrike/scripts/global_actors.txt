@@ -1,0 +1,12 @@
+globalactors
+{
+	"ct_gign"	"male"
+	"ct_gsg9"	"female"
+	"ct_sas"	"male"
+	"ct_urban"	"male"
+	"t_arctic"	"male"
+	"t_guerilla"	"male"
+	"t_leet"	"male"
+	"t_phoenix"	"male"
+	"zomtest"	"male"
+}

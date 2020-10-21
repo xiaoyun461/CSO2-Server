@@ -1,0 +1,142 @@
+WeaponData									
+{
+	default
+	{									
+		MaxPlayerSpeed		255	// "250"				
+		WeaponType			SubMachinegun				
+		FullAuto				1			
+		WeaponPrice			1400				
+		BigcityWeaponPrice		1400
+		WeaponArmorRatio		0.95					
+		CrosshairMinDistance		9					
+		CrosshairDeltaDistance	3						
+		Team				TERRORIST			
+		BuiltRightHanded		0					
+		PlayerAnimationExtension	mac10					
+		MuzzleFlashScale		1.1					
+									
+		CanEquipWithShield		0					
+									
+									
+		// Weapon characteristics:							
+		Penetration			1				
+		Damage			27	// "29"			
+		Range				4096			
+		RangeModifier			0.8	// "0.82"			
+		Bullets			1				
+		CycleTime			0.075				
+		AccuracyDivisor		300	// "200"				
+		AccuracyOffset		0.4	// "0.6"				
+		MaxInaccuracy			1.2	// "1.65"			
+		TimeToIdle			0.6	// "2"			
+		IdleInterval			20				
+									
+		// New accuracy model parameters							
+		Spread					0.001		
+		InaccuracyCrouch			0.01425				
+		InaccuracyStand			0.019				
+		InaccuracyJump			0.13704				
+		InaccuracyLand			0.02741				
+		InaccuracyLadder			0.03426				
+		InaccuracyFire			0.00845				
+		InaccuracyMove			0.0062				
+									 
+		RecoveryTimeCrouch		0.25263					
+		RecoveryTimeStand			0.35368				
+									
+		// Weapon data is loaded by both the Game and Client DLLs.							
+		printname			#CSO2_ITEM_NAME_mac10				
+		viewmodel			models/weapons/v_mac10.mdl				
+		playermodel			models/weapons/w_mac10.mdl				
+									
+		anim_prefix			anim				
+		bucket			0				
+		bucket_position		0					
+									
+		clip_size			30				
+									
+		primary_ammo			BULLET_PLAYER_45ACP				
+		secondary_ammo		None		primary_ammo_InvenCategory			SMG		secondary_ammo_InvenCategory			None					
+									
+		weight			25				
+		item_flags			0				
+									
+		// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)							
+		SoundData							
+		{							
+			//"reload"			Default.Reload			
+			//"empty"				Default.ClipEmpty_Rifle		
+			single_shot		Weapon_MAC10.Single				
+		}							
+									
+		// Weapon Sprite data is loaded by the Client DLL.							
+		TextureData							
+		{							
+			weapon						
+			{						
+					font		CSweaponsSmall		
+					character	L			
+			}						
+			weapon_s						
+			{						
+					font		CSweapons		
+					character	L			
+			}						
+			ammo						
+			{						
+					font		CSTypeDeath		
+					character		M		
+			}						
+			crosshair						
+			{						
+					file		sprites/crosshairs		
+					x			0	
+					y			48	
+					width		24		
+					height	24			
+			}						
+			autoaim						
+			{						
+					file		sprites/crosshairs		
+					x			0	
+					y			48	
+					width		24		
+					height	24			
+			}						
+		}							
+		ModelBounds							
+		{							
+			Viewmodel						
+			{						
+				Mins	-23				
+				Maxs	20 10 0				
+			}						
+			World						
+			{						
+				Mins	-13				
+				Maxs	13 4 7				
+			}						
+		}
+		MuzzleEffects
+		{
+			Muzzle0		muzzle_mac10
+		}
+	}				
+	basic
+	{
+		"printname"				"#CSO2_ITEM_NAME_MAC10_BASIC"
+	}
+	spray1
+	{
+		"printname"			"#CSO2_ITEM_NAME_mac10_spray1"
+		"WorldSkin"			"models/weapons/w_models/w_smg_mac10/w_mac10_c_spray1"
+		"ViewSkin"			"models/weapons/v_models/smg_mac10/v_mac10_c_spray1"
+	}
+	silver1
+	{
+		"printname"			"#CSO2_ITEM_NAME_mac10_silver1"
+		"WorldSkin"			"models/weapons/w_models/w_smg_mac10/w_mac10_s_silver1"
+		"ViewSkin"			"models/weapons/v_models/smg_mac10/v_mac10_s_silver1"
+	}
+}									
+

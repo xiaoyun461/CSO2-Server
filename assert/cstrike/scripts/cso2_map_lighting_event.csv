@@ -1,0 +1,7 @@
+// 맵 이름,// 모드 아이디,// 맵 하루에 대응하는 실제 시간 초,// 이벤트 아이디,"// 발동 타입 ( [ ]는 발동 부가 정보 인덱스 )
+// 1 : [1]초마다 검사. [2]%로 발동",// 발동 부가 정보,// 발동 부가 정보,"// 비활성화 조건
+// 1 : [1]초 후에 제거",// 부가 정보,// 부가 정보
+mapname,modid,onedayinsec,eventid,trigger_type,trigger_value1,trigger_value2,removal_type,removal_value1,removal_value2
+bigcity_main,17,1800,0,1,900,10,1,900,0
+bigcity_main,11,1800,0,1,900,10,1,900,0
+

@@ -1,0 +1,12 @@
+//아이디,//제목,"//로드 시점(0 : 항상올라가있음, 1: 아웃게임, 2: 인게임, 3: UI에서 visible요청이 있을때)",//모드 이름(),,
+addonID,addonName,LoadTime,ModID,UIHandler,Depth
+1,addOnHUDMinimap,2,0,,-3
+2,addOnHUDHeadName,2,0,,-3
+3,addOnMatch,3,0,automatch,-1
+4,addonHUDZombieCommand,2,48,zombiecommander,-3
+5,addOnHudBattleBoard,2,0,,1
+6,addOnLobbyCustomChat,0,0,customchat,1
+7,addOnPopup,0,0,popup,2
+8,addOnLobbyScene,1,0,,1
+9,addonLobbyResultReward ,3,,,1
+

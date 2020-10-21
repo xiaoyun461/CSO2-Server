@@ -1,0 +1,290 @@
+;//풀아이디,확률,등장 아이템
+;ItemPool,DropWeight,ContainedItems
+;int,float,string
+";// grade0~1 무기 상자(무기 1종은 확정, 1세트만 나온다, 기본값)",,
+1,300,weapon_knife; CSO2_ITEM_MONEY_S; CSO2_ITEM_MONEY_S; CSO2_ITEM_MONEY_S;
+1,33,weapon_knife; CSO2_ITEM_MONEY_S; CSO2_ITEM_MONEY_S; weapon_flashbang;
+1,33,weapon_knife; weapon_hegrenade; CSO2_ITEM_MONEY_S; CSO2_ITEM_MONEY_S; CSO2_ITEM_MONEY_S;
+1,34,weapon_knife; CSO2_ITEM_FLASK_S; CSO2_ITEM_FLASK_S; weapon_hegrenade;
+1,200,weapon_crowbar; CSO2_ITEM_MONEY_S; CSO2_ITEM_MONEY_S; CSO2_ITEM_MONEY_S;
+1,33,weapon_crowbar; CSO2_ITEM_MONEY_S; CSO2_ITEM_MONEY_S; weapon_flashbang;
+1,33,weapon_crowbar; weapon_hegrenade; CSO2_ITEM_MONEY_S; CSO2_ITEM_MONEY_S; CSO2_ITEM_MONEY_M;
+1,34,weapon_crowbar; CSO2_ITEM_FLASK_S; CSO2_ITEM_FLASK_S; weapon_hegrenade;
+1,75,weapon_usp; CSO2_ITEM_FLASK_S; CSO2_ITEM_FLASK_S;
+1,25,weapon_usp; CSO2_ITEM_AMMO_PISTOL; CSO2_ITEM_AMMO_PISTOL; weapon_flashbang;
+1,25,weapon_usp; CSO2_ITEM_AMMO_PISTOL; weapon_hegrenade;
+1,75,weapon_glock; CSO2_ITEM_FLASK_S; CSO2_ITEM_FLASK_S;
+1,25,weapon_glock;  CSO2_ITEM_MONEY_S; weapon_flashbang;
+1,25,weapon_glock;  CSO2_ITEM_AMMO_PISTOL; weapon_hegrenade;
+1,50,weapon_tmp; CSO2_ITEM_FLASK_S; CSO2_ITEM_MONEY_S; weapon_hegrenade;
+1,20,CSO2_ITEM_BACKPACK_LV1
+1,10,CSO2_ITEM_BACKPACK_LV2
+1,5,CSO2_ITEM_BACKPACK_LV3
+";// grade2 무기 상자(전체 아이템 풀에서, 2~5세트가 나온다)",,
+2,70,CSO2_ITEM_AMMO_PISTOL;
+2,60,CSO2_ITEM_AMMO_SHOTGUN;
+2,50,CSO2_ITEM_AMMO_SMG;
+2,50,CSO2_ITEM_AMMO_RIFLE;
+2,30,CSO2_ITEM_AMMO_SNIPE;
+2,30,CSO2_ITEM_AMMO_HEAVY;
+2,30,CSO2_ITEM_AMMO_SPECIAL;
+2,55,CSO2_ITEM_MONEY_S;
+2,55,CSO2_ITEM_MONEY_S; CSO2_ITEM_MEDKIT;
+2,35,CSO2_ITEM_MONEY_S;
+2,55,CSO2_ITEM_FLASK_S; CSO2_ITEM_MONEY_S;
+2,55,CSO2_ITEM_FLASK_M; CSO2_ITEM_MONEY_S;
+2,35,CSO2_ITEM_FLASK_L;
+2,25,CSO2_ITEM_FLASK_FULL;
+2,55,CSO2_ITEM_ARMOUR; CSO2_ITEM_MONEY_S;
+2,55,CSO2_ITEM_MEDKIT; CSO2_ITEM_MONEY_S;
+2,25,weapon_hegrenade; CSO2_ITEM_MONEY_S;
+2,25,weapon_flashbang; CSO2_ITEM_MONEY_S;
+2,25,weapon_smokegrenade; CSO2_ITEM_MONEY_S;
+2,15,weapon_glock; CSO2_ITEM_MONEY_S;
+2,15,weapon_usp; CSO2_ITEM_MONEY_S;
+2,3,weapon_deagle; CSO2_ITEM_MONEY_S;
+2,15,weapon_elite; CSO2_ITEM_MONEY_S;
+2,15,weapon_fiveseven;
+2,15,weapon_tmp;
+2,15,weapon_mac10;
+2,25,weapon_mp5navy;
+2,5,weapon_p90;
+2,15,weapon_m3;
+2,15,weapon_galil;
+2,15,weapon_famas;
+2,5,weapon_m4a1;
+2,5,weapon_ak47;
+2,1,weapon_rpg7;
+2,1,CSO2_ITEM_MONEY_L; CSO2_ITEM_MONEY_S; CSO2_ITEM_MONEY_S;
+2,20,CSO2_ITEM_BACKPACK_LV1
+2,10,CSO2_ITEM_BACKPACK_LV2
+2,5,CSO2_ITEM_BACKPACK_LV3
+";// grade3 무기 상자(전체 아이템 풀에서, 2~5세트가 나온다)",,
+3,75,CSO2_ITEM_AMMO_PISTOL; CSO2_ITEM_MONEY_S;
+3,65,CSO2_ITEM_AMMO_SHOTGUN; CSO2_ITEM_MONEY_S;
+3,45,CSO2_ITEM_AMMO_SMG; CSO2_ITEM_MONEY_S;
+3,45,CSO2_ITEM_AMMO_RIFLE;
+3,25,CSO2_ITEM_AMMO_SNIPE;
+3,25,CSO2_ITEM_AMMO_HEAVY;
+3,25,CSO2_ITEM_AMMO_SPECIAL;
+3,85,CSO2_ITEM_MONEY_S;
+3,55,CSO2_ITEM_MONEY_S; CSO2_ITEM_MEDKIT;
+3,5,CSO2_ITEM_MONEY_M;
+3,55,CSO2_ITEM_FLASK_S; CSO2_ITEM_MONEY_S;
+3,55,CSO2_ITEM_FLASK_M; CSO2_ITEM_MONEY_S;
+3,35,CSO2_ITEM_FLASK_L;
+3,25,CSO2_ITEM_FLASK_FULL;
+3,55,CSO2_ITEM_ARMOUR; CSO2_ITEM_MONEY_S;
+3,55,CSO2_ITEM_MEDKIT; CSO2_ITEM_MONEY_S;
+3,29,weapon_hegrenade; CSO2_ITEM_MONEY_S;
+3,25,weapon_flashbang; CSO2_ITEM_MONEY_S;
+3,25,weapon_smokegrenade; CSO2_ITEM_MONEY_S;
+3,15,weapon_glock; CSO2_ITEM_MONEY_S;
+3,15,weapon_usp; CSO2_ITEM_MONEY_S;
+3,9,weapon_deagle; CSO2_ITEM_MONEY_S;
+3,15,weapon_elite; CSO2_ITEM_MONEY_S;
+3,15,weapon_fiveseven; CSO2_ITEM_MONEY_S;
+3,9,weapon_anaconda; CSO2_ITEM_MONEY_S;
+3,15,weapon_tmp;
+3,15,weapon_mac10;
+3,15,weapon_mp5navy;
+3,8,weapon_p90;
+3,5,weapon_m3;
+3,15,weapon_galil;
+3,15,weapon_famas;
+3,9,weapon_m4a1;
+3,9,weapon_ak47;
+3,1,weapon_m249;
+3,1,weapon_g3sg1;
+3,1,weapon_scout;
+3,1,weapon_aug;
+3,1,weapon_sg550;
+3,1,weapon_rpg7;
+3,1,CSO2_ITEM_MONEY_L; CSO2_ITEM_MONEY_S; CSO2_ITEM_MONEY_S;
+3,20,CSO2_ITEM_BACKPACK_LV1
+3,10,CSO2_ITEM_BACKPACK_LV2
+3,5,CSO2_ITEM_BACKPACK_LV3
+";// grade4 무기 상자(전체 아이템 풀에서, 2~5세트가 나온다)",,
+4,30,CSO2_ITEM_AMMO_PISTOL;
+4,30,CSO2_ITEM_AMMO_SHOTGUN;
+4,60,CSO2_ITEM_AMMO_SMG;
+4,60,CSO2_ITEM_AMMO_RIFLE;
+4,30,CSO2_ITEM_AMMO_SNIPE;
+4,10,CSO2_ITEM_AMMO_HEAVY;
+4,25,CSO2_ITEM_AMMO_SPECIAL;
+4,80,CSO2_ITEM_MONEY_S;
+4,80,CSO2_ITEM_MONEY_S; CSO2_ITEM_MEDKIT;
+4,5,CSO2_ITEM_MONEY_M;
+4,70,CSO2_ITEM_FLASK_S;
+4,65,CSO2_ITEM_FLASK_M; CSO2_ITEM_MONEY_S;
+4,35,CSO2_ITEM_FLASK_L;
+4,25,CSO2_ITEM_FLASK_FULL;
+4,55,CSO2_ITEM_ARMOUR; CSO2_ITEM_MONEY_S;
+4,55,CSO2_ITEM_MEDKIT; CSO2_ITEM_MONEY_S;
+4,25,weapon_hegrenade;
+4,25,weapon_flashbang;
+4,25,weapon_smokegrenade;
+4,15,weapon_glock; CSO2_ITEM_MONEY_S;
+4,15,weapon_usp; CSO2_ITEM_MONEY_S;
+4,5,weapon_deagle; CSO2_ITEM_MONEY_S;
+4,15,weapon_elite; CSO2_ITEM_MONEY_S;
+4,15,weapon_fiveseven; CSO2_ITEM_MONEY_S;
+4,5,weapon_anaconda; CSO2_ITEM_MONEY_S;
+4,15,weapon_tmp; CSO2_ITEM_MONEY_S;
+4,15,weapon_mac10; CSO2_ITEM_MONEY_S;
+4,15,weapon_mp5navy; CSO2_ITEM_MONEY_S;
+4,4,weapon_p90;
+4,25,weapon_m3;
+4,15,weapon_galil;
+4,15,weapon_famas;
+4,5,weapon_m4a1;
+4,5,weapon_ak47;
+4,5,weapon_m249;
+4,5,weapon_g3sg1;
+4,5,weapon_scout;
+4,3,weapon_aug;
+4,1,weapon_awp;
+4,3,weapon_sg550;
+4,3,weapon_rpg7;
+4,1,CSO2_ITEM_MONEY_L; CSO2_ITEM_MONEY_S; CSO2_ITEM_MONEY_S;
+4,20,CSO2_ITEM_BACKPACK_LV1
+4,10,CSO2_ITEM_BACKPACK_LV2
+4,5,CSO2_ITEM_BACKPACK_LV3
+";// grade5 무기 상자(전체 아이템 풀에서, 2~5세트가 나온다)",,
+5,30,CSO2_ITEM_AMMO_PISTOL;
+5,30,CSO2_ITEM_AMMO_SHOTGUN;
+5,60,CSO2_ITEM_AMMO_SMG;
+5,60,CSO2_ITEM_AMMO_RIFLE;
+5,30,CSO2_ITEM_AMMO_SNIPE;
+5,10,CSO2_ITEM_AMMO_HEAVY;
+5,25,CSO2_ITEM_AMMO_SPECIAL; CSO2_ITEM_MEDKIT;
+5,80,CSO2_ITEM_MONEY_S;
+5,80,CSO2_ITEM_MONEY_S; CSO2_ITEM_MEDKIT;
+5,5,CSO2_ITEM_MONEY_M;
+5,70,CSO2_ITEM_FLASK_S;
+5,65,CSO2_ITEM_FLASK_M; CSO2_ITEM_MONEY_S;
+5,35,CSO2_ITEM_FLASK_L;
+5,25,CSO2_ITEM_FLASK_FULL; CSO2_ITEM_MEDKIT;
+5,55,CSO2_ITEM_ARMOUR; CSO2_ITEM_MONEY_S;
+5,55,CSO2_ITEM_MEDKIT; CSO2_ITEM_MONEY_S;
+5,25,weapon_hegrenade;
+5,25,weapon_flashbang;
+5,25,weapon_smokegrenade;
+5,15,weapon_glock; CSO2_ITEM_MONEY_S;
+5,15,weapon_usp; CSO2_ITEM_MONEY_S;
+5,5,weapon_deagle; CSO2_ITEM_MONEY_S;
+5,15,weapon_elite; CSO2_ITEM_MONEY_S;
+5,15,weapon_fiveseven; CSO2_ITEM_MONEY_S;
+5,5,weapon_anaconda; CSO2_ITEM_MONEY_S;
+5,15,weapon_tmp; CSO2_ITEM_MONEY_S;
+5,15,weapon_mac10; CSO2_ITEM_MONEY_S;
+5,15,weapon_mp5navy; CSO2_ITEM_MONEY_S;
+5,4,weapon_p90;
+5,25,weapon_m3;
+5,15,weapon_galil;
+5,15,weapon_famas;
+5,5,weapon_m4a1;
+5,5,weapon_ak47;
+5,5,weapon_m249;
+5,5,weapon_g3sg1;
+5,5,weapon_scout;
+5,3,weapon_aug;
+5,1,weapon_awp;
+5,3,weapon_sg550;
+5,3,weapon_rpg7;
+5,1,CSO2_ITEM_MONEY_L; CSO2_ITEM_MONEY_S; CSO2_ITEM_MONEY_S;
+5,20,CSO2_ITEM_BACKPACK_LV1
+5,10,CSO2_ITEM_BACKPACK_LV2
+5,5,CSO2_ITEM_BACKPACK_LV3
+;// MADCITY_TEAM 모드용 무기상자,,
+6,60,CSO2_ITEM_AMMO_PISTOL;
+6,48,CSO2_ITEM_AMMO_SHOTGUN;
+6,48,CSO2_ITEM_AMMO_SMG;
+6,36,CSO2_ITEM_AMMO_RIFLE;
+6,34,CSO2_ITEM_AMMO_SNIPE;
+6,34,CSO2_ITEM_AMMO_HEAVY;
+6,34,CSO2_ITEM_AMMO_SPECIAL; CSO2_ITEM_MEDKIT;
+6,60,CSO2_ITEM_MONEY_S;
+6,36,CSO2_ITEM_MONEY_M;
+6,34,CSO2_ITEM_MONEY_L;
+6,60,CSO2_ITEM_FLASK_S;
+6,55,CSO2_ITEM_FLASK_M;
+6,34,CSO2_ITEM_FLASK_L;
+6,1,CSO2_ITEM_FLASK_FULL;
+6,14,CSO2_ITEM_ARMOUR;
+6,14,CSO2_ITEM_MEDKIT;
+6,16,weapon_knife;
+6,16,weapon_crowbar;
+6,16,weapon_hegrenade;
+6,16,weapon_flashbang;
+6,16,weapon_smokegrenade;
+6,28,weapon_glock;
+6,28,weapon_usp;
+6,16,weapon_deagle;
+6,28,weapon_elite;
+6,28,weapon_fiveseven;
+6,16,weapon_anaconda;
+6,6,weapon_tmp;
+6,6,weapon_mac10;
+6,6,weapon_mp5navy;
+6,4,weapon_p90;
+6,4,weapon_m3;
+6,6,weapon_galil;
+6,6,weapon_famas;
+6,4,weapon_m4a1;
+6,4,weapon_ak47;
+6,4,weapon_m249;
+6,2,weapon_g3sg1;
+6,2,weapon_scout;
+6,1,weapon_aug;
+6,1,weapon_awp;
+6,1,weapon_sg550;
+6,2,weapon_rpg7;
+6,2,CSO2_ITEM_MONEY_L; CSO2_ITEM_MONEY_S; CSO2_ITEM_MONEY_S;
+6,1,weapon_m16a4m203;
+6,20,CSO2_ITEM_BACKPACK_LV1
+6,10,CSO2_ITEM_BACKPACK_LV2
+6,5,CSO2_ITEM_BACKPACK_LV3
+;// MADCITY_TEAM 대기실 전용 무기상자,,
+7,16,weapon_knife;
+7,16,weapon_crowbar;
+7,16,weapon_hegrenade;
+7,28,weapon_glock;
+7,28,weapon_usp;
+7,16,weapon_deagle;
+7,28,weapon_elite;
+7,28,weapon_fiveseven;
+7,16,weapon_anaconda;
+7,6,weapon_tmp;
+7,6,weapon_mac10;
+7,6,weapon_mp5navy;
+7,4,weapon_p90;
+7,4,weapon_m3;
+7,6,weapon_galil;
+7,6,weapon_famas;
+7,4,weapon_m4a1;
+7,4,weapon_ak47;
+7,4,weapon_m249;
+7,2,weapon_g3sg1;
+7,2,weapon_scout;
+7,1,weapon_aug;
+7,1,weapon_awp;
+7,1,weapon_sg550;
+7,2,weapon_rpg7;
+// 테스트용,,
+8,30,weapon_ak47;
+8,5,weapon_awp;
+8,30,weapon_m4a1;
+8,30,weapon_hegrenade;
+8,10,weapon_p90;
+8,30,weapon_usp;
+8,25,weapon_deagle;
+8,30,weapon_glock;
+8,30,weapon_knife;
+8,30,weapon_crowbar;
+8,30,weapon_m3;
+8,30,weapon_hegrenade;
+8,30,weapon_hegrenade;
+8,30,weapon_hegrenade;
+8,30,weapon_hegrenade;
+

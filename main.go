@@ -27,9 +27,9 @@ import (
 	. "github.com/KouKouChan/CSO2-Server/database/redis"
 	. "github.com/KouKouChan/CSO2-Server/database/sqlite"
 	. "github.com/KouKouChan/CSO2-Server/kerlong"
-	. "github.com/KouKouChan/CSO2-Server/register"
 	. "github.com/KouKouChan/CSO2-Server/servermanager"
 	. "github.com/KouKouChan/CSO2-Server/verbose"
+	. "github.com/KouKouChan/CSO2-Server/web/register"
 	"github.com/garyburd/redigo/redis"
 	_ "github.com/mattn/go-sqlite3"
 )

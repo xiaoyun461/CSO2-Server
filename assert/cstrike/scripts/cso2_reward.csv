@@ -1,0 +1,10 @@
+;// 보상,,,,,,,,,,,,
+;// 보상 인덱스,// 보상 이름,// 보상 설명,// 어떤보상인가용,// 어떤보상인가용,"//알림 사용(0=알리지않음, 1=나에게만 알림, 2=친구에게알림, 3=나와 친구에게 알림)",// 보상 타입,// 아이템 지급여부,// 아이템 번호,// 칭호 아이디,// 칭호 이름,//포인트즉시지급,//경험치즉시지급
+;RewardID,Name,RewardDesc,RewardHint,ResourceName,Alarm,Type,RewardItem,ItemId,AchievId,AchievTitleName,Point,Exp
+1,#CSO2_REWARD_NAME_TESTPOINT,#CSO2_REWARD_DESC_TESTPOINT,테스트 아이템보상,TESTPOINT,1,QUEST,1,"<item id=""2001"" num=""1"" day=""0""/>",,,,
+2,#CSO2_REWARD_NAME_TESTITEM,#CSO2_REWARD_DESC_TESTITEM,테스트 무기 보상,TESTITEM,1,QUEST,0,"<item id=""20001"" num=""1"" day=""7""/>",,,,
+3,#CSO2_REWARD_NAME_TESTFRIENDS,#CSO2_REWARD_DESC_TESTFRIENDS,테스트 친구초대보상,TESTFRIENDS,1,ACHIEVEMENT,1,"<item id=""40001"" num=""1"" day=""7""/>",,,,
+4,#CSO2_REWARD_NAME_TESTACHIEV,#CSO2_REWARD_DESC_TESTACHIEV,테스트 칭호 보상,TESTACHIEV,1,ACHIEVEMENT,0,,1,#CSO2_ACHIEVMENT_TITLE_LEVEL10,,
+5,#CSO2_REWARD_NAME_TEST,#CSO2_REWARD_DESC_TEST,테스트 포인트 경험치보상,TEST,1,ACHIEVEMENT,0,,,,500,500
+6,#CSO2_REWARD_NAME_TUTORIAL,#CSO2_REWARD_DESC_TUTORIAL,튜토리얼 완료 보상,TUTORIALCLEAR,1,ACHIEVEMENT,1,,,,10000,
+

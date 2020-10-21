@@ -1,0 +1,15 @@
+;//ID,모드ID,미션이름,제목,상세 설명,미션이미지,
+;id,modeid,Name,Title,TitleDesc,ImgName,BossImgName
+1,45,#CSO2_BOSSMISSION_NAME_ALBERT,#CSO2_BOSSMISSION_TITLE_ALBERT,#CSO2_BOSSMISSION_SUBTITLE_ALBERT,bossmission_albert,bossmission_albert_title
+2,44,#CSO2_BOSSMISSION_NAME_MAX,#CSO2_BOSSMISSION_TITLE_MAX,#CSO2_BOSSMISSION_SUBTITLE_MAX,bossmission_max,bossmission_max_title
+3,46,#CSO2_BOSSMISSION_NAME_TESLA,#CSO2_BOSSMISSION_TITLE_TESLA,#CSO2_BOSSMISSION_SUBTITLE_TESLA,bossmission_tesla,bossmission_tesla_title
+
+
+
+
+
+
+
+
+
+

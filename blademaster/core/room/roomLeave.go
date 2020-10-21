@@ -69,7 +69,7 @@ func SentUserLeaveMes(uPtr *User, rm *Room) {
 		//选出新房主
 		for _, v := range rm.Users {
 			rm.SetRoomHost(v)
-			DebugInfo(2, "User", string(v.UserName), "id", v.Userid, "is host in room", string(rm.Setting.RoomName), "id", rm.Id)
+			DebugInfo(2, "Set User", string(v.UserName), "id", v.Userid, "to host in room", string(rm.Setting.RoomName), "id", rm.Id)
 			if !v.CurrentIsIngame {
 				v.SetUserStatus(UserNotReady)
 				temp := BuildUserReadyStatus(v)
@@ -83,6 +83,7 @@ func SentUserLeaveMes(uPtr *User, rm *Room) {
 		numInGame := 0
 		leave := BuildUserLeave(uPtr.Userid)
 		sethost := BuildSetHost(rm.HostUserID)
+
 		for _, v := range rm.Users {
 			if v.CurrentIsIngame {
 				numInGame++
@@ -91,9 +92,18 @@ func SentUserLeaveMes(uPtr *User, rm *Room) {
 			rst1 = BytesCombine(rst1, leave)
 			rst2 := append(BuildHeader(v.CurrentSequence, PacketTypeRoom), OUTSetHost)
 			rst2 = BytesCombine(rst2, sethost)
+
 			SendPacket(rst1, v.CurrentConnection)
 			SendPacket(rst2, v.CurrentConnection)
+
+			// hostu := GetUserFromID(rm.HostUserID)
+			// rst := BytesCombine(BuildHeader(hostu.CurrentSequence, PacketTypeHost), BuildGameContinue(rm.HostUserID))
+			// SendPacket(rst, hostu.CurrentConnection)
+
+			// rst = UDPBuild(hostu.CurrentSequence, 0, v.Userid, v.NetInfo.ExternalIpAddress, v.NetInfo.ExternalClientPort)
+			// SendPacket(rst, hostu.CurrentConnection)
 		}
+
 		if numInGame == 0 {
 			rm.SetStatus(StatusWaiting)
 			// setting := BuildRoomSetting(rm, 0x404000)
@@ -123,6 +133,14 @@ func BuildSetHost(id uint32) []byte {
 	buf := make([]byte, 5)
 	offset := 0
 	WriteUint32(&buf, id, &offset)
-	buf[4] = 0
+	buf[4] = 1
 	return buf
+}
+
+func BuildGameContinue(id uint32) []byte {
+	buf := make([]byte, 5)
+	offset := 0
+	WriteUint8(&buf, GameStart, &offset)
+	WriteUint32(&buf, id, &offset)
+	return buf[:offset]
 }

@@ -1,0 +1,174 @@
+WeaponData									
+{			
+	default
+	{						
+		MaxPlayerSpeed		255	// "250"				
+		WeaponType			Pistol				
+		FullAuto				0			
+		WeaponPrice			600				
+		BigcityWeaponPrice		800
+		WeaponArmorRatio		1					
+		CrosshairMinDistance		8					
+		CrosshairDeltaDistance 	3						
+		Team 				ANY		
+		BuiltRightHanded 		0					
+		PlayerAnimationExtension 	pistol						
+		MuzzleFlashScale		1					
+									
+		CanEquipWithShield 		1					
+									
+									
+		// Weapon characteristics:							
+		Penetration			1				
+		Damage			36				
+		Range				4096			
+		RangeModifier			0.79				
+		Bullets			1				
+		CycleTime			0.14
+		TimeToIdle		1					
+		TimeToIdle2		3					
+									
+
+		// New accuracy model parameters						
+		// CSO2 Spread						
+		SpreadFunction		Pistol				
+		BaseAccuracy			0.055
+		DefaultSpread			0.023
+		RunSpread			0.045
+		MoveSpread			0.05			
+		JumpSpread			0.9
+		DuckingSpread			0.015
+		PistolAccuracyBase		0.6
+		PistolAccuracyModifier		0.37
+		PistolAccuracyMax		0.6		// 0.0 ~ 1.0 사이로
+		PistolAccuracyMin		-0.5
+		ModSpread				0.025		// 소음기 장착 시 Spread
+
+									
+		// Weapon data is loaded by both the Game and Client DLLs.							
+		printname			#CSO2_ITEM_NAME_mk23
+		viewmodel			models/weapons/v_mk23.mdl				
+		playermodel			models/weapons/w_mk23.mdl				
+		shieldviewmodel		models/weapons/v_shield_mk23_r.mdl					
+		SilencerModel			models/weapons/w_mk23_silencer.mdl				
+		anim_prefix			anim				
+		bucket			1				
+		bucket_position		1					
+									
+		clip_size			12				
+									
+		primary_ammo			BULLET_PLAYER_45ACP_2				
+		secondary_ammo		None		primary_ammo_InvenCategory			PISTOL		secondary_ammo_InvenCategory			None					
+									
+		weight			5				
+		item_flags			0				
+									
+		// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)							
+		SoundData							
+		{							
+			//"reload"			Default.Reload			
+			//"empty"				Default.ClipEmpty_Rifle		
+			single_shot		Weapon_MK23.Single			
+			special1			Weapon_MK23.SilencedShot			
+			special2			Weapon_MK23.DetachSilencer			
+			special3			Weapon_MK23.AttachSilencer			
+		}							
+		Kickback						
+		{						
+			Default_Kickback					
+			{					
+				up_base		2		
+				lateral_base		0		
+				up_modifier		0		
+				lateral_modifier	0			
+				up_max		2		
+				lateral_max		0		
+				direction_change	0			
+			}					
+			Jump_Kickback					
+			{					
+				up_base		2		
+				lateral_base		0		
+				up_modifier		0		
+				lateral_modifier	0			
+				up_max		2		
+				lateral_max		0		
+				direction_change	0			
+			}					
+			Ducking_Kickback					
+			{					
+				up_base		1.5		
+				lateral_base		0		
+				up_modifier		0		
+				lateral_modifier	0			
+				up_max		1.5		
+				lateral_max		0		
+				direction_change	0			
+			}					
+			Move_Kickback					
+			{					
+				up_base		2		
+				lateral_base		0		
+				up_modifier		0		
+				lateral_modifier	0			
+				up_max		2		
+				lateral_max		0		
+				direction_change	0			
+			}					
+		}										
+		// Weapon Sprite data is loaded by the Client DLL.							
+		TextureData							
+		{							
+			weapon						
+			{						
+					font		CSweaponsSmall		
+					character	A			
+			}						
+			weapon_s						
+			{						
+					font		CSweapons		
+					character	A			
+			}						
+			ammo						
+			{						
+					font		CSTypeDeath		
+					character		M		
+			}						
+			crosshair						
+			{						
+					file		sprites/crosshairs		
+					x			0	
+					y			48	
+					width		24		
+					height	24			
+			}						
+			autoaim						
+			{						
+					file		sprites/crosshairs		
+					x			0	
+					y			48	
+					width		24		
+					height	24			
+			}						
+		}							
+		ModelBounds							
+		{							
+			Viewmodel						
+			{						
+				Mins	-25				
+				Maxs	24 9 -2				
+			}						
+			World						
+			{						
+				Mins	-8				
+				Maxs	17 5 6				
+			}						
+		}							
+	}
+	blackmamba1
+	{
+		"printname"			"#CSO2_ITEM_NAME_v_mk23_blackmamba1"
+		"WorldSkin"			"models/weapons/w_models/w_pist_mk23/w_mk23_s_blackmamba1"
+		"ViewSkin"			"models/weapons/v_models/pist_mk23/v_mk23_s_blackmamba1"
+	}
+}									

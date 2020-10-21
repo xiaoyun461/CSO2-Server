@@ -1,0 +1,125 @@
+"players"
+{        // 시작 !!!!
+
+// ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+// 아래부터 카운터 테러리스트
+// ★ CT_GIGN
+
+	"models/player/ct_gign/ct_gign.mdl"
+	{
+		"attachments"
+		{
+			"gign_helmet" "1"
+			"gign_glove"	"1"
+//			"back_lpg" "1"
+//			"head_weldmask" "1"
+			"gign_hand_glove" "1"
+		}
+	}
+// ★ CT_SAS
+
+	"models/player/ct_sas/ct_sas.mdl"
+	{
+		"attachments"
+		{
+			"sas_helmet" "1"
+			"sas_glove"	"1"
+//			"back_lpg" "1"
+//			"head_weldmask" "1"
+			"sas_backpack"	"1"
+			"sas_hud"	"1"
+			"sas_hand_glove" "1"
+		}
+	}
+// ★ CT_LISA
+	
+	"models/player/ct_lisa/ct_lisa.mdl"
+	{
+		"attachments"
+		{
+			"lisa_hair" "1"
+			"lisa_radio" "1"
+//			"lisa_glove"	"1"
+//			"back_lpg" "1"
+//			"head_weldmask" "1"
+//			"lisa_hand_glove" "1"
+		}
+	}
+
+// ★ CT_URBAN
+	
+	"models/player/ct_urban/ct_urban.mdl"
+	{
+		"attachments"
+		{
+//			"urban_helmet" "1"
+			"urban_glove"	"1"
+			"back_lpg" "1"
+			"head_weldmask" "1"
+			"urban_hand_glove" "1"
+		}
+	}
+		
+// ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+// 아래부터 테러리스트
+		
+// ★ TR_LEET
+
+	"models/player/tr_leet/tr_leet.mdl"
+	{
+		"attachments"
+		{
+			"leet_hair" "1"
+			"leet_sunglass" "1"
+			"leet_glove"	"1"
+//			"back_lpg" "1"
+//			"head_weldmask" "1"
+			"leet_hand_glove" "1"
+		}
+	}
+// ★ TR_arctic
+							 
+	"models/player/tr_arctic/tr_arctic.mdl"
+	{
+		"attachments"
+		{
+			"arctic_hat" "1"
+			"arctic_glove"	"1"
+			"arctic_goggles"	"1"
+//			"back_lpg" "1"
+//			"head_weldmask" "1"
+			"arctic_hand_glove" "1"
+		}
+	}
+	
+// ★ TR_MILA
+	
+	"models/player/tr_mila/tr_mila.mdl"
+	{
+		"attachments"
+		{
+			"mila_hair" "1"
+			"mila_glove"	"1"
+//			"back_lpg" "1"
+//			"head_weldmask" "1"
+			"mila_hand_glove" "1"
+		}
+	}
+
+// ★ TR_Guerilla
+	
+
+	"models/player/tr_guerilla/tr_guerilla.mdl"
+	{
+		"attachments"
+		{
+			"guerilla_hair" "1"
+			"guerilla_sunglass" "1"
+			"guerilla_glove"	"1"
+//			"back_lpg" "1"
+//			"head_weldmask" "1"
+			"guerilla_hand_glove" "1"
+		}
+	}	
+}     // 끝!!!
+

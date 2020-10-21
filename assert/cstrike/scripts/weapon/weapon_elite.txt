@@ -1,0 +1,158 @@
+WeaponData									
+{			
+	default
+	{
+						
+		MaxPlayerSpeed		255	// "250"				
+		WeaponType 			Pistol				
+		FullAuto				0			
+		WeaponPrice 			800				
+		BigcityWeaponPrice		1000
+		WeaponArmorRatio 		1.05					
+		CrosshairMinDistance 		4					
+		CrosshairDeltaDistance 	3					
+		Team 				TERRORIST			
+		BuiltRightHanded		0					
+		PlayerAnimationExtension 	elites						
+		MuzzleFlashScale		1					
+									
+		CanEquipWithShield		0					
+		TimeToIdle			2.5				
+									
+		// Weapon characteristics:							
+		Penetration			1				
+		Damage			45				
+		Range				4096			
+		RangeModifier			0.75				
+		Bullets			1				
+		CycleTime			0.075	// "0.12"			
+									
+		// New accuracy model parameters							
+		Spread					0.004		
+		InaccuracyCrouch			0.006				
+		InaccuracyStand			0.008				
+		InaccuracyJump			0.29625				
+		InaccuracyLand			0.05925				
+		InaccuracyLadder			0.01975				
+		InaccuracyFire			0.03162				
+		InaccuracyMove			0.01778				
+									 
+		RecoveryTimeCrouch		0.24753					
+		RecoveryTimeStand			0.29703				
+									
+		// Weapon data is loaded by both the Game and Client DLLs.							
+		printname			#CSO2_ITEM_NAME_elites				
+		viewmodel			models/weapons/v_elites.mdl				
+		playermodel			models/weapons/w_elites.mdl				
+		AddonModel			models/weapons/w_elites_single.mdl				
+		DroppedModel			models/weapons/w_elites_dropped.mdl				
+									
+		anim_prefix			anim				
+		bucket			1				
+		bucket_position		1					
+									
+		clip_size			30				
+									
+		primary_ammo			BULLET_PLAYER_9MM_2				
+		secondary_ammo		None		primary_ammo_InvenCategory			PISTOL		secondary_ammo_InvenCategory			None					
+									
+		weight			5				
+		item_flags			0				
+									
+		// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)							
+		SoundData							
+		{							
+			single_shot		Weapon_Elite.Single				
+		}							
+									
+		// Weapon Sprite data is loaded by the Client DLL.							
+		TextureData							
+		{							
+			weapon						
+			{						
+					font		CSweaponsSmall		
+					character	S			
+			}						
+			weapon_s						
+			{						
+					font		CSweapons		
+					character	S			
+			}						
+			ammo						
+			{						
+					font		CSTypeDeath		
+					character		R		
+			}						
+			crosshair						
+			{						
+					file		sprites/crosshairs		
+					x			0	
+					y			48	
+					width		24		
+					height	24			
+			}						
+			autoaim						
+			{						
+					file		sprites/crosshairs		
+					x			0	
+					y			48	
+					width		24		
+					height	24			
+			}						
+		}							
+		ModelBounds							
+		{							
+			Viewmodel						
+			{						
+				Mins	-27				
+				Maxs	18 11 2				
+			}						
+			World						
+			{						
+				Mins	-12				
+				Maxs	12 9 5				
+			}						
+		}							
+	}
+	basic
+	{
+		"printname"				"#CSO2_ITEM_NAME_ELITES_BASIC"
+	}
+	spray1
+	{
+		"printname"			"#CSO2_ITEM_NAME_elites_spray1"
+		"WorldSkin"			"models/weapons/w_models/w_pist_elite/w_elite_c_spray1"
+		"ViewSkin"			"models/weapons/v_models/pist_elite/v_elite_c_spray1"
+	}
+	camo1
+	{
+		"printname"			"#CSO2_ITEM_NAME_elite_camo1"
+		"WorldSkin"			"models/weapons/w_models/w_pist_elite/w_elite_b_camo1"
+		"ViewSkin"			"models/weapons/v_models/pist_elite/v_elite_b_camo1"
+	}
+	Silver1
+	{
+		"printname"			"#CSO2_ITEM_NAME_elites_silver1"
+		"WorldSkin"			"models/weapons/w_models/w_pist_elite/w_elite_a_silver"
+		"ViewSkin"			"models/weapons/v_models/pist_elite/v_elite_a_silver"
+	}
+	amethyst1
+	{
+		"printname"			"#CSO2_ITEM_NAME_elites_amethyst1"
+		"WorldSkin"			"models/weapons/w_models/w_pist_elite/w_elite_s_amethyst1"
+		"ViewSkin"			"models/weapons/v_models/pist_elite/v_elite_s_amethyst1"
+	}
+	gold1
+	{
+		"printname"			"#CSO2_ITEM_NAME_elites_gold1"
+		"WorldSkin"			"models/weapons/w_models/w_pist_elite/w_elite_s_gold1"
+		"ViewSkin"			"models/weapons/v_models/pist_elite/v_elite_s_gold1"
+	}
+	neon1
+	{
+		"printname"			"#CSO2_ITEM_NAME_Elites_neon1"
+		"WorldSkin"			"models/weapons/w_models/w_pist_elite/w_elite_s_neon1"
+		"ViewSkin"			"models/weapons/v_models/pist_elite/v_elite_s_neon1"
+	}
+}									
+

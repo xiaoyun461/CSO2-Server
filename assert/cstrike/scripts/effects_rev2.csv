@@ -1,0 +1,42 @@
+//리소스이름,//파티클이름,//타입,//발생 주기,//발생위치,//어태치본,//위치조정(forward),//위치조정(right),//위치조정(up),,
+resname,particlename,type,interval,attach,attachbonename,offset_forward,offset_right,offset_up,spread_size,spread_per_sec
+cso2_step_fire,cso2_step_fire,shoot_move,0.05,body,,-10,0,-6,0,0
+cso2_step_fire_b,cso2_step_fire_b,shoot_move,0.05,head,,0,0,22,0,0
+cso2_step_smoke,cso2_step_smoke,shoot_move,0.05,body,,0,0,0,0,0
+cso2_step_fastdust,cso2_step_fastdust,shoot_step,0,feet,,0,0,0,0,0
+cso2_step_fall,cso2_step_fall,shoot_step,0,feet,,0,0,7,0,0
+cso2_step_grass,cso2_step_grass,shoot_step,0,feet,,0,0,7,0,0
+cso2_step_trail_01,cso2_step_trail_01,trail,0,body,,0,0,12,0,0
+cso2_step_trail_02,cso2_step_trail_02,trail,0,body,,0,0,12,0,0
+cso2_step_trail_03,cso2_step_trail_03,trail,0,body,,0,0,12,0,0
+cso2_step_trail_04,cso2_step_trail_04,trail,0,bone,CSO2_BipM L Hand;CSO2_BipM R Hand,0,0,12,0,0
+cso2_step_song,cso2_step_song,shoot_always,0.1,body,,-10,0,-8,0,0
+cso2_step_china,cso2_step_china,shoot_always,0.1,body,,-10,0,-8,0,0
+cso2_step_halloween,cso2_step_halloween,shoot_step,0.1,body,,-10,0,-8,0,0
+cso2_step_star,cso2_step_star,shoot_always,0.1,body,,-10,0,-8,0,0
+cso2_step_heal,cso2_step_heal,shoot_move,0.1,feet,,0,0,0,0,0
+cso2_step_electro,cso2_step_electro,shoot_move,0.05,body,,0,0,0,0,0
+cso2_step_light,cso2_step_light,shoot_move,0.025,feet,,-15,0,30,0,0
+cso2_step_buster,cso2_step_buster,shoot_move,0,feet,,-15,0,30,0,0
+cso2_step_ball,cso2_step_ball,shoot_move,0.5,body,,0,0,0,0,0
+cso2_step_dust,cso2_step_dust,shoot_step,0,feet,,0,0,5,0,0
+cso2_step_smoke_b,cso2_step_smoke_b,shoot_step,0,feet,,0,0,0,0,0
+cso2_step_smoke_c,cso2_step_smoke_c,shoot_move,0.05,feet,,0,0,12,0,0
+cso2_step_snow,cso2_step_snow,shoot_step,0.05,feet,,0,0,0,0,0
+cso2_step_fortune,cso2_step_fortune,shoot_move,0.1,head,,0,0,10,0,0
+cso2_step_zombie,cso2_step_zombie,shoot_step,0,feet,,0,0,3,0,0
+cso2_step_korean,cso2_step_hangul,shoot_always,0.1,body,,-10,0,-8,0,0
+cso2_step_fhand,cso2_step_fhand,shoot_move,0,bone,CSO2_BipM L Hand;CSO2_BipM R Hand,-5,0,0,0,0
+cso2_step_firework,cso2_step_firework,shoot_move,0.05,feet,,-5,0,13,0,0
+cso2_step_dragonboat,cso2_step_dragonboat,shoot_step,0,feet,,0,0,0,0,0
+cso2_step_love,cso2_step_love,shoot_always,0.1,body,,-10,0,-8,0,0
+cso2_step_crow,cso2_step_crow,shoot_step,0.1,body,,-10,0,-8,0,0
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,blood_advisor_puncture,,,,,,,,,
+

@@ -1,0 +1,15 @@
+// 아이디,// UI 이름,//Z 오프셋값," //플래그 (1은 화면 밖에 나갈 경우 화면 가장자리에 인디케이터 표시, 2는 화살표와 거리 표시, 4는 ""Quest"" 표시 , 8은 거리가 가까우면서 화면 중앙이면 그리지 않기) 쉼표로 구분한다메"
+ID,UIName,OffsetZ,Flag
+1,head.add.mission.main.attack,0,
+2,head.add.mission.main.depend,0,
+3,head.add.mission.main.move,0,
+4,head.add.mission.sub.attack,0,
+5,head.add.mission.sub.depend,0,
+6,head.add.mission.sub.move,0,
+7,head.add.zombiemaster.fuel,0,"1,2"
+8,head.add.zombiemaster.fuel.b,0,"1,2"
+9,head.add.zombiecrush.circuit.g,0,"1,2"
+10,head.add.zombiecrush.circuit.a,0,"1,2"
+11,head.add.zombiecrush.circuit.b,0,"1,2"
+12,head.add.zombiecrush.move,0,"1,2"
+

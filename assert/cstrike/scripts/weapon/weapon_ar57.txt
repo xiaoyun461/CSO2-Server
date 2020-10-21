@@ -1,0 +1,233 @@
+WeaponData								
+{		
+	default
+	{
+						
+		MaxPlayerSpeed		240			
+		WeaponType			SubMachinegun			
+		FullAuto				1		
+		WeaponPrice			3100			
+		BigcityWeaponPrice		3100
+		WeaponArmorRatio		1.6				
+		CrosshairMinDistance		7				
+		CrosshairDeltaDistance	3					
+		Team					ANY	
+		BuiltRightHanded		0		
+		PlayerAnimationExtension	ar57					
+		MuzzleFlashScale		1.2				
+		MuzzleFlashStyle		CS_MUZZLEFLASH_X				
+		CanEquipWithShield		0				
+								
+								
+		// Weapon characteristics:						
+		Penetration			1			
+		Damage			27			
+		Range				4096		
+		RangeModifier			0.84			
+		Bullets			1			
+		CycleTime			0.075
+		AccuracyQuadratic		1				
+		AccuracyDivisor		175				
+		AccuracyOffset		0.45				
+		MaxInaccuracy			1			
+		TimeToIdle			0.4	// "2"		
+		IdleInterval			20			
+								
+								
+		// Weapon data is loaded by both the Game and Client DLLs.						
+		printname			#CSO2_ITEM_NAME_AR57			
+		viewmodel			models/weapons/v_ar57.mdl			
+		playermodel		models/weapons/w_ar57.mdl				
+								
+		anim_prefix		anim				
+		bucket			0			
+		bucket_position	0					
+								
+		clip_size			50			
+								
+		primary_ammo			BULLET_PLAYER_57MM			
+		secondary_ammo		None		primary_ammo_InvenCategory			SMG		secondary_ammo_InvenCategory			None				
+								
+		weight			26			
+		item_flags			0			
+								
+		// Spread						
+		SpreadFunction		SubMachinegun				
+		BaseAccuracy			0.2			
+		DefaultSpread			0.032			
+		RunSpread			0.12
+		MoveSpread			0.05
+		JumpSpread			0.3			
+		DuckingSpread			0.029			
+								
+		// 줌 관련						
+		ZoomRate					0.2	
+		UnZoomRate				0.15		
+		ZoomFov					60	
+		ZoomDelay					0.3	
+		// 줌 모드일 때 연사 시간						
+		SecondCycleTime			0.12			
+								
+		Kickback						
+		{						
+			Default_Kickback					
+			{					
+				up_base			0.35	
+				lateral_base		0.225		
+				up_modifier		0.115		
+				lateral_modifier	0.018			
+				up_max			3.25	
+				lateral_max		1.25		
+				direction_change	9			
+			}					
+			Jump_Kickback					
+			{					
+				up_base			0.85	
+				lateral_base		0.4		
+				up_modifier		0.3		
+				lateral_modifier	0.038			
+				up_max			5	
+				lateral_max		3		
+				direction_change	5			
+			}					
+			Ducking_Kickback					
+			{					
+				up_base			0.3	
+				lateral_base		0.2		
+				up_modifier		0.125		
+				lateral_modifier	0.02			
+				up_max			3	
+				lateral_max		1		
+				direction_change	10			
+			}					
+			Move_Kickback					
+			{					
+				up_base			0.4	
+				lateral_base		0.25		
+				up_modifier		0.15		
+				lateral_modifier	0.025			
+				up_max			3.5	
+				lateral_max		2.25		
+				direction_change	8			
+			}					
+		}						
+								
+		// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)						
+		SoundData						
+		{						
+			single_shot		Weapon_ar57.Single			
+		}						
+								
+		// Weapon Sprite data is loaded by the Client DLL.						
+		TextureData						
+		{						
+			weapon					
+			{					
+					font		CSweaponsSmall	
+					character	M		
+			}					
+			weapon_s					
+			{					
+					font		CSweapons	
+					character	M		
+			}					
+			ammo					
+			{					
+					font		CSTypeDeath	
+					character		S	
+			}					
+			crosshair					
+			{					
+					file		sprites/crosshairs	
+					x			0
+					y			48
+					width		24	
+					height	24		
+			}					
+			zoom					
+			{					
+					file		sprites/crosshairs	
+					x			0
+					y			48
+					width		24	
+					height	24		
+			}					
+			autoaim					
+			{					
+					file		sprites/crosshairs	
+					x			0
+					y			48
+					width		24	
+					height	24		
+			}					
+		}						
+		ModelBounds						
+		{						
+			Viewmodel					
+			{					
+				Mins	-24			
+				Maxs	19 9 -1			
+			}					
+			World					
+			{					
+				Mins	-12			
+				Maxs	14 3 9			
+			}					
+		}						
+	}
+	basic
+	{
+		"printname"				"#CSO2_ITEM_NAME_AR57_BASIC"
+	}
+	snake1
+	{
+		"printname"			"#CSO2_ITEM_NAME_ar57_snake1"
+		"WorldSkin"			"models/weapons/w_models/w_smg_ar57/w_ar57_a_snake1"
+		"ViewSkin"			"models/weapons/v_models/smg_ar57/v_ar57_a_snake1"
+	}
+	camo1
+	{
+		"printname"			"#CSO2_ITEM_NAME_ar57_camo1"
+		"WorldSkin"			"models/weapons/w_models/w_smg_ar57/w_ar57_b_camo1"
+		"ViewSkin"			"models/weapons/v_models/smg_ar57/v_ar57_b_camo1"
+	}
+	spray1
+	{
+		"printname"			"#CSO2_ITEM_NAME_ar57_spray1"
+		"WorldSkin"			"models/weapons/w_models/w_smg_ar57/w_ar57_c_spray1"
+		"ViewSkin"			"models/weapons/v_models/smg_ar57/v_ar57_c_spray1"
+	}
+	chrome1
+	{
+		"printname"			"#CSO2_ITEM_NAME_ar57_chrome1"
+		"WorldSkin"			"models/weapons/w_models/w_smg_ar57/w_ar57_s_chrome1"
+		"ViewSkin"			"models/weapons/v_models/smg_ar57/v_ar57_s_chrome1"
+	}
+	amethyst1
+	{
+		"printname"			"#CSO2_ITEM_NAME_ar57_amethyst1"
+		"WorldSkin"			"models/weapons/w_models/w_smg_ar57/w_ar57_s_amethyst1"
+		"ViewSkin"			"models/weapons/v_models/smg_ar57/v_ar57_s_amethyst1"
+	}
+	magpie1
+	{
+		"printname"			"#CSO2_ITEM_NAME_ar57_magpie1"
+		"WorldSkin"			"models/weapons/w_models/w_smg_ar57/w_ar57_a_magpie1"
+		"ViewSkin"			"models/weapons/v_models/smg_ar57/v_ar57_a_magpie1"
+	}
+	neon1
+	{
+		"printname"			"#CSO2_ITEM_NAME_ar57_neon1"
+		"WorldSkin"			"models/weapons/w_models/w_smg_ar57/w_ar57_s_neon1"
+		"ViewSkin"			"models/weapons/v_models/smg_ar57/v_ar57_s_neon1"
+	}
+	xmas
+	{
+		"printname"			"#CSO2_ITEM_NAME_ar57_xmas"
+		"WorldSkin"			"models/weapons/w_models/w_smg_ar57/w_ar57_s_xmas1"
+		"ViewSkin"			"models/weapons/v_models/smg_ar57/v_ar57_s_xmas1"
+		WorldAttach			models/weapons/w_charm_santa_ar57.mdl
+		ViewAttach			models/weapons/v_charm_santa_ar57.mdl
+	}
+}								
+
