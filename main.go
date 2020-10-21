@@ -11,6 +11,7 @@ import (
 
 	. "github.com/KouKouChan/CSO2-Server/blademaster/Exp"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/achievement"
+	. "github.com/KouKouChan/CSO2-Server/blademaster/core/automatch"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/chat"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/holepunch"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/host"
@@ -270,7 +271,8 @@ func RecvMessage(client net.Conn) {
 			OnChat(&dataPacket, client)
 		case PacketTypeAchievement:
 			OnAchievement(&dataPacket, client)
-		//case PacketTypeAutomatch:
+		case PacketTypeAutomatch:
+			OnAutoMatch(&dataPacket, client)
 		//case PacketTypeFriend:
 		default:
 			DebugInfo(2, "Unknown packet", dataPacket.Id, "from", client.RemoteAddr().String())
