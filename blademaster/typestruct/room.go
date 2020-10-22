@@ -80,6 +80,7 @@ const (
 	GameStartRequest          = 5
 	UpdateSettings            = 6
 	OnCloseResultWindow       = 7
+	JoinRoomFiled             = 8
 	SetUserTeamRequest        = 9
 	GameStartCountdownRequest = 19
 	Feedback                  = 30
