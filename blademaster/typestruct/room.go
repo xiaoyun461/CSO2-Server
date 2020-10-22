@@ -65,6 +65,7 @@ const (
 	HostJoin          = 1
 	HostStop          = 3
 	LeaveResultWindow = 4
+	GameContinue      = 5
 
 	//频道以及房间
 	SendFullRoomList = 0

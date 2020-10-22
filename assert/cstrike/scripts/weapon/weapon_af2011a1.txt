@@ -1,0 +1,175 @@
+WeaponData								
+{			
+	default
+	{					
+		MaxPlayerSpeed 		255	// "250"			
+		WeaponType 			Pistol			
+		FullAuto				0		
+		WeaponPrice 			1050
+		BigcityWeaponPrice		1500
+		WeaponArmorRatio 		1
+		CrosshairMinDistance		8				
+		CrosshairDeltaDistance	3					
+		Team 				ANY		
+		BuiltRightHanded		0				
+		PlayerAnimationExtension 	af2011a0
+		MuzzleFlashScale		1				
+								
+		CanEquipWithShield		1				
+								
+								
+		// Weapon characteristics:						
+		Penetration			1			
+		Damage			34			
+		Range				4096		
+		RangeModifier			0.7
+		Bullets			2
+		CycleTime			0.28
+		TimeToIdle		0.7				
+								
+		// New accuracy model parameters						
+		// CSO2 Spread						
+		SpreadFunction		Pistol				
+		BaseAccuracy			0.85			
+		DefaultSpread			0.06			
+		RunSpread				0.12		
+		MoveSpread			0.12			
+		JumpSpread			1.5			
+		DuckingSpread			0.06			
+		PistolAccuracyBase		0.28				
+		PistolAccuracyModifier	0.25					
+		PistolAccuracyMax		0.7				
+		PistolAccuracyMin		0.4				
+								
+								
+			 					
+		RecoveryTimeCrouch		0.23026				
+		RecoveryTimeStand			0.27631			
+								
+		// Weapon data is loaded by both the Game and Client DLLs.						
+		printname			#CSO2_ITEM_NAME_k5			
+		viewmodel			models/weapons/v_af2011a1.mdl			
+		playermodel			models/weapons/w_af2011a1.mdl			
+		shieldviewmodel		models/weapons/v_shield_af2011a1_r.mdl				
+		anim_prefix			anim			
+		bucket			1			
+		bucket_position		1				
+								
+		clip_size			14
+								
+		primary_ammo			BULLET_PLAYER_45ACP_2
+		secondary_ammo		None		primary_ammo_InvenCategory			PISTOL		secondary_ammo_InvenCategory			None				
+								
+		weight			5			
+		item_flags			0			
+								
+		Kickback						
+		{						
+			Default_Kickback					
+			{					
+				up_base		2.5
+				lateral_base		0		
+				up_modifier		0		
+				lateral_modifier	0			
+				up_max		2.5		
+				lateral_max		0		
+				direction_change	0			
+			}					
+			Jump_Kickback					
+			{					
+				up_base		2.5
+				lateral_base		0		
+				up_modifier		0		
+				lateral_modifier	0			
+				up_max		2.5
+				lateral_max		0		
+				direction_change	0			
+			}					
+			Ducking_Kickback					
+			{					
+				up_base		2		
+				lateral_base		0		
+				up_modifier		0		
+				lateral_modifier	0			
+				up_max		2
+				lateral_max		0		
+				direction_change	0			
+			}					
+			Move_Kickback					
+			{					
+				up_base		2.5		
+				lateral_base		0		
+				up_modifier		0		
+				lateral_modifier	0			
+				up_max		2.5
+				lateral_max		0		
+				direction_change	0			
+			}					
+		}						
+								
+								
+		// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)						
+		SoundData						
+		{						
+			//"reload"			Default.Reload		
+			//"empty"				Default.ClipEmpty_Rifle	
+			single_shot		Weapon_af2011a1.Single			
+		}						
+								
+		// Weapon Sprite data is loaded by the Client DLL.						
+		TextureData						
+		{						
+			weapon					
+			{					
+					font		CSweaponsSmall	
+					character	Y		
+			}					
+			weapon_s					
+			{					
+					font		CSweapons	
+					character	Y		
+			}					
+			ammo					
+			{					
+					font		CSTypeDeath	
+					character		T	
+			}					
+			crosshair					
+			{					
+					file		sprites/crosshairs	
+					x			0
+					y			48
+					width		24	
+					height	24		
+			}					
+			autoaim					
+			{					
+					file		sprites/crosshairs	
+					x			0
+					y			48
+					width		24	
+					height	24		
+			}					
+		}						
+		ModelBounds						
+		{						
+			Viewmodel					
+			{					
+				Mins	-25			
+				Maxs	17 9 0			
+			}					
+			World					
+			{					
+				Mins	-6			
+				Maxs	10 3 5			
+			}					
+		}	
+	}					
+	ruby1
+	{
+		"printname"			"#CSO2_ITEM_NAME_af2011a1_ruby1"
+		"WorldSkin"			"models/weapons/w_models/w_pist_af2011a1/w_af2011a1_s_ruby1"
+		"ViewSkin"			"models/weapons/v_models/pist_af2011a1/v_af2011a1_s_ruby1"
+	}
+}								
+

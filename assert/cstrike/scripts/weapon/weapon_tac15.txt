@@ -1,0 +1,106 @@
+// Missile Launcher								
+								
+WeaponData								
+{								
+	default
+	{
+		// Weapon data is loaded by both the Game and Client DLLs.						
+		printname			#CSO2_ITEM_NAME_TAC15			
+		viewmodel			models/weapons/v_crossbow.mdl
+		playermodel			models/weapons/w_crossbow.mdl
+		WeaponType 			Rifle			
+		anim_prefix			anim		
+		bucket			0			
+		bucket_position		0				
+		autoswitchfrom		0				
+		bucket_360			3			
+		bucket_position_360		1				
+		MaxPlayerSpeed		220				
+		BuiltRightHanded 		0				
+		PlayerAnimationExtension	crossbow
+								
+		WeaponPrice			0			
+		Team 				ANY		
+								
+		MuzzleFlashScale		1.6				
+		MuzzleFlashStyle		CS_MUZZLEFLASH_X				
+								
+		Damage			100			
+		DamageScaleToMachine		4				
+								
+		clip_size			1			
+		clip2_size			-1			
+		default_clip			1			
+		default_clip2			-1			
+								
+		primary_ammo			rpg_round		
+		secondary_ammo		None		primary_ammo_InvenCategory			EXPLOSIVE		secondary_ammo_InvenCategory			None				
+
+		autoswitchto			1			
+		weight				40		
+		item_flags			0			
+		Bullets			0
+								
+		// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)						
+		SoundData						
+		{						
+			single_shot		Weapon_TAC15.Single			
+		}						
+								
+		// Weapon Sprite data is loaded by the Client DLL.						
+		TextureData						
+		{						
+			weapon					
+			{					
+					font		WeaponIcons	
+					character	i		
+			}					
+			weapon_s					
+			{					
+					font		WeaponIconsSelected	
+					character	i		
+			}					
+			weapon_small					
+			{					
+					font		WeaponIconsSmall	
+					character	i		
+			}					
+			ammo					
+			{					
+					font		WeaponIconsSmall	
+					character	x		
+			}					
+			crosshair					
+			{					
+					font		Crosshairs	
+					character	Q		
+			}					
+			autoaim					
+			{					
+					file		sprites/crosshairs	
+					x			48
+					y			72
+					width		24	
+					height	24		
+			}					
+		}						
+		ModelBounds						
+		{						
+			Viewmodel					
+			{					
+				Mins	-25			
+				Maxs	30 11 0			
+			}					
+			World					
+			{					
+				Mins	-27			
+				Maxs	30 9 7			
+			}					
+		}		
+		MuzzleEffects
+		{
+			Muzzle0		muzzle_tac15
+		}	
+	}
+}								
+

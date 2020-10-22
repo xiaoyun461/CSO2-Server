@@ -1,0 +1,204 @@
+WeaponData									
+{		
+	default
+	{
+							
+		MaxPlayerSpeed			210
+		WeaponType 			SniperRifle				
+		FullAuto				0			
+		WeaponPrice			4750				
+		BigcityWeaponPrice		20000
+		WeaponArmorRatio		1.95					
+		CrosshairMinDistance		8					
+		CrosshairDeltaDistance	3						
+		Team				ANY			
+		BuiltRightHanded		0					
+		PlayerAnimationExtension 	awp
+		MuzzleFlashScale		1.35				
+									
+		CanEquipWithShield		0					
+									
+									
+		// Weapon characteristics:							
+		Penetration			3				
+		Damage			115				
+		Range				8192			
+		RangeModifier			0.99			
+		Bullets			1				
+		CycleTime			1.5	// "1.5"		
+		AccuracyDivisor		-1					
+		AccuracyOffset		0					
+		MaxInaccuracy			0				
+		TimeToIdle			1.4	// "2"			
+		IdleInterval			60			
+
+		ZoomRate			0.5
+		SecondZoomRate			0.8
+		ZoomFov				40
+		ZoomFovSecond			10
+		ZoomDelay			0.4
+		
+									
+		// New accuracy model parameters							
+		Spread					0.2		
+		InaccuracyCrouch			0.0606				
+		InaccuracyStand			0.0808				
+		InaccuracyJump			0.546				
+		InaccuracyLand			0.0546				
+		InaccuracyLadder			0.1365				
+		InaccuracyFire			0.14				
+		InaccuracyMove			0.273				
+									 
+		SpreadAlt					0.0002		
+		InaccuracyCrouchAlt		0.0015					
+		InaccuracyStandAlt		0.002					
+		InaccuracyJumpAlt			0.546				
+		InaccuracyLandAlt			0.0546				
+		InaccuracyLadderAlt		0.1365					
+		InaccuracyFireAlt			0.14				
+		InaccuracyMoveAlt			0.273				
+									 
+		RecoveryTimeCrouch		0.24671					
+		RecoveryTimeStand			0.34539				
+									
+		// Weapon data is loaded by both the Game and Client DLLs.							
+		printname			#CSO2_ITEM_NAME_AWM				
+		viewmodel			models/weapons/v_awm.mdl				
+		playermodel			models/weapons/w_awm.mdl				
+									
+		anim_prefix			anim				
+		bucket			0				
+		bucket_position		0					
+									
+		clip_size			10				
+									
+		primary_ammo			BULLET_PLAYER_338MAG				
+		secondary_ammo		None		primary_ammo_InvenCategory			SNIPE		secondary_ammo_InvenCategory			None					
+									
+		weight			30				
+		item_flags			0				
+									
+		// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)							
+		SoundData							
+		{							
+			//"reload"			Weapon_AWP.Reload			
+			//"empty"				Default.ClipEmpty_Rifle		
+			single_shot		Weapon_AWP_TW.Single
+			special3			Default.Zoom			
+		}							
+									
+		// Weapon Sprite data is loaded by the Client DLL.							
+		TextureData							
+		{							
+			weapon						
+			{						
+					font		CSweaponsSmall		
+					character	R			
+			}						
+			weapon_s						
+			{						
+					font		CSweapons		
+					character	R			
+			}						
+			ammo						
+			{						
+					font		CSTypeDeath		
+					character		W		
+			}						
+			autoaim						
+			{						
+					file		sprites/crosshairs		
+					x			0	
+					y			48	
+					width		24		
+					height	24			
+			}						
+		}							
+		ModelBounds							
+		{							
+			Viewmodel						
+			{						
+				Mins	-26				
+				Maxs	32 10 0				
+			}						
+			World						
+			{						
+				Mins	-33				
+				Maxs	38 9 15				
+			}						
+		}			
+	}				
+	spray1
+	{
+		"printname"			"#CSO2_ITEM_NAME_awm_spray1"
+		"WorldSkin"			"models/weapons/w_models/w_snip_awp_new/w_awp_new_c_spray1"
+		"ViewSkin"			"models/weapons/v_models/snip_awp_new/v_awp_new_c_spray1"
+	}
+	camo1
+	{
+		"printname"			"#CSO2_ITEM_NAME_awm_camo1"
+		"WorldSkin"			"models/weapons/w_models/w_snip_awp_new/w_awp_new_b_camo1"
+		"ViewSkin"			"models/weapons/v_models/snip_awp_new/v_awp_new_b_camo1"
+	}
+	paint1
+	{
+		"printname"			"#CSO2_ITEM_NAME_awm_paint1"
+		"WorldSkin"			"models/weapons/w_models/w_snip_awp_new/w_awp_new_c_paint1"
+		"ViewSkin"			"models/weapons/v_models/snip_awp_new/v_awp_new_c_paint1"
+	}
+	camo2
+	{
+		"printname"			"#CSO2_ITEM_NAME_awm_camo2"
+		"WorldSkin"			"models/weapons/w_models/w_snip_awp_new/w_awp_new_b_camo2"
+		"ViewSkin"			"models/weapons/v_models/snip_awp_new/v_awp_new_b_camo2"
+	}
+	infernal1
+	{
+		"printname"			"#CSO2_ITEM_NAME_awm_infernal1"
+		"WorldSkin"			"models/weapons/w_models/w_snip_awp_new/w_awp_new_a_infernal1"
+		"ViewSkin"			"models/weapons/v_models/snip_awp_new/v_awp_new_a_infernal1"
+	}
+	chngold1
+	{
+		"printname"			"#CSO2_ITEM_NAME_awm_chngold1"
+		"WorldSkin"			"models/weapons/w_models/w_snip_awp_new/w_awp_new_s_chngold1"
+		"ViewSkin"			"models/weapons/v_models/snip_awp_new/v_awp_new_s_chngold1"
+	}
+	amethyst1
+	{
+		"printname"			"#CSO2_ITEM_NAME_awm_amethyst1"
+		"WorldSkin"			"models/weapons/w_models/w_snip_awp_new/w_awp_new_s_amethyst1"
+		"ViewSkin"			"models/weapons/v_models/snip_awp_new/v_awp_new_s_amethyst1"
+	}
+	nebula1
+	{
+		"printname"			"#CSO2_ITEM_NAME_awm_nebula"
+		"WorldSkin"			"models/weapons/w_models/w_snip_awp_new/w_awp_new_s_nebula1"
+		"ViewSkin"			"models/weapons/v_models/snip_awp_new/v_awp_new_s_nebula1"
+	}
+	gold1
+	{
+		"printname"			"#CSO2_ITEM_NAME_awm_gold1"
+		"WorldSkin"			"models/weapons/w_models/w_snip_awp_new/w_awp_new_s_gold1"
+		"ViewSkin"			"models/weapons/v_models/snip_awp_new/v_awp_new_s_gold1"
+	}
+	special
+	{
+		"printname"			"#CSO2_ITEM_NAME_awm_special"
+		"WorldSkin"			"models/weapons/w_models/w_snip_awp_new/w_awm_s_bluephoenix"
+		"ViewSkin"			"models/weapons/v_models/snip_awp_new/v_awm_s_bluephoenix"
+	}
+	honor
+	{
+		"printname"			"#CSO2_ITEM_NAME_awm_special"
+		"WorldSkin"			"models/weapons/w_models/w_snip_awp_new/w_awp_new_s_season4"
+		"ViewSkin"			"models/weapons/v_models/snip_awp_new/v_awp_new_s_season4"
+	}
+	lion
+	{
+		"printname"			"#CSO2_ITEM_NAME_awm_lion"
+		"WorldSkin"			"models/weapons/w_models/w_snip_awp_new/w_awp_new_a_lion1"
+		"ViewSkin"			"models/weapons/v_models/snip_awp_new/v_awp_new_a_lion1"
+	}
+}									
+

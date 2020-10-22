@@ -1,0 +1,222 @@
+WeaponData								
+{
+	default
+	{							
+		MaxPlayerSpeed			222			
+		WeaponType				Rifle		
+		FullAuto					1	
+		WeaponPrice				3000		
+		BigcityWeaponPrice			5200
+		WeaponArmorRatio			1.56			
+		CrosshairMinDistance		4				
+		CrosshairDeltaDistance	4					
+		Team 						TERRORIST
+		BuiltRightHanded 			0			
+		PlayerAnimationExtension 	ak					
+		MuzzleFlashScale			1.6			
+		MuzzleFlashStyle			CS_MUZZLEFLASH_X			
+		CanEquipWithShield		0				
+								
+								
+		// Weapon characteristics:						
+		Penetration			2			
+		Damage				34		
+		Range					8192	
+		RangeModifier			0.98			
+		Bullets				1		
+		CycleTime				0.099		
+		AccuracyDivisor		220				
+		AccuracyOffset		0.27	// "0.35"			
+		MaxInaccuracy			1.18			
+		TimeToIdle			0.55	// "1.9"		
+		IdleInterval			20			
+								
+		// New accuracy model parameters						
+		Spread					0.0006	
+		InaccuracyCrouch			0.0066			
+		InaccuracyStand			0.0089			
+		InaccuracyJump			0.43			
+		InaccuracyLand			0.085			
+		InaccuracyLadder			0.1			
+		InaccuracyFire			0.01			
+		InaccuracyMove			0.09			
+								
+		RecoveryTimeCrouch		0.34868				
+		RecoveryTimeStand			0.48815			
+								
+		// Weapon data is loaded by both the Game and Client DLLs.						
+		printname					#CSO2_ITEM_NAME_ak12	
+		viewmodel					models/weapons/v_ak12.mdl	
+		playermodel				models/weapons/w_ak12.mdl		
+								
+		anim_prefix			anim			
+		bucket				0		
+		bucket_position		0				
+								
+		clip_size				30		
+								
+		primary_ammo			BULLET_PLAYER_762MM			
+		secondary_ammo		None		primary_ammo_InvenCategory			RIFLE		secondary_ammo_InvenCategory			None				
+								
+		weight				25		
+		item_flags			0			
+								
+		// Spread						
+		SpreadFunction			Rifle			
+		BaseAccuracy				0.2		
+		DefaultSpread				0.026		
+		DefaultSpreadOffset		0				
+		RunSpread					0.06	
+		RunSpreadOffset			0.02			
+		MoveSpread				0.022		
+		MoveSpreadOffset			0			
+		JumpSpread				0.4		
+		JumpSpreadOffset			0.04			
+		DuckingSpread				0.0255		
+		DuckingSpreadOffset		0				
+								
+		Kickback						
+		{						
+			Default_Kickback					
+			{					
+				up_base			0.85	
+				lateral_base		0.275		
+				up_modifier		0.16		
+				lateral_modifier	0.027			
+				up_max			5.6	
+				lateral_max		1.6		
+				direction_change	8			
+			}					
+			Jump_Kickback					
+			{					
+				up_base			2	
+				lateral_base		1		
+				up_modifier		0.7		
+				lateral_modifier	0.5			
+				up_max			9	
+				lateral_max		6		
+				direction_change	5			
+			}					
+			Ducking_Kickback					
+			{					
+				up_base			0.75	
+				lateral_base		0.31		
+				up_modifier		0.15		
+				lateral_modifier	0.024			
+				up_max			5.3	
+				lateral_max		1.5		
+				direction_change	9			
+			}					
+			Move_Kickback					
+			{					
+				up_base			1.4	
+				lateral_base		0.45		
+				up_modifier		0.225		
+				lateral_modifier	0.05			
+				up_max			6.4	
+				lateral_max		2.5		
+				direction_change	7			
+			}					
+		}						
+								
+		// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)						
+		SoundData						
+		{						
+			single_shot		Weapon_ak12.Single			
+		}						
+								
+		// Weapon Sprite data is loaded by the Client DLL.						
+		TextureData						
+		{						
+			//Weapon Select Images					
+			weapon					
+			{					
+					font		CSweaponsSmall	
+					character	B		
+			}					
+			weapon_s					
+			{					
+					font		CSweapons	
+					character	B		
+			}					
+			ammo					
+			{					
+					font		CSTypeDeath	
+					character		V	
+			}					
+			crosshair					
+			{					
+					file		sprites/crosshairs	
+					x			0
+					y			48
+					width		24	
+					height	24		
+			}					
+			autoaim					
+			{					
+					file		sprites/crosshairs	
+					x			0
+					y			48
+					width		24	
+					height	24		
+			}					
+		}						
+		ModelBounds						
+		{						
+			Viewmodel					
+			{					
+				Mins	-25			
+				Maxs	30 11 0			
+			}					
+			World					
+			{					
+				Mins	-27			
+				Maxs	30 9 7			
+			}					
+		}
+		MuzzleEffects
+		{
+			Muzzle0		muzzle_ak47
+		}
+	}							
+	basic
+	{
+		"printname"				"#CSO2_ITEM_NAME_AK12_BASIC"
+	}
+	spray1
+	{
+		"printname"			"#CSO2_ITEM_NAME_ak12_spray1"
+		"WorldSkin"			"models/weapons/w_models/w_rif_ak12/w_ak12_c_spray1"
+		"ViewSkin"			"models/weapons/v_models/rif_ak12/v_ak12_c_spray1"
+	}
+	camo1
+	{
+		"printname"			"#CSO2_ITEM_NAME_ak12_camo1"
+		"WorldSkin"			"models/weapons/w_models/w_rif_ak12/w_ak12_b_camo1"
+		"ViewSkin"			"models/weapons/v_models/rif_ak12/v_ak12_b_camo1"
+	}
+	amethyst1
+	{
+		"printname"			"#CSO2_ITEM_NAME_ak12_amethyst1"
+		"WorldSkin"			"models/weapons/w_models/w_rif_ak12/w_ak12_s_amethyst1"
+		"ViewSkin"			"models/weapons/v_models/rif_ak12/v_ak12_s_amethyst1"
+	}
+	xmas
+	{
+		"printname"			"#CSO2_ITEM_NAME_ak12_xmas1"
+		"WorldSkin"			"models/weapons/w_models/w_rif_ak12/w_ak12_s_xmas01"
+		"ViewSkin"			"models/weapons/v_models/rif_ak12/v_ak12_s_xmas01"
+	}
+	gold1
+	{
+		"printname"			"#CSO2_ITEM_NAME_ak12_gold1"
+		"WorldSkin"			"models/weapons/w_models/w_rif_ak12/w_ak12_s_gold1"
+		"ViewSkin"			"models/weapons/v_models/rif_ak12/v_ak12_s_gold1"
+	}
+	blackmamba1
+	{
+		"printname"			"#CSO2_ITEM_NAME_ak12_blackmamba1"
+		"WorldSkin"			"models/weapons/w_models/w_rif_ak12/w_ak12_s_blackmamba1"
+		"ViewSkin"			"models/weapons/v_models/rif_ak12/v_ak12_s_blackmamba1"
+	}
+}

@@ -2,6 +2,7 @@ package inventory
 
 import (
 	. "github.com/KouKouChan/CSO2-Server/blademaster/typestruct"
+	. "github.com/KouKouChan/CSO2-Server/configure"
 	. "github.com/KouKouChan/CSO2-Server/kerlong"
 )
 
@@ -10,6 +11,9 @@ var (
 )
 
 func BuildInventoryInfo(u *User) []byte {
+	if Conf.UnlockAllWeapons == 1 {
+		return FullInventoryReply
+	}
 	buf := make([]byte, 5+u.Inventory.NumOfItem*19)
 	offset := 0
 	WriteUint16(&buf, u.Inventory.NumOfItem, &offset)

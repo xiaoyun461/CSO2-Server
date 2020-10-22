@@ -27,6 +27,10 @@ func OnLogin(seq *uint8, dataPacket *PacketData, client net.Conn) {
 	}
 
 	u, result := GetUserByLogin(pkt.NexonUsername, pkt.PassWd)
+	// var u User
+	// dataEncoded, _ := ioutil.ReadFile("userdata.txt")
+	// json.Unmarshal(dataEncoded, &u)
+	// result := 0
 	switch result {
 	case USER_PASSWD_ERROR:
 		DebugInfo(2, "Error : User", string(pkt.NexonUsername), "from", client.RemoteAddr().String(), "login failed with error password !")
@@ -87,13 +91,8 @@ func OnLogin(seq *uint8, dataPacket *PacketData, client net.Conn) {
 	SendPacket(rst, u.CurrentConnection)
 
 	//Inventory部分
-	if Conf.UnlockAllWeapons == 0 {
-		rst = BytesCombine(BuildHeader(u.CurrentSequence, PacketTypeInventory_Create),
-			BuildInventoryInfo(u))
-	} else {
-		rst = BytesCombine(BuildHeader(u.CurrentSequence, PacketTypeInventory_Create),
-			FullInventoryReply)
-	}
+	rst = BytesCombine(BuildHeader(u.CurrentSequence, PacketTypeInventory_Create),
+		BuildInventoryInfo(u))
 	SendPacket(rst, u.CurrentConnection)
 
 	//unlock
@@ -117,6 +116,11 @@ func OnLogin(seq *uint8, dataPacket *PacketData, client net.Conn) {
 	//ServerList部分
 	OnServerList(u.CurrentConnection)
 
+	// data, _ := json.Marshal(u)
+	// err := ioutil.WriteFile("userdata.txt", data, 0644)
+	// if err != nil {
+	// 	panic(err)
+	// }
 }
 
 //BuildUserStart 返回结构

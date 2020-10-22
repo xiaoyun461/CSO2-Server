@@ -1,0 +1,221 @@
+WeaponData								
+{		
+	default
+	{						
+		MaxPlayerSpeed			220			
+		WeaponType				Rifle		
+		FullAuto					1	
+		WeaponPrice				3500		
+		BigcityWeaponPrice			8800
+		WeaponArmorRatio			1.6			
+		CrosshairMinDistance		3				
+		CrosshairDeltaDistance	3					
+		Team						ANY
+		BuiltRightHanded			0			
+		PlayerAnimationExtension	scarh					
+		MuzzleFlashScale			1.3			
+		MuzzleFlashStyle			CS_MUZZLEFLASH_X			
+		CanEquipWithShield		0				
+								
+		// Weapon characteristics:						
+		Penetration				2		
+		Damage					36	
+		Range						8192
+		RangeModifier				0.96		
+		Bullets					1	
+		CycleTime					0.095	
+		AccuracyDivisor			230			
+		AccuracyOffset			0.25			
+		MaxInaccuracy				1		
+		TimeToIdle				0.7	// "1.9"	
+		IdleInterval				20		
+								
+		// Weapon data is loaded by both the Game and Client DLLs.						
+		printname					#CSO2_ITEM_NAME_SCAR_H	
+		viewmodel					models/weapons/v_scarh.mdl	
+		playermodel				models/weapons/w_scarh.mdl		
+								
+		anim_prefix				anim		
+		bucket					0	
+		bucket_position			0			
+								
+		clip_size					20	
+								
+		primary_ammo				BULLET_PLAYER_762MM_NATO		
+		secondary_ammo			None			
+		primary_ammo_InvenCategory			RIFLE
+		secondary_ammo_InvenCategory			None
+		
+		weight					25	
+		item_flags				0		
+								
+		// Spread						
+		SpreadFunction			Rifle			
+		BaseAccuracy				0.2		
+								
+		DefaultSpread				0.02		
+		DefaultSpreadOffset			0.005			
+		MoveSpread				0.02		
+		MoveSpreadOffset			0.005			
+		DuckingSpread				0.02		
+		DuckingSpreadOffset			0.005			
+		JumpSpread				0.04		
+		JumpSpreadOffset			0.035			
+		RunSpread					0.05	
+		RunSpreadOffset			0.001			
+								
+		ReloadDelay				0.1		
+								
+		// 줌 관련						
+		ZoomRate					0.2	
+		UnZoomRate				0.15		
+		ZoomFov					50	
+		ZoomDelay					0.3	
+		// 줌 모드일 때 연사 시간						
+		SecondCycleTime			0.135			
+								
+		// 총기 반동						
+		//"up_base"					위쪽 반동 기본값	
+		//"lateral_base"			좌우 반동 기본값			
+		//"up_modifier"				위쪽 반동에 총 발사회수마다 곱해지는 값		
+		//"lateral_modifier"		좌우 반동에 총 발사회수마다 곱해지는 값				
+		//"up_max"					위쪽 최대 반동값	
+		//"lateral_max"				좌우 최대 반동값		
+		//"direction_change"		좌우측 반동 방향이 바뀔 확률 = 1 / (direction_change + 1). 0이면 매 발사시마다 방향바뀜				
+		Kickback						
+		{						
+			Default_Kickback					
+			{					
+				up_base			0.63	
+				lateral_base		0.35		
+				up_modifier		0.19		
+				lateral_modifier	0.01			
+				up_max			3.8	
+				lateral_max		2.2		
+				direction_change	8			
+			}					
+			Jump_Kickback					
+			{					
+				up_base			1.25	
+				lateral_base		0.45		
+				up_modifier		0.22		
+				lateral_modifier	0.18			
+				up_max			5.5	
+				lateral_max		4		
+				direction_change	5			
+			}					
+			Ducking_Kickback					
+			{					
+				up_base			0.59	
+				lateral_base		0.32		
+				up_modifier		0.16		
+				lateral_modifier	0.01			
+				up_max			3.4	
+				lateral_max		1.8		
+				direction_change	8			
+			}					
+			Move_Kickback					
+			{					
+				up_base			0.7	
+				lateral_base		0.35		
+				up_modifier		0.2		
+				lateral_modifier	0.05			
+				up_max			4	
+				lateral_max		2		
+				direction_change	7			
+			}					
+		}						
+								
+		// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)						
+		SoundData						
+		{						
+			//"reload"			Default.Reload		
+			//"empty"				Default.ClipEmpty_Rifle	
+			single_shot		Weapon_scarh.Single			
+		}						
+								
+		// Weapon Sprite data is loaded by the Client DLL.						
+		TextureData						
+		{						
+			weapon					
+			{					
+					font		CSweaponsSmall	
+					character	E		
+			}					
+			weapon_s					
+			{					
+					font		CSweapons	
+					character	E		
+			}					
+			ammo					
+			{					
+					font		CSTypeDeath	
+					character		N	// "V"
+			}					
+			zoom					
+			{					
+					file		sprites/crosshairs	
+					x			0
+					y			48
+					width		24	
+					height	24		
+			}					
+			autoaim					
+			{					
+					file		sprites/crosshairs	
+					x			0
+					y			48
+					width		24	
+					height	24		
+			}					
+		}						
+		ModelBounds						
+		{						
+			Viewmodel					
+			{					
+				Mins	-27			
+				Maxs	25 12 -1			
+			}					
+			World					
+			{					
+				Mins	-17			
+				Maxs	23 4 10			
+			}					
+		}		
+	}				
+	basic
+	{
+		"printname"				"#CSO2_ITEM_NAME_SCAR_H_BASIC"
+	}
+	spray1
+	{
+		"printname"			"#CSO2_ITEM_NAME_scarh_spray1"
+		"WorldSkin"			"models/weapons/w_models/w_rif_scarh/w_scarh_c_spray1"
+		"ViewSkin"			"models/weapons/v_models/rif_scarh/v_scarh_c_spray1"
+	}
+	camo1
+	{
+		"printname"			"#CSO2_ITEM_NAME_scarh_camo1"
+		"WorldSkin"			"models/weapons/w_models/w_rif_scarh/w_scarh_b_camo1"
+		"ViewSkin"			"models/weapons/v_models/rif_scarh/v_scarh_b_camo1"
+	}
+	silver1
+	{
+		"printname"			"#CSO2_ITEM_NAME_scarh_silver1"
+		"WorldSkin"			"models/weapons/w_models/w_rif_scarh/w_scarh_a_silver"
+		"ViewSkin"			"models/weapons/v_models/rif_scarh/v_scarh_a_silver"
+	}
+	lion1
+	{
+		"printname"			"#CSO2_ITEM_NAME_scarH_lion1"
+		"WorldSkin"			"models/weapons/w_models/w_rif_scarh/w_scarh_a_lion1"
+		"ViewSkin"			"models/weapons/v_models/rif_scarh/v_scarh_a_lion1"
+	}
+	athena
+	{
+		"printname"			"#CSO2_ITEM_NAME_scarH_athena"
+		"WorldSkin"			"models/weapons/w_models/w_rif_scarh/w_scarh_s_athena"
+		"ViewSkin"			"models/weapons/v_models/rif_scarh/v_scarh_s_athena"
+	}
+}								
+

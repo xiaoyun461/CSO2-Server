@@ -1,0 +1,184 @@
+WeaponData									
+{
+	default
+	{						
+		MaxPlayerSpeed 		219					
+		WeaponType 			Rifle				
+		FullAuto				0			
+		WeaponPrice			1750				
+		BigcityWeaponPrice		2500
+		WeaponArmorRatio		1.8					
+		CrosshairMinDistance		5					
+		CrosshairDeltaDistance	3						
+		Team				ANY			
+		BuiltRightHanded		0					
+		PlayerAnimationExtension	m1903a3
+		"LobbyAnimationExtension"	m1903a3
+		MuzzleFlashScale		1.1					
+								
+		CanEquipWithShield		0					
+									
+									
+		// Weapon characteristics:							
+		Penetration			3				
+		Damage			65				
+		Range				8192			
+		RangeModifier			0.98				
+		Bullets			1				
+		CycleTime			1.1
+		AccuracyDivisor		-1					
+		AccuracyOffset		0					
+		MaxInaccuracy			0				
+		TimeToIdle			1.26	// "1.8"			
+		IdleInterval			60				
+									
+		// New accuracy model parameters							
+		Spread					0.3	// 0.003
+		InaccuracyCrouch			0.02378				
+		InaccuracyStand			0.0317				
+		InaccuracyJump			0.38195				
+		InaccuracyLand			0.03819				
+		InaccuracyLadder			0.09549				
+		InaccuracyFire			0.06667				
+		InaccuracyMove			0.19097				
+									 
+		SpreadAlt					0.3		// 0.0003
+		InaccuracyCrouchAlt		0.003					
+		InaccuracyStandAlt		0.004					
+		InaccuracyJumpAlt			0.38195				
+		InaccuracyLandAlt			0.03819				
+		InaccuracyLadderAlt		0.09549					
+		InaccuracyFireAlt			0.06667				
+		InaccuracyMoveAlt			0.19097				
+									 
+		RecoveryTimeCrouch		0.17681					
+		RecoveryTimeStand			0.24753		
+
+
+		// Spread						
+		SpreadFunction			Rifle			
+		BaseAccuracy				0.2		
+		DefaultSpread				0.0255		
+		DefaultSpreadOffset		0				
+		RunSpread					0.06	
+		RunSpreadOffset			0.02			
+		MoveSpread				0.022		
+		MoveSpreadOffset			0			
+		JumpSpread				0.4		
+		JumpSpreadOffset			0.04			
+		DuckingSpread				0.0255		
+		DuckingSpreadOffset		0				
+								
+		Kickback						
+		{						
+			Default_Kickback					
+			{					
+				up_base			5.5
+				lateral_base		0.275		
+				up_modifier		0.165		
+				lateral_modifier	0.0275			
+				up_max			5.5
+				lateral_max		1.65		
+				direction_change	8			
+			}					
+			Jump_Kickback					
+			{					
+				up_base			7	
+				lateral_base		1		
+				up_modifier		0.5		
+				lateral_modifier	0.35			
+				up_max			10	
+				lateral_max		7		
+				direction_change	5			
+			}					
+			Ducking_Kickback					
+			{					
+				up_base			3.5
+				lateral_base		0.34		
+				up_modifier		0.15		
+				lateral_modifier	0.024			
+				up_max			3.5
+				lateral_max		1.5		
+				direction_change	9			
+			}					
+			Move_Kickback					
+			{					
+				up_base			6
+				lateral_base		0.45		
+				up_modifier		0.225		
+				lateral_modifier	0.05			
+				up_max			6
+				lateral_max		2.5		
+				direction_change	7			
+			}					
+		}						
+		
+									
+		// Weapon data is loaded by both the Game and Client DLLs.							
+		printname			#CSO2_ITEM_NAME_mosinnagant
+		viewmodel			models/weapons/v_mosinnagant.mdl				
+		playermodel			models/weapons/w_mosinnagant.mdl				
+									
+		anim_prefix			anim				
+		bucket			0				
+		bucket_position		0					
+									
+		clip_size			5
+									
+		primary_ammo			BULLET_PLAYER_762MM	
+		secondary_ammo		None		primary_ammo_InvenCategory			RIFLE		secondary_ammo_InvenCategory			None					
+									
+		weight			30				
+		item_flags			0				
+									
+		// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)							
+		SoundData							
+		{							
+			//"reload"			Weapon_AWP.Reload			
+			//"empty"				Default.ClipEmpty_Rifle		
+			single_shot		Weapon_mosinnagant.Single				
+		}							
+									
+		// Weapon Sprite data is loaded by the Client DLL.							
+		TextureData							
+		{							
+			weapon						
+			{						
+					font		CSweaponsSmall		
+					character	N			
+			}						
+			weapon_s						
+			{						
+					font		CSweapons		
+					character	N			
+			}						
+			ammo						
+			{						
+					font		CSTypeDeath		
+					character		V		
+			}						
+			autoaim						
+			{						
+					file		sprites/crosshairs		
+					x			0	
+					y			48	
+					width		24		
+					height	24			
+			}						
+		}							
+		ModelBounds							
+		{							
+			Viewmodel						
+			{						
+				Mins	-27				
+				Maxs	27 12 -1				
+			}						
+			World						
+			{						
+				Mins	-27				
+				Maxs	32 8 12				
+			}						
+		}	
+	}					
+}									
+

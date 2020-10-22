@@ -8,9 +8,11 @@ import (
 	"os/signal"
 	"strconv"
 	"syscall"
+	"time"
 
 	. "github.com/KouKouChan/CSO2-Server/blademaster/Exp"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/achievement"
+	. "github.com/KouKouChan/CSO2-Server/blademaster/core/automatch"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/chat"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/holepunch"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/host"
@@ -28,9 +30,9 @@ import (
 	. "github.com/KouKouChan/CSO2-Server/database/redis"
 	. "github.com/KouKouChan/CSO2-Server/database/sqlite"
 	. "github.com/KouKouChan/CSO2-Server/kerlong"
-	. "github.com/KouKouChan/CSO2-Server/register"
 	. "github.com/KouKouChan/CSO2-Server/servermanager"
 	. "github.com/KouKouChan/CSO2-Server/verbose"
+	. "github.com/KouKouChan/CSO2-Server/web/register"
 	"github.com/garyburd/redigo/redis"
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -90,6 +92,8 @@ func main() {
 
 	//read configure
 	Conf.InitConf(path)
+
+	InitCSV(path)
 
 	//read locales
 	if Locales.InitLocales(path) {
@@ -167,6 +171,9 @@ func main() {
 
 	//Start TCP Server
 	go TCPServer(server)
+
+	//Start BroadCast Server
+	go BroadcastRoomList()
 
 	//Start Register Server
 	if Conf.EnableRegister != 0 {
@@ -269,9 +276,8 @@ func RecvMessage(client net.Conn) {
 			OnChat(&dataPacket, client)
 		case PacketTypeAchievement:
 			OnAchievement(&dataPacket, client)
-		case PacketTypeShop:
-			OnShopRequest(&dataPacket, client)
-		//case PacketTypeAutomatch:
+		case PacketTypeAutomatch:
+			OnAutoMatch(&dataPacket, client)
 		//case PacketTypeFriend:
 		default:
 			DebugInfo(2, "Unknown packet", dataPacket.Id, "from", client.RemoteAddr().String())
@@ -283,4 +289,18 @@ close:
 	OnLeaveRoom(client, true)
 	DelUserWithConn(client)
 	return
+}
+
+func BroadcastRoomList() {
+	for {
+		timer := time.NewTimer(6 * time.Second)
+		<-timer.C
+
+		for _, v := range UsersManager.Users {
+			if v != nil && v.CurrentChannelIndex > 0 && v.CurrentRoomId <= 0 {
+				OnBroadcastRoomList(v.CurrentChannelServerIndex, v.CurrentChannelIndex, v)
+			}
+		}
+
+	}
 }
