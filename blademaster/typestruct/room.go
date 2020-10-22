@@ -81,6 +81,7 @@ const (
 	OnCloseResultWindow       = 7
 	SetUserTeamRequest        = 9
 	GameStartCountdownRequest = 19
+	Feedback                  = 30
 
 	//游戏模式
 	ModeOriginal            = 1

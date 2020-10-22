@@ -46,8 +46,8 @@ func OnHost(p *PacketData, client net.Conn) {
 			OnHostSetUserBuyMenu(p, client)
 		case TeamChanging:
 			OnChangingTeam(p, client)
-		case ItemUsing:
-			//log.Println("Recived a use item packet from", client.RemoteAddr().String())
+		//case ItemUsing:
+		//log.Println("Recived a use item packet from", client.RemoteAddr().String())
 		case UserKillOne:
 			OnHostKillPacket(p, client)
 		case UserDeath:
@@ -58,8 +58,8 @@ func OnHost(p *PacketData, client net.Conn) {
 			OnHostRevivedPacket(p, client)
 		case GameScore:
 			OnHostGameScorePacket(p, client)
-		case HostUnk00:
-			//fmt.Println("TeamWinPacket", p.data[:p.datalen], "from", client.RemoteAddr().String())
+		//case HostUnk00:
+		//fmt.Println("TeamWinPacket", p.data[:p.datalen], "from", client.RemoteAddr().String())
 		default:
 			DebugInfo(2, "Unknown host packet", pkt.InHostType, "from", client.RemoteAddr().String())
 		}

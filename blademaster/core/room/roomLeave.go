@@ -123,6 +123,6 @@ func BuildSetHost(id uint32) []byte {
 	buf := make([]byte, 5)
 	offset := 0
 	WriteUint32(&buf, id, &offset)
-	buf[4] = 0
+	buf[4] = 1
 	return buf
 }

@@ -53,6 +53,9 @@ type (
 		InRoomType uint8
 	}
 
+	InShopPacket struct {
+		InShopType uint8
+	}
 	//InRoomListRequestPacket 房间列表请求，用于请求频道
 	InRoomListRequestPacket struct {
 		ChannelServerIndex uint8
@@ -329,6 +332,7 @@ const (
 	PacketTypeHost             = 68
 	PacketTypePlayerInfo       = 69
 	PacketTypeUdp              = 70
+	PacketTypeShop             = 72
 	PacketTypeBan              = 74
 	PacketTypeOption           = 76
 	PacketTypeFavorite         = 77
@@ -430,6 +434,16 @@ func (p *PacketData) PraseFavoritePacket(dest *InFavoritePacket) bool {
 		return false
 	}
 	dest.PacketType = ReadUint8(p.Data, &p.CurOffset)
+	return true
+}
+
+func (p *PacketData) PraseShopPacket(dest *InShopPacket) bool {
+	// id + type = 2 bytes
+	if p.Length < 2 ||
+		dest == nil {
+		return false
+	}
+	dest.InShopType = ReadUint8(p.Data, &p.CurOffset)
 	return true
 }
 

@@ -20,6 +20,7 @@ import (
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/playerinfo"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/quick"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/room"
+	. "github.com/KouKouChan/CSO2-Server/blademaster/core/shop"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/user"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/version"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/typestruct"
@@ -268,6 +269,8 @@ func RecvMessage(client net.Conn) {
 			OnChat(&dataPacket, client)
 		case PacketTypeAchievement:
 			OnAchievement(&dataPacket, client)
+		case PacketTypeShop:
+			OnShopRequest(&dataPacket, client)
 		//case PacketTypeAutomatch:
 		//case PacketTypeFriend:
 		default:
