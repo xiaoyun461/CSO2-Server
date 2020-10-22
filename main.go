@@ -278,6 +278,8 @@ func RecvMessage(client net.Conn) {
 			OnAchievement(&dataPacket, client)
 		case PacketTypeAutomatch:
 			OnAutoMatch(&dataPacket, client)
+		case PacketTypeShop:
+			OnShopRequest(&dataPacket, client)
 		//case PacketTypeFriend:
 		default:
 			DebugInfo(2, "Unknown packet", dataPacket.Id, "from", client.RemoteAddr().String())

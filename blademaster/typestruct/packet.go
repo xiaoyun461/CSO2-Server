@@ -188,7 +188,7 @@ type (
 
 	InFeedbackPacket struct {
 		unk00     uint16
-		ErrorCode uint8
+		ErrorCode uint16
 		unk01     uint32
 	}
 
