@@ -186,6 +186,12 @@ type (
 		PassWord      []byte
 	}
 
+	InFeedbackPacket struct {
+		unk00     uint16
+		ErrorCode uint8
+		unk01     uint32
+	}
+
 	InChangeTeamPacket struct {
 		NewTeam uint8
 	}
@@ -657,6 +663,18 @@ func (p *PacketData) PraseRoomCountdownPacket(dest *InRoomCountdownPacket) bool 
 		}
 		dest.Count = ReadUint8(p.Data, &p.CurOffset)
 	}
+	return true
+}
+
+func (p *PacketData) PraseRoomFeedbackPacket(dest *InFeedbackPacket) bool {
+	//id + type + unk00 + code + unk01 = 10 bytes
+	if p.Length < 10 ||
+		dest == nil {
+		return false
+	}
+	dest.unk00 = ReadUint16(p.Data, &p.CurOffset)
+	dest.ErrorCode = ReadUint16(p.Data, &p.CurOffset)
+	dest.unk01 = ReadUint32(p.Data, &p.CurOffset)
 	return true
 }
 
