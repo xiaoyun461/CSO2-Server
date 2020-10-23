@@ -69,7 +69,8 @@ type (
 		CurrentAssistNum          uint16      `json:"-"`
 		NetInfo                   UserNetInfo `json:"-"`
 		//仓库信息
-		Inventory UserInventory
+		Inventory   UserInventory
+		WeaponKills map[uint32]uint32
 
 		UserMutex *sync.Mutex `json:"-"`
 	}
@@ -483,6 +484,7 @@ func GetNewUser() User {
 			0,
 		},
 		CreateNewUserInventory(), //仓库
+		map[uint32]uint32{},
 		&mutex,
 	}
 }
@@ -596,5 +598,20 @@ func (u *User) AddWins() {
 	defer u.UserMutex.Unlock()
 	if u.Wins < math.MaxUint32 {
 		u.Wins++
+	}
+}
+
+func (u *User) CountWeaponKill(itemid uint32) {
+	if u == nil {
+		return
+	}
+	u.UserMutex.Lock()
+	defer u.UserMutex.Unlock()
+	if _, ok := u.WeaponKills[itemid]; ok {
+		if u.WeaponKills[itemid] < math.MaxUint32 {
+			u.WeaponKills[itemid]++
+		}
+	} else {
+		u.WeaponKills[itemid] = 1
 	}
 }

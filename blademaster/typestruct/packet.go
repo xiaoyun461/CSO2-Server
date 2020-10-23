@@ -244,6 +244,43 @@ type (
 		PlayerTeam uint8  //待定
 	}
 
+	InWeaponPointPacket struct {
+		KillType uint8
+
+		KillerID             uint32
+		KillerWeaponID       uint32
+		KillerTeam           uint8
+		KillerClientType     uint8
+		KillerCharacterType  uint8
+		KillerCharacterClass uint32
+
+		DeadType             uint8
+		VictimID             uint32
+		VictimWeaponID       uint32
+		VictimTeam           uint8
+		VictimClientType     uint8
+		VictimCharacterType  uint8
+		VictimCharacterClass uint32
+
+		KillerX uint32
+		KillerY uint32
+		KillerZ uint32
+
+		VictimX uint32
+		VictimY uint32
+		VictimZ uint32
+
+		ArraySize uint16 //待定
+		Array     []InWeaponPointArray
+	}
+
+	InWeaponPointArray struct {
+		unk00 uint8
+		unk01 uint32
+		unk02 uint32
+		unk03 uint8
+	}
+
 	InDeathPacket struct {
 		DeadID     uint32
 		Unk00      uint32 //一直是0
@@ -820,6 +857,49 @@ func (p *PacketData) PraseInKillPacket(dest *InKillPacket) bool {
 	dest.KillType = ReadUint8(p.Data, &p.CurOffset)
 	dest.KillNum = ReadUint16(p.Data, &p.CurOffset)
 	dest.PlayerTeam = ReadUint8(p.Data, &p.CurOffset)
+	return true
+}
+
+func (p *PacketData) PraseInWeaponPointPacket(dest *InWeaponPointPacket) bool {
+	//id + type + ... = 58 bytes
+	if p.Length < 58 ||
+		dest == nil {
+		return false
+	}
+	dest.KillType = ReadUint8(p.Data, &p.CurOffset)
+	dest.KillerID = ReadUint32(p.Data, &p.CurOffset)
+	dest.KillerWeaponID = ReadUint32(p.Data, &p.CurOffset)
+	dest.KillerTeam = ReadUint8(p.Data, &p.CurOffset)
+	dest.KillerClientType = ReadUint8(p.Data, &p.CurOffset)
+	dest.KillerCharacterType = ReadUint8(p.Data, &p.CurOffset)
+	dest.KillerCharacterClass = ReadUint32(p.Data, &p.CurOffset)
+
+	dest.DeadType = ReadUint8(p.Data, &p.CurOffset)
+	dest.VictimID = ReadUint32(p.Data, &p.CurOffset)
+	dest.VictimWeaponID = ReadUint32(p.Data, &p.CurOffset)
+	dest.VictimTeam = ReadUint8(p.Data, &p.CurOffset)
+	dest.VictimClientType = ReadUint8(p.Data, &p.CurOffset)
+	dest.VictimCharacterType = ReadUint8(p.Data, &p.CurOffset)
+	dest.VictimCharacterClass = ReadUint32(p.Data, &p.CurOffset)
+
+	dest.KillerX = ReadUint32(p.Data, &p.CurOffset)
+	dest.KillerY = ReadUint32(p.Data, &p.CurOffset)
+	dest.KillerZ = ReadUint32(p.Data, &p.CurOffset)
+	dest.VictimX = ReadUint32(p.Data, &p.CurOffset)
+	dest.VictimY = ReadUint32(p.Data, &p.CurOffset)
+	dest.VictimZ = ReadUint32(p.Data, &p.CurOffset)
+
+	dest.ArraySize = ReadUint16(p.Data, &p.CurOffset)
+	dest.Array = make([]InWeaponPointArray, dest.ArraySize)
+
+	for i := 0; i < int(dest.ArraySize); i++ {
+		var tmp InWeaponPointArray
+		tmp.unk00 = ReadUint8(p.Data, &p.CurOffset)
+		tmp.unk01 = ReadUint32(p.Data, &p.CurOffset)
+		tmp.unk02 = ReadUint32(p.Data, &p.CurOffset)
+		tmp.unk03 = ReadUint8(p.Data, &p.CurOffset)
+		dest.Array = append(dest.Array, tmp)
+	}
 	return true
 }
 

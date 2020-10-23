@@ -9,6 +9,7 @@ import (
 
 const (
 	DataCheck    = 1 //也许是
+	WeaponsPoint = 3
 	UserKillOne  = 7
 	UserDeath    = 8
 	UserAssist   = 9
@@ -49,6 +50,8 @@ func OnHost(p *PacketData, client net.Conn) {
 			OnChangingTeam(p, client)
 		case ItemUsing:
 			OnHostItemUsing(p, client)
+		case WeaponsPoint:
+			OnHostWeaponPoint(p, client)
 		case UserKillOne:
 			OnHostKillPacket(p, client)
 		case UserDeath:

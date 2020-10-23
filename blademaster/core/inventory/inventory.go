@@ -63,7 +63,10 @@ func BuildDefaultInventoryInfo() []byte {
 	return buf[:offset]
 }
 
-func BuildUnlockReply() []byte {
+func BuildUnlockReply(u *User) []byte {
+	if u == nil {
+		return []byte{}
+	}
 	buf := make([]byte, 4096)
 	offset := 0
 	WriteUint8(&buf, 1, &offset)                            //type ?
@@ -74,6 +77,7 @@ func BuildUnlockReply() []byte {
 		WriteUint8(&buf, v.CostType, &offset)
 		WriteUint32(&buf, v.Price, &offset)
 	}
+
 	WriteUint16(&buf, 1, &offset) //num of weapons
 
 	WriteUint32(&buf, 2, &offset) //前置
@@ -89,6 +93,29 @@ func BuildUnlockReply() []byte {
 
 	return buf[:offset]
 }
+
+// func BuildWeaponKillNum(u *User) []byte {
+// 	if u == nil {
+// 		return []byte{}
+// 	}
+// 	buf := make([]byte, 4096)
+// 	offset := 0
+// 	count := 0
+// 	WriteUint16(&buf, uint16(count), &offset)
+// 	for _, v := range UnlockFullList {
+// 		if _, ok := u.WeaponKills[v.Itemid]; ok && u.WeaponKills[v.Itemid] > 0 {
+// 			count++
+// 			WriteUint32(&buf, 2, &offset) //前置
+// 			WriteUint32(&buf, 1, &offset) //当前
+// 			WriteUint32(&buf, 2, &offset) //杀敌数
+// 			WriteUint16(&buf, 1, &offset)
+// 			WriteUint16(&buf, 1, &offset)
+// 			WriteUint16(&buf, 1, &offset)
+// 		}
+// 	}
+// 	return buf[:offset]
+
+// }
 
 func BuildDefaultUnlockReply() []byte {
 	return []byte{0x01, 0x4B, 0x00, 0x01, 0x00, 0x00,

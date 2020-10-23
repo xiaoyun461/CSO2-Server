@@ -97,7 +97,7 @@ func OnLogin(seq *uint8, dataPacket *PacketData, client net.Conn) {
 	SendPacket(rst, u.CurrentConnection)
 
 	//unlock
-	rst = BytesCombine(BuildHeader(u.CurrentSequence, PacketTypeUnlock), BuildDefaultUnlockReply())
+	rst = BytesCombine(BuildHeader(u.CurrentSequence, PacketTypeUnlock), BuildUnlockReply(u))
 	SendPacket(rst, u.CurrentConnection)
 
 	//偏好装备
