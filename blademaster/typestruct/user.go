@@ -11,8 +11,8 @@ import (
 type (
 	User struct {
 		//个人信息
-		Userid               uint32
-		UserName             []byte //暂时两个name使用一个值
+		Userid               uint32 `json:"-"`
+		UserName             []byte
 		IngameName           []byte
 		Password             []byte
 		Gm                   uint8
@@ -55,23 +55,23 @@ type (
 		SkillZombiePoints    uint8
 		UserMail             []byte
 		//连接
-		CurrentConnection net.Conn
+		CurrentConnection net.Conn `json:"-"`
 		//频道房间信息
-		CurrentChannelServerIndex uint8
-		CurrentChannelIndex       uint8
-		CurrentRoomId             uint16
-		CurrentTeam               uint8
-		Currentstatus             uint8
-		CurrentIsIngame           bool
-		CurrentSequence           *uint8
-		CurrentKillNum            uint16
-		CurrentDeathNum           uint16
-		CurrentAssistNum          uint16
-		NetInfo                   UserNetInfo
+		CurrentChannelServerIndex uint8       `json:"-"`
+		CurrentChannelIndex       uint8       `json:"-"`
+		CurrentRoomId             uint16      `json:"-"`
+		CurrentTeam               uint8       `json:"-"`
+		Currentstatus             uint8       `json:"-"`
+		CurrentIsIngame           bool        `json:"-"`
+		CurrentSequence           *uint8      `json:"-"`
+		CurrentKillNum            uint16      `json:"-"`
+		CurrentDeathNum           uint16      `json:"-"`
+		CurrentAssistNum          uint16      `json:"-"`
+		NetInfo                   UserNetInfo `json:"-"`
 		//仓库信息
 		Inventory UserInventory
 
-		UserMutex *sync.Mutex
+		UserMutex *sync.Mutex `json:"-"`
 	}
 
 	UserNetInfo struct {
@@ -113,6 +113,14 @@ func (u *User) SetID(id uint32) {
 	u.UserMutex.Lock()
 	defer u.UserMutex.Unlock()
 	u.Userid = id
+}
+
+func (u *User) SetNewMutex() {
+	if u == nil {
+		return
+	}
+	var mutex sync.Mutex
+	u.UserMutex = &mutex
 }
 
 func (u *User) SetUserName(loginName, username []byte) {

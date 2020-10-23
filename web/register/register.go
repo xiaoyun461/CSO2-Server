@@ -109,15 +109,20 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		Conf.EnableMail != 0 {
 		addrtmp := strings.Join(r.Form["emailaddr"], ", ")
 		usernametmp := strings.Join(r.Form["username"], ", ")
+		ingamenametmp := strings.Join(r.Form["ingamename"], ", ")
 		passwordtmp := strings.Join(r.Form["password"], ", ")
 		vercodetmp := strings.Join(r.Form["vercode"], ", ")
-		wth := WebToHtml{UserName: usernametmp, Password: passwordtmp, Addr: addrtmp, VerCode: vercodetmp}
+		wth := WebToHtml{UserName: usernametmp, Ingamename: ingamenametmp, Password: passwordtmp, Addr: addrtmp, VerCode: vercodetmp}
 		if addrtmp == "" {
 			wth.Tip = "提示：邮箱不能为空！"
 			t.Execute(w, wth)
 			return
 		} else if usernametmp == "" {
 			wth.Tip = "提示：用户名不能为空！"
+			t.Execute(w, wth)
+			return
+		} else if ingamenametmp == "" {
+			wth.Tip = "提示：游戏昵称不能为空！"
 			t.Execute(w, wth)
 			return
 		} else if passwordtmp == "" {
@@ -139,7 +144,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 			return
 		} else if mailvcode[addrtmp] == vercodetmp {
 			u := GetNewUser()
-			u.SetUserName([]byte(usernametmp), []byte(usernametmp))
+			u.SetUserName([]byte(usernametmp), []byte(ingamenametmp))
 			u.Password = []byte(fmt.Sprintf("%x", md5.Sum([]byte(usernametmp+passwordtmp))))
 			u.UserMail = []byte(addrtmp)
 			if tf := AddUserToDB(&u); tf != nil {
@@ -149,6 +154,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 			}
 			wth.Tip = "注册成功!"
 			t.Execute(w, wth)
+			DebugInfo(1, "User name :<", usernametmp, "> ingamename :<", ingamenametmp, "> mail :<", addrtmp, "> registered !")
 		} else {
 			wth.Tip = "提示：验证码不正确！"
 			t.Execute(w, wth)
@@ -156,10 +162,15 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	} else if strings.Join(r.Form["on_click"], ", ") == "register" &&
 		Conf.EnableMail == 0 {
 		usernametmp := strings.Join(r.Form["username"], ", ")
+		ingamenametmp := strings.Join(r.Form["ingamename"], ", ")
 		passwordtmp := strings.Join(r.Form["password"], ", ")
-		wth := WebToHtml{UserName: usernametmp, Password: passwordtmp}
+		wth := WebToHtml{UserName: usernametmp, Ingamename: ingamenametmp, Password: passwordtmp}
 		if usernametmp == "" {
 			wth.Tip = "提示：用户名不能为空！"
+			t.Execute(w, wth)
+			return
+		} else if ingamenametmp == "" {
+			wth.Tip = "提示：游戏昵称不能为空！"
 			t.Execute(w, wth)
 			return
 		} else if passwordtmp == "" {
@@ -173,7 +184,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 			return
 		} else {
 			u := GetNewUser()
-			u.SetUserName([]byte(usernametmp), []byte(usernametmp))
+			u.SetUserName([]byte(usernametmp), []byte(ingamenametmp))
 			u.Password = []byte(fmt.Sprintf("%x", md5.Sum([]byte(usernametmp+passwordtmp))))
 			u.UserMail = []byte("Unkown")
 			if tf := AddUserToDB(&u); tf != nil {
@@ -183,6 +194,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 			}
 			wth.Tip = "注册成功!"
 			t.Execute(w, wth)
+			DebugInfo(1, "User name :<", usernametmp, "> ingamename :<", ingamenametmp, "> registered !")
 		}
 	} else {
 		t.Execute(w, nil)

@@ -29,6 +29,7 @@ type CSO2Conf struct {
 	REGPassWord      string
 	REGSMTPaddr      string
 	LocaleFile       string
+	CodePage         string
 }
 
 type CSO2Locales struct {
@@ -72,6 +73,7 @@ func (conf *CSO2Conf) InitConf(path string) {
 		conf.EnableRegister = 1
 		conf.EnableMail = 0
 		Conf.LocaleFile = "zh-cn.ini"
+		Conf.CodePage = "gbk"
 		return
 	}
 	conf.EnableRedis = ini_parser.IniGetUint32("Database", "EnableRedis")
@@ -101,6 +103,7 @@ func (conf *CSO2Conf) InitConf(path string) {
 	conf.REGPassWord = ini_parser.IniGetString("Register", "REGPassWord")
 	conf.REGSMTPaddr = ini_parser.IniGetString("Register", "REGSMTPaddr")
 	Conf.LocaleFile = ini_parser.IniGetString("Locale", "LocaleFile")
+	Conf.CodePage = ini_parser.IniGetString("Encode", "CodePage")
 }
 
 func (locales *CSO2Locales) InitLocales(path string) bool {

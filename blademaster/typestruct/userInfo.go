@@ -2,6 +2,7 @@ package typestruct
 
 import (
 	. "github.com/KouKouChan/CSO2-Server/kerlong"
+	. "github.com/KouKouChan/CSO2-Server/kerlong/encode"
 )
 
 //发送出去的包结构，其中一些未知，知道后会加入user里去
@@ -111,7 +112,8 @@ func BuildUserInfo(flags uint32, info UserInfo, id uint32, needID bool) []byte {
 		WriteUint64(&infobuf, info.unk00, &offset)
 	}
 	if flags&0x2 != 0 {
-		WriteString(&infobuf, info.userName, &offset)
+		ansiName, _ := Utf8ToLocal(string(info.userName))
+		WriteString(&infobuf, []byte(ansiName), &offset)
 	}
 	if flags&0x4 != 0 {
 		WriteUint16(&infobuf, info.level, &offset)
@@ -163,7 +165,8 @@ func BuildUserInfo(flags uint32, info UserInfo, id uint32, needID bool) []byte {
 	}
 	if flags&0x200 != 0 {
 		WriteUint32(&infobuf, info.unk34, &offset)
-		WriteString(&infobuf, info.clanName, &offset)
+		ansiName, _ := Utf8ToLocal(string(info.clanName))
+		WriteString(&infobuf, []byte(ansiName), &offset)
 		WriteUint32(&infobuf, info.clanMark, &offset)
 		WriteUint8(&infobuf, info.unk37, &offset)
 		for _, v := range info.unk38 {
@@ -209,8 +212,8 @@ func BuildUserInfo(flags uint32, info UserInfo, id uint32, needID bool) []byte {
 
 	}
 	if flags&0x40000 != 0 {
-
-		WriteString(&infobuf, info.signature, &offset)
+		ansiString, _ := Utf8ToLocal(string(info.signature))
+		WriteString(&infobuf, []byte(ansiString), &offset)
 	}
 	if flags&0x80000 != 0 {
 		WriteUint8(&infobuf, info.unk53, &offset)

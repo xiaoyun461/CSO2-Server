@@ -30,6 +30,7 @@ import (
 	. "github.com/KouKouChan/CSO2-Server/database/redis"
 	. "github.com/KouKouChan/CSO2-Server/database/sqlite"
 	. "github.com/KouKouChan/CSO2-Server/kerlong"
+	. "github.com/KouKouChan/CSO2-Server/kerlong/encode"
 	. "github.com/KouKouChan/CSO2-Server/servermanager"
 	. "github.com/KouKouChan/CSO2-Server/verbose"
 	. "github.com/KouKouChan/CSO2-Server/web/register"
@@ -161,6 +162,9 @@ func main() {
 			defer Redis.Close()
 		}
 	}
+
+	//Init converter
+	InitConverter(Conf.CodePage)
 
 	//Init MainServer Info
 	MainServer = NewMainServer()

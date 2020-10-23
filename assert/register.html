@@ -53,12 +53,13 @@
     </div></br></br>
     <form action="/register?on_click=sendmail" method="post" >
         <font size="6" color="white">
-            &nbsp&nbsp&nbsp&nbsp邮&nbsp&nbsp&nbsp&nbsp箱:
+            &nbsp&nbsp&nbsp&nbsp邮&nbsp&nbsp&nbsp箱 :
         </font>
         <input type="text" 
             name="emailaddr" 
             value="{{.Addr}}" 
             id="addr" 
+            style="margin-left: 28px;"
             placeholder="请输入邮箱">
         <input type="submit" 
             value="发送 " 
@@ -70,6 +71,12 @@
             name="username" 
             value="{{.UserName}}" 
             placeholder="请输入用户名" > &nbsp&nbsp&nbsp&nbsp </br></br>
+        <font size="6" color="white">&nbsp&nbsp&nbsp&nbsp昵&nbsp&nbsp&nbsp称 :</font>
+        <input type="text" 
+            name="ingamename" 
+            value="{{.Ingamename}}" 
+            style="margin-left: 34px;"
+            placeholder="请输入游戏昵称" > &nbsp&nbsp&nbsp&nbsp </br></br>
         <font size="6" color="white" >&nbsp&nbsp&nbsp&nbsp密&nbsp&nbsp&nbsp码 :</font>
         <input type="password" 
             name="password" 
