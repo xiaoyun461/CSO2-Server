@@ -90,6 +90,10 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	DBPath = path + "\\CSO2-Server\\database\\json\\"
+
+	//check folder
+	checkFolder()
 
 	//read configure
 	Conf.InitConf(path)
@@ -139,7 +143,7 @@ func main() {
 
 	//Init Database
 	if Conf.EnableDataBase != 0 {
-		DB, err = InitDatabase(path + "\\cso2.db")
+		DB, err = InitDatabase(path + "\\CSO2-Server\\database\\sqlite\\cso2.db")
 		if err != nil {
 			fmt.Println("Init database failed !")
 			Conf.EnableDataBase = 0
@@ -308,5 +312,17 @@ func BroadcastRoomList() {
 			}
 		}
 
+	}
+}
+
+func checkFolder() {
+	rst, _ := PathExists(DBPath)
+	if !rst {
+		err := os.Mkdir(DBPath, os.ModePerm)
+		if err != nil {
+			fmt.Println("mkdir failed!", err)
+		} else {
+			fmt.Println("mkdir success!")
+		}
 	}
 }

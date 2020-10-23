@@ -18,17 +18,13 @@ test_script:
 - cmd: >-
     move .\CSO2-Server.exe ..\
 
-    move .\configure\server.conf ..\
-
-    move .\cso2.db ..\
-
     cd ..
 
     7z a .\CSO2-Server-0.3.11-Win64.7z .\CSO2-Server.exe
 
-    7z a .\CSO2-Server-0.3.11-Win64.7z .\server.conf
+    7z a .\CSO2-Server-0.3.11-Win64.7z CSO2-Server\configure\server.conf
 
-    7z a .\CSO2-Server-0.3.11-Win64.7z .\cso2.db
+    7z a .\CSO2-Server-0.3.11-Win64.7z CSO2-Server\database\sqlite\cso2.db
 
     7z a .\CSO2-Server-0.3.11-Win64.7z CSO2-Server\assert\bg.jpg
 

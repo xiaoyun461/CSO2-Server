@@ -98,11 +98,7 @@ type UserInfo struct {
 }
 
 func BuildUserInfo(flags uint32, info UserInfo, id uint32, needID bool) []byte {
-	infobuf := make([]byte, 2048)
-	// if err != nil {
-	// 	log.Println("Server occurred an error while senting user info packet !")
-	// 	return nil
-	// }
+	infobuf := make([]byte, 4096)
 	offset := 0
 	if needID {
 		WriteUint32(&infobuf, id, &offset)

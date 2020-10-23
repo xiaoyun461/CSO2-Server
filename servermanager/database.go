@@ -3,11 +3,13 @@ package servermanager
 import (
 	"crypto/md5"
 	"database/sql"
+	"encoding/json"
 	"errors"
 	"fmt"
+	"io/ioutil"
+	"os"
 	"sync"
 
-	. "github.com/KouKouChan/CSO2-Server/blademaster/Exp"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/typestruct"
 	. "github.com/KouKouChan/CSO2-Server/kerlong"
 	. "github.com/KouKouChan/CSO2-Server/verbose"
@@ -16,35 +18,37 @@ import (
 var (
 	DB     *sql.DB
 	dblock sync.Mutex
+	DBPath string
 )
 
 //从数据库中读取用户数据
 //如果是新用户则保存到数据库中
 func GetUserFromDatabase(loginname, passwd []byte) (*User, int) {
 	if DB != nil {
-		query, err := DB.Prepare("SELECT * FROM userinfo WHERE LoginName = ?")
-		if err == nil {
-			defer query.Close()
+		//query, err := DB.Prepare("SELECT * FROM userinfo WHERE LoginName = ?")
+		//if err == nil {
+		filepath := DBPath + string(loginname)
+		rst, err := PathExists(filepath)
+		if rst {
+			//defer query.Close()
 			u := GetNewUser()
-			var inventory []byte
-			var clanID uint32
+			//var inventory []byte
+			//var clanID uint32
 			dblock.Lock()
-			err = query.QueryRow(loginname).Scan(&u.UserName, &u.IngameName, &u.Password, &u.Level, &u.Rank,
-				&u.RankFrame, &u.Points, &u.CurrentExp, &u.PlayedMatches, &u.Wins, &u.Kills,
-				&u.Headshots, &u.Deaths, &u.Assists, &u.Accuracy, &u.SecondsPlayed, &u.NetCafeName,
-				&u.Cash, &clanID, &u.WorldRank, &u.Mpoints, &u.TitleId, &u.UnlockedTitles, &u.Signature,
-				&u.BestGamemode, &u.BestMap, &u.UnlockedAchievements, &u.Avatar, &u.UnlockedAvatars,
-				&u.VipLevel, &u.VipXp, &u.SkillHumanCurXp, &u.SkillHumanPoints, &u.SkillZombieCurXp,
-				&u.SkillZombiePoints, &inventory, &u.UserMail)
+			dataEncoded, _ := ioutil.ReadFile(filepath)
+			// err = query.QueryRow(loginname).Scan(&u.UserName, &u.IngameName, &u.Password, &u.Level, &u.Rank,
+			// 	&u.RankFrame, &u.Points, &u.CurrentExp, &u.PlayedMatches, &u.Wins, &u.Kills,
+			// 	&u.Headshots, &u.Deaths, &u.Assists, &u.Accuracy, &u.SecondsPlayed, &u.NetCafeName,
+			// 	&u.Cash, &clanID, &u.WorldRank, &u.Mpoints, &u.TitleId, &u.UnlockedTitles, &u.Signature,
+			// 	&u.BestGamemode, &u.BestMap, &u.UnlockedAchievements, &u.Avatar, &u.UnlockedAvatars,
+			// 	&u.VipLevel, &u.VipXp, &u.SkillHumanCurXp, &u.SkillHumanPoints, &u.SkillZombieCurXp,
+			// 	&u.SkillZombiePoints, &inventory, &u.UserMail)
+
 			dblock.Unlock()
+			err = json.Unmarshal(dataEncoded, &u)
 			if err != nil {
 				DebugInfo(1, "Suffered a error while getting User", string(loginname)+"'s data !", err)
-				//u = GetNewUser()
-				//u.SetID(0)
-				//u.SetUserName(loginname, loginname)
-				//u.Password = passwd
-				//CheckErr(AddUserToDB(&u))
-				return nil, USER_NOT_FOUND
+				return nil, USER_UNKOWN_ERROR
 			}
 			//检查密码
 			str := fmt.Sprintf("%x", md5.Sum([]byte(string(loginname)+string(passwd))))
@@ -55,26 +59,15 @@ func GetUserFromDatabase(loginname, passwd []byte) (*User, int) {
 					return nil, USER_PASSWD_ERROR
 				}
 			}
-			//设置仓库
-			u.Inventory = praseInventory(inventory)
+			// //设置仓库
+			// u.Inventory = praseInventory(inventory)
 			//设置战队...
 			DebugInfo(1, "User", string(u.UserName), "data found !")
 			u.SetID(GetNewUserID())
-			u.MaxExp = LevelExp[u.Level-1]
+			//u.MaxExp = LevelExp[u.Level-1]
 			return &u, USER_LOGIN_SUCCESS
-			// u.setID(getNewUserID())
-			// u.setUserName(p)
-			// u.password = p.PassWd
-			// CheckErr(AddUserToDB(u))
-			// return u
-		} else { //出错
-			// u := GetNewUser()
-			// u.SetID(GetNewUserID())
-			// u.SetUserName(loginname, loginname)
-			// u.Password = passwd
-			// log.Println(err)
-			// CheckErr(AddUserToDB(&u))
-			return nil, USER_UNKOWN_ERROR
+		} else {
+			return nil, USER_NOT_FOUND
 		}
 	}
 	u := GetNewUser()
@@ -176,30 +169,45 @@ func AddUserToDB(u *User) error {
 	if DB == nil {
 		return errors.New("DataBase not connected")
 	}
-	stmt, err := DB.Prepare(`INSERT INTO userinfo(LoginName, UserName, PassWord,  
-		Level, Rank, RankFrame, Points, CurrentExp, PlayedMatches, Wins, Kills,	
-		HeadShots, Deathes, Assists, accuracy, SecondsPlayed, netCafeName,	
-		Cash, ClanID, WorldRank, Mpoints, TitleID, UnlockefTitleID, signature,	
-		bestGamemode, bestMap, unlockedAchievements, avatar, unlockedAvatars,	
-		viplevel, vipXp, skillHumanCurXp, skillHumanPoints, skillZombieCurXp,	
-		skillZombiePoints, Inventory, UserMail) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?	
-		   ,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`) //36个
-	if err != nil {
-		return err
-	}
-	defer stmt.Close()
+	// stmt, err := DB.Prepare(`INSERT INTO userinfo(LoginName, UserName, PassWord,
+	// 	Level, Rank, RankFrame, Points, CurrentExp, PlayedMatches, Wins, Kills,
+	// 	HeadShots, Deathes, Assists, accuracy, SecondsPlayed, netCafeName,
+	// 	Cash, ClanID, WorldRank, Mpoints, TitleID, UnlockefTitleID, signature,
+	// 	bestGamemode, bestMap, unlockedAchievements, avatar, unlockedAvatars,
+	// 	viplevel, vipXp, skillHumanCurXp, skillHumanPoints, skillZombieCurXp,
+	// 	skillZombiePoints, Inventory, UserMail) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+	// 	   ,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`) //36个
+	// if err != nil {
+	// 	return err
+	// }
+	// defer stmt.Close()
+
+	filepath := DBPath + string(u.UserName)
+	data, _ := json.MarshalIndent(u, "", "     ")
 	dblock.Lock()
-	_, err = stmt.Exec(u.UserName, u.IngameName, u.Password, u.Level, u.Rank,
-		u.RankFrame, u.Points, u.CurrentExp, u.PlayedMatches, u.Wins, u.Kills,
-		u.Headshots, u.Deaths, u.Assists, u.Accuracy, u.SecondsPlayed, u.NetCafeName,
-		u.Cash, 0, u.WorldRank, u.Mpoints, u.TitleId, u.UnlockedTitles, u.Signature,
-		u.BestGamemode, u.BestMap, u.UnlockedAchievements, u.Avatar, u.UnlockedAvatars,
-		u.VipLevel, u.VipXp, u.SkillHumanCurXp, u.SkillHumanPoints, u.SkillZombieCurXp,
-		u.SkillZombiePoints, InventoryToBytes(&u.Inventory), u.UserMail)
+	err := ioutil.WriteFile(filepath, data, 0644)
+
+	// _, err = stmt.Exec(u.UserName, u.IngameName, u.Password, u.Level, u.Rank,
+	// 	u.RankFrame, u.Points, u.CurrentExp, u.PlayedMatches, u.Wins, u.Kills,
+	// 	u.Headshots, u.Deaths, u.Assists, u.Accuracy, u.SecondsPlayed, u.NetCafeName,
+	// 	u.Cash, 0, u.WorldRank, u.Mpoints, u.TitleId, u.UnlockedTitles, u.Signature,
+	// 	u.BestGamemode, u.BestMap, u.UnlockedAchievements, u.Avatar, u.UnlockedAvatars,
+	// 	u.VipLevel, u.VipXp, u.SkillHumanCurXp, u.SkillHumanPoints, u.SkillZombieCurXp,
+	// 	u.SkillZombiePoints, InventoryToBytes(&u.Inventory), u.UserMail)
+
 	dblock.Unlock()
 	if err != nil {
 		return err
 	}
+
+	filepath = DBPath + string(u.IngameName) + ".check"
+	dblock.Lock()
+	err = ioutil.WriteFile(filepath, u.IngameName, 0644)
+	dblock.Unlock()
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -207,25 +215,31 @@ func UpdateUserToDB(u *User) error {
 	if DB == nil {
 		return errors.New("DataBase not connected,can't save user's data !")
 	}
-	stmt, err := DB.Prepare(`Update userinfo set Level=?, 
-		Rank=?, RankFrame=?, Points=?, CurrentExp=?, PlayedMatches=?, Wins=?, Kills=?,	
-		HeadShots=?, Deathes=?, Assists=?, accuracy=?, SecondsPlayed=?, netCafeName=?,	
-		Cash=?, ClanID=?, WorldRank=?, Mpoints=?, TitleID=?, UnlockefTitleID=?, signature=?,	
-		bestGamemode=?, bestMap=?, unlockedAchievements=?, avatar=?, unlockedAvatars=?,	
-		viplevel=?, vipXp=?, skillHumanCurXp=?, skillHumanPoints=?, skillZombieCurXp=?,	
-		skillZombiePoints=?, Inventory=? WHERE LoginName=? `) //36个
-	if err != nil {
-		return err
-	}
-	defer stmt.Close()
+	// stmt, err := DB.Prepare(`Update userinfo set Level=?,
+	// 	Rank=?, RankFrame=?, Points=?, CurrentExp=?, PlayedMatches=?, Wins=?, Kills=?,
+	// 	HeadShots=?, Deathes=?, Assists=?, accuracy=?, SecondsPlayed=?, netCafeName=?,
+	// 	Cash=?, ClanID=?, WorldRank=?, Mpoints=?, TitleID=?, UnlockefTitleID=?, signature=?,
+	// 	bestGamemode=?, bestMap=?, unlockedAchievements=?, avatar=?, unlockedAvatars=?,
+	// 	viplevel=?, vipXp=?, skillHumanCurXp=?, skillHumanPoints=?, skillZombieCurXp=?,
+	// 	skillZombiePoints=?, Inventory=? WHERE LoginName=? `) //36个
+	// if err != nil {
+	// 	return err
+	// }
+	// defer stmt.Close()
+
+	filepath := DBPath + string(u.UserName)
+	data, _ := json.MarshalIndent(u, "", "     ")
 	dblock.Lock()
-	_, err = stmt.Exec(u.Level, u.Rank,
-		u.RankFrame, u.Points, u.CurrentExp, u.PlayedMatches, u.Wins, u.Kills,
-		u.Headshots, u.Deaths, u.Assists, u.Accuracy, u.SecondsPlayed, u.NetCafeName,
-		u.Cash, 0, u.WorldRank, u.Mpoints, u.TitleId, u.UnlockedTitles, u.Signature,
-		u.BestGamemode, u.BestMap, u.UnlockedAchievements, u.Avatar, u.UnlockedAvatars,
-		u.VipLevel, u.VipXp, u.SkillHumanCurXp, u.SkillHumanPoints, u.SkillZombieCurXp,
-		u.SkillZombiePoints, InventoryToBytes(&u.Inventory), u.UserName)
+	err := ioutil.WriteFile(filepath, data, 0644)
+
+	// _, err = stmt.Exec(u.Level, u.Rank,
+	// 	u.RankFrame, u.Points, u.CurrentExp, u.PlayedMatches, u.Wins, u.Kills,
+	// 	u.Headshots, u.Deaths, u.Assists, u.Accuracy, u.SecondsPlayed, u.NetCafeName,
+	// 	u.Cash, 0, u.WorldRank, u.Mpoints, u.TitleId, u.UnlockedTitles, u.Signature,
+	// 	u.BestGamemode, u.BestMap, u.UnlockedAchievements, u.Avatar, u.UnlockedAvatars,
+	// 	u.VipLevel, u.VipXp, u.SkillHumanCurXp, u.SkillHumanPoints, u.SkillZombieCurXp,
+	// 	u.SkillZombiePoints, InventoryToBytes(&u.Inventory), u.UserName)
+
 	dblock.Unlock()
 	if err != nil {
 		return err
@@ -257,21 +271,59 @@ func IsExistsMail(mail []byte) bool {
 
 func IsExistsUser(username []byte) bool {
 	if DB != nil {
-		query, err := DB.Prepare("SELECT * FROM userinfo WHERE LoginName = ?")
-		if err == nil {
-			defer query.Close()
-			dblock.Lock()
-			rows, err := query.Query(username)
-			dblock.Unlock()
-			if err != nil {
-				return false
-			}
-			defer rows.Close()
-			if rows.Next() {
-				return true
-			}
+		//query, err := DB.Prepare("SELECT * FROM userinfo WHERE LoginName = ?")
+		filepath := DBPath + string(username)
+		rst, _ := PathExists(filepath)
+		if rst {
+			return true
+			// defer query.Close()
+			// dblock.Lock()
+			// rows, err := query.Query(username)
+			// dblock.Unlock()
+			// if err != nil {
+			// 	return false
+			// }
+			// defer rows.Close()
+			// if rows.Next() {
+			// 	return true
+			// }
 		}
 		return false
 	}
 	return false
+}
+
+func IsExistsIngameName(name []byte) bool {
+	if DB != nil {
+		//query, err := DB.Prepare("SELECT * FROM userinfo WHERE LoginName = ?")
+		filepath := DBPath + string(name) + ".check"
+		rst, _ := PathExists(filepath)
+		if rst {
+			return true
+			// defer query.Close()
+			// dblock.Lock()
+			// rows, err := query.Query(username)
+			// dblock.Unlock()
+			// if err != nil {
+			// 	return false
+			// }
+			// defer rows.Close()
+			// if rows.Next() {
+			// 	return true
+			// }
+		}
+		return false
+	}
+	return false
+}
+
+func PathExists(path string) (bool, error) {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true, nil
+	}
+	if os.IsNotExist(err) {
+		return false, nil
+	}
+	return false, err
 }

@@ -12,7 +12,6 @@ type CSO2Conf struct {
 	HolePunchPort    uint32
 	EnableRedis      uint32
 	EnableDataBase   uint32
-	UseJson          uint32
 	MaxUsers         uint32
 	EnableShop       uint32
 	UnlockAllWeapons uint32
@@ -39,11 +38,38 @@ type CSO2Locales struct {
 	GAME_LOGIN_ERROR           string
 	GAME_ROOM_COUNT_MODE_ERROR string
 	GAME_ROOM_JOIN_ERROR       string
+	MAIL_EMPTY                 string
+	MAIL_ERROR                 string
+	MAIL_SENT                  string
+	USERNAME_EMPTY             string
+	USERNAME_EXISTS            string
+	GAMENAME_EMPTY             string
+	GAMENAME_EXISTS            string
+	PASSWORD_EMPTY             string
+	CODE_EMPTY                 string
+	CODE_WRONG                 string
+	NAME_ERROR                 string
+	DATABASE_ERROR             string
+	REGISTER_SUCCESS           string
 }
 
 var (
 	Conf    CSO2Conf
 	Locales CSO2Locales
+
+	MAIL_EMPTY       = "提示：邮箱不能为空！"
+	MAIL_ERROR       = "提示：请输入正确的邮箱！"
+	MAIL_SENT        = "已发送，请在一分钟之内完成注册！"
+	USERNAME_EMPTY   = "提示：用户名不能为空！"
+	USERNAME_EXISTS  = "提示：用户名已存在！"
+	GAMENAME_EMPTY   = "提示：游戏昵称不能为空！"
+	GAMENAME_EXISTS  = "提示：游戏昵称已存在！"
+	PASSWORD_EMPTY   = "提示：密码不能为空！"
+	CODE_EMPTY       = "提示：验证码不能为空！"
+	CODE_WRONG       = "提示：验证码不正确！"
+	NAME_ERROR       = "提示：用户名或昵称含有非法字符！"
+	DATABASE_ERROR   = "提示：数据库错误,注册失败！"
+	REGISTER_SUCCESS = "注册成功!"
 )
 
 func (conf *CSO2Conf) InitConf(path string) {
@@ -52,13 +78,12 @@ func (conf *CSO2Conf) InitConf(path string) {
 	}
 	fmt.Printf("Reading configure file ...\n")
 	ini_parser := IniParser{}
-	file := path + "\\server.conf"
+	file := path + "\\CSO2-Server\\configure\\server.conf"
 	if err := ini_parser.LoadIni(file); err != nil {
 		fmt.Printf("Loading config file error[%s]\n", err.Error())
 		fmt.Printf("Using default data ...\n")
 		conf.EnableRedis = 0
 		conf.EnableDataBase = 1
-		conf.UseJson = 0
 		conf.MaxUsers = 0
 		conf.EnableShop = 0
 		conf.UnlockAllWeapons = 1
@@ -78,7 +103,6 @@ func (conf *CSO2Conf) InitConf(path string) {
 	}
 	conf.EnableRedis = ini_parser.IniGetUint32("Database", "EnableRedis")
 	conf.EnableDataBase = ini_parser.IniGetUint32("Database", "EnableDataBase")
-	conf.UseJson = ini_parser.IniGetUint32("Database", "UseJson")
 	conf.MaxUsers = ini_parser.IniGetUint32("Server", "MaxUsers")
 	if conf.MaxUsers < 0 {
 		conf.MaxUsers = 0
@@ -124,6 +148,18 @@ func (locales *CSO2Locales) InitLocales(path string) bool {
 	locales.GAME_LOGIN_ERROR = ini_parser.IniGetString("System", "GAME_LOGIN_ERROR")
 	locales.GAME_ROOM_COUNT_MODE_ERROR = ini_parser.IniGetString("System", "GAME_ROOM_COUNT_MODE_ERROR")
 	locales.GAME_ROOM_JOIN_ERROR = ini_parser.IniGetString("System", "GAME_ROOM_JOIN_ERROR")
+	locales.MAIL_EMPTY = ini_parser.IniGetString("Register", "MAIL_EMPTY")
+	locales.MAIL_ERROR = ini_parser.IniGetString("Register", "MAIL_ERROR")
+	locales.USERNAME_EMPTY = ini_parser.IniGetString("Register", "USERNAME_EMPTY")
+	locales.USERNAME_EXISTS = ini_parser.IniGetString("Register", "USERNAME_EXISTS")
+	locales.GAMENAME_EMPTY = ini_parser.IniGetString("Register", "GAMENAME_EMPTY")
+	locales.GAMENAME_EXISTS = ini_parser.IniGetString("Register", "GAMENAME_EXISTS")
+	locales.PASSWORD_EMPTY = ini_parser.IniGetString("Register", "PASSWORD_EMPTY")
+	locales.CODE_EMPTY = ini_parser.IniGetString("Register", "CODE_EMPTY")
+	locales.CODE_WRONG = ini_parser.IniGetString("Register", "CODE_WRONG")
+	locales.NAME_ERROR = ini_parser.IniGetString("Register", "NAME_ERROR")
+	locales.DATABASE_ERROR = ini_parser.IniGetString("Register", "DATABASE_ERROR")
+	locales.REGISTER_SUCCESS = ini_parser.IniGetString("Register", "REGISTER_SUCCESS")
 	return true
 }
 
@@ -135,4 +171,18 @@ func SetLocales() {
 	GAME_LOGIN_ERROR = []byte(Locales.GAME_LOGIN_ERROR)
 	GAME_ROOM_COUNT_MODE_ERROR = []byte(Locales.GAME_ROOM_COUNT_MODE_ERROR)
 	GAME_ROOM_JOIN_ERROR = []byte(Locales.GAME_ROOM_JOIN_ERROR)
+
+	MAIL_EMPTY = Locales.MAIL_EMPTY
+	MAIL_ERROR = Locales.MAIL_ERROR
+	MAIL_SENT = Locales.MAIL_SENT
+	USERNAME_EMPTY = Locales.USERNAME_EMPTY
+	USERNAME_EXISTS = Locales.USERNAME_EXISTS
+	GAMENAME_EMPTY = Locales.GAMENAME_EMPTY
+	GAMENAME_EXISTS = Locales.GAMENAME_EXISTS
+	PASSWORD_EMPTY = Locales.PASSWORD_EMPTY
+	CODE_EMPTY = Locales.CODE_EMPTY
+	CODE_WRONG = Locales.CODE_WRONG
+	NAME_ERROR = Locales.NAME_ERROR
+	DATABASE_ERROR = Locales.DATABASE_ERROR
+	REGISTER_SUCCESS = Locales.REGISTER_SUCCESS
 }

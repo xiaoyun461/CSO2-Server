@@ -5,6 +5,7 @@ import (
 
 	. "github.com/KouKouChan/CSO2-Server/blademaster/typestruct"
 	. "github.com/KouKouChan/CSO2-Server/kerlong"
+	. "github.com/KouKouChan/CSO2-Server/kerlong/encode"
 	. "github.com/KouKouChan/CSO2-Server/servermanager"
 	. "github.com/KouKouChan/CSO2-Server/verbose"
 )
@@ -32,10 +33,11 @@ func OnSetSignature(p *PacketData, client net.Conn) {
 }
 
 func BuildSetSignaturePacket(id uint32, Signature []byte, len uint8) []byte {
-	buf := make([]byte, 10+len)
+	buf := make([]byte, 10+2*len)
 	offset := 0
 	WriteUint32(&buf, id, &offset)
 	WriteUint32(&buf, 0x40000, &offset)
-	WriteString(&buf, Signature, &offset)
+	ansiString, _ := Utf8ToLocal(string(Signature))
+	WriteString(&buf, []byte(ansiString), &offset)
 	return buf[:offset]
 }

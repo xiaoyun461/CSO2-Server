@@ -22,6 +22,7 @@ import (
 	. "github.com/KouKouChan/CSO2-Server/verbose"
 )
 
+
 var (
 	mailvcode   = make(map[string]string)
 	Reglock     sync.Mutex
@@ -83,9 +84,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		addrtmp := strings.Join(r.Form["emailaddr"], ", ")
 		wth := WebToHtml{Addr: addrtmp}
 		if addrtmp == "" {
-			wth.Tip = "提示：邮箱不能为空！"
-			//} else if IsExistsMail([]byte(addrtmp)) {
-			//	wth.Tip = "提示：该邮箱已注册过！"
+			wth.Tip = MAIL_EMPTY
 		} else {
 			Vcode := getrand()
 			DebugInfo(2, Vcode)
@@ -94,9 +93,9 @@ func Register(w http.ResponseWriter, r *http.Request) {
 			MailService.Content = "您的验证码为：" + Vcode + "<br>" + "请勿告诉他人，如非本人操作请忽略本条邮件。请勿回复。"
 			Reglock.Unlock()
 			if SendEmailTO(&MailService) != nil {
-				wth.Tip = "提示：请输入正确的邮箱！"
+				wth.Tip = MAIL_ERROR
 			} else {
-				wth.Tip = "已发送，请在一分钟之内完成注册！"
+				wth.Tip = MAIL_SENT
 
 				Reglock.Lock()
 				mailvcode[addrtmp] = Vcode
@@ -114,32 +113,37 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		vercodetmp := strings.Join(r.Form["vercode"], ", ")
 		wth := WebToHtml{UserName: usernametmp, Ingamename: ingamenametmp, Password: passwordtmp, Addr: addrtmp, VerCode: vercodetmp}
 		if addrtmp == "" {
-			wth.Tip = "提示：邮箱不能为空！"
+			wth.Tip = MAIL_EMPTY
 			t.Execute(w, wth)
 			return
 		} else if usernametmp == "" {
-			wth.Tip = "提示：用户名不能为空！"
+			wth.Tip = USERNAME_EMPTY
 			t.Execute(w, wth)
 			return
 		} else if ingamenametmp == "" {
-			wth.Tip = "提示：游戏昵称不能为空！"
+			wth.Tip = GAMENAME_EMPTY
 			t.Execute(w, wth)
 			return
 		} else if passwordtmp == "" {
-			wth.Tip = "提示：密码不能为空！"
+			wth.Tip = PASSWORD_EMPTY
 			t.Execute(w, wth)
 			return
 		} else if vercodetmp == "" {
-			wth.Tip = "提示：验证码不能为空！"
+			wth.Tip = CODE_EMPTY
 			t.Execute(w, wth)
 			return
-			// } else if IsExistsMail([]byte(addrtmp)) {
-			// 	wth.Tip = "提示：该邮箱已注册过！"
-			// 	t.Execute(w, wth)
-			// 	return
+		} else if !check(usernametmp) || !check(ingamenametmp) {
+			wth.Tip = NAME_ERROR
+			t.Execute(w, wth)
+			return
 		} else if IsExistsUser([]byte(usernametmp)) {
-			wth.Tip = "提示：用户名已存在！"
+			wth.Tip = USERNAME_EXISTS
 			wth.UserName = ""
+			t.Execute(w, wth)
+			return
+		} else if IsExistsIngameName([]byte(ingamenametmp)) {
+			wth.Tip = GAMENAME_EXISTS
+			wth.Ingamename = ""
 			t.Execute(w, wth)
 			return
 		} else if mailvcode[addrtmp] == vercodetmp {
@@ -148,15 +152,15 @@ func Register(w http.ResponseWriter, r *http.Request) {
 			u.Password = []byte(fmt.Sprintf("%x", md5.Sum([]byte(usernametmp+passwordtmp))))
 			u.UserMail = []byte(addrtmp)
 			if tf := AddUserToDB(&u); tf != nil {
-				wth.Tip = "提示：数据库错误,注册失败！"
+				wth.Tip = DATABASE_ERROR
 				t.Execute(w, wth)
 				return
 			}
-			wth.Tip = "注册成功!"
+			wth.Tip = REGISTER_SUCCESS
 			t.Execute(w, wth)
 			DebugInfo(1, "User name :<", usernametmp, "> ingamename :<", ingamenametmp, "> mail :<", addrtmp, "> registered !")
 		} else {
-			wth.Tip = "提示：验证码不正确！"
+			wth.Tip = CODE_WRONG
 			t.Execute(w, wth)
 		}
 	} else if strings.Join(r.Form["on_click"], ", ") == "register" &&
@@ -166,20 +170,29 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		passwordtmp := strings.Join(r.Form["password"], ", ")
 		wth := WebToHtml{UserName: usernametmp, Ingamename: ingamenametmp, Password: passwordtmp}
 		if usernametmp == "" {
-			wth.Tip = "提示：用户名不能为空！"
+			wth.Tip = USERNAME_EMPTY
 			t.Execute(w, wth)
 			return
 		} else if ingamenametmp == "" {
-			wth.Tip = "提示：游戏昵称不能为空！"
+			wth.Tip = GAMENAME_EMPTY
 			t.Execute(w, wth)
 			return
 		} else if passwordtmp == "" {
-			wth.Tip = "提示：密码不能为空！"
+			wth.Tip = PASSWORD_EMPTY
+			t.Execute(w, wth)
+			return
+		} else if !check(usernametmp) || !check(ingamenametmp) {
+			wth.Tip = NAME_ERROR
 			t.Execute(w, wth)
 			return
 		} else if IsExistsUser([]byte(usernametmp)) {
-			wth.Tip = "提示：用户名已存在！"
+			wth.Tip = USERNAME_EXISTS
 			wth.UserName = ""
+			t.Execute(w, wth)
+			return
+		} else if IsExistsIngameName([]byte(ingamenametmp)) {
+			wth.Tip = GAMENAME_EXISTS
+			wth.Ingamename = ""
 			t.Execute(w, wth)
 			return
 		} else {
@@ -188,11 +201,11 @@ func Register(w http.ResponseWriter, r *http.Request) {
 			u.Password = []byte(fmt.Sprintf("%x", md5.Sum([]byte(usernametmp+passwordtmp))))
 			u.UserMail = []byte("Unkown")
 			if tf := AddUserToDB(&u); tf != nil {
-				wth.Tip = "提示：数据库错误,注册失败！"
+				wth.Tip = DATABASE_ERROR
 				t.Execute(w, wth)
 				return
 			}
-			wth.Tip = "注册成功!"
+			wth.Tip = REGISTER_SUCCESS
 			t.Execute(w, wth)
 			DebugInfo(1, "User name :<", usernametmp, "> ingamename :<", ingamenametmp, "> registered !")
 		}
@@ -237,4 +250,13 @@ func TimeOut(addrtmp string) {
 	Reglock.Lock()
 	defer Reglock.Unlock()
 	delete(mailvcode, addrtmp)
+}
+
+func check(str string) bool {
+	for _, v := range str {
+		if v == '.' || v == ' ' || v == '\'' || v == '"' || v == '\\' || v == '/' {
+			return false
+		}
+	}
+	return true
 }
