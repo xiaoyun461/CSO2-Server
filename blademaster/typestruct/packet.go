@@ -245,8 +245,7 @@ type (
 	}
 
 	InWeaponPointPacket struct {
-		KillType uint8
-
+		KillType             uint32
 		KillerID             uint32
 		KillerWeaponID       uint32
 		KillerTeam           uint8
@@ -254,7 +253,7 @@ type (
 		KillerCharacterType  uint8
 		KillerCharacterClass uint32
 
-		DeadType             uint8
+		DeadType             uint32
 		VictimID             uint32
 		VictimWeaponID       uint32
 		VictimTeam           uint8
@@ -861,12 +860,12 @@ func (p *PacketData) PraseInKillPacket(dest *InKillPacket) bool {
 }
 
 func (p *PacketData) PraseInWeaponPointPacket(dest *InWeaponPointPacket) bool {
-	//id + type + ... = 58 bytes
-	if p.Length < 58 ||
+	//id + type + ... = 66 bytes
+	if p.Length < 66 ||
 		dest == nil {
 		return false
 	}
-	dest.KillType = ReadUint8(p.Data, &p.CurOffset)
+	dest.KillType = ReadUint32(p.Data, &p.CurOffset)
 	dest.KillerID = ReadUint32(p.Data, &p.CurOffset)
 	dest.KillerWeaponID = ReadUint32(p.Data, &p.CurOffset)
 	dest.KillerTeam = ReadUint8(p.Data, &p.CurOffset)
@@ -874,7 +873,7 @@ func (p *PacketData) PraseInWeaponPointPacket(dest *InWeaponPointPacket) bool {
 	dest.KillerCharacterType = ReadUint8(p.Data, &p.CurOffset)
 	dest.KillerCharacterClass = ReadUint32(p.Data, &p.CurOffset)
 
-	dest.DeadType = ReadUint8(p.Data, &p.CurOffset)
+	dest.DeadType = ReadUint32(p.Data, &p.CurOffset)
 	dest.VictimID = ReadUint32(p.Data, &p.CurOffset)
 	dest.VictimWeaponID = ReadUint32(p.Data, &p.CurOffset)
 	dest.VictimTeam = ReadUint8(p.Data, &p.CurOffset)

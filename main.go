@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"math"
 	"net"
@@ -11,6 +12,7 @@ import (
 	"time"
 
 	. "github.com/KouKouChan/CSO2-Server/blademaster/Exp"
+	. "github.com/KouKouChan/CSO2-Server/blademaster/GMconsole"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/achievement"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/automatch"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/chat"
@@ -82,9 +84,31 @@ func main() {
 			fmt.Println("异常结束")
 		}
 	}()
+
 	fmt.Println("Counter-Strike Online 2 Server", SERVERVERSION)
 	fmt.Println("Initializing process ...")
 
+	for k, v := range os.Args {
+		if v == "-console" {
+			os.Args = append(os.Args[:k], os.Args[k+1:]...)
+			// 定义几个变量，用于接收命令行的参数值
+			var user string
+			var password string
+			var host string
+			var port string
+			// &user 就是接收命令行中输入 -u 后面的参数值，其他同理
+			flag.StringVar(&user, "username", "admin", "账号，默认为admin")
+			flag.StringVar(&password, "password", "cso2server123", "密码，默认为cso2server123")
+			flag.StringVar(&host, "ip", "localhost", "主机名，默认为localhost")
+			flag.StringVar(&port, "port", "1315", "端口号，默认为1315")
+			// 解析命令行参数写入注册的flag里
+			flag.Parse()
+
+			ToConsoleHost(user, password, host, port)
+
+			return
+		}
+	}
 	//get server exe path
 	path, err := GetExePath()
 	if err != nil {
@@ -108,7 +132,6 @@ func main() {
 	//set val
 	Level = Conf.DebugLevel
 	LogFile = Conf.LogFile
-	IsConsole = Conf.EnableConsole
 	if Conf.MaxUsers <= 0 {
 		MaxUsers = math.MaxUint32
 	} else {
@@ -180,13 +203,19 @@ func main() {
 	//Start TCP Server
 	go TCPServer(server)
 
-	//Start BroadCast Server
+	//Start BroadCast Service
 	go BroadcastRoomList()
 
 	//Start Register Server
 	if Conf.EnableRegister != 0 {
 		go OnRegister()
 	}
+
+	//Start console server
+	if Conf.EnableConsole != 0 {
+		go InitGMconsole()
+	}
+
 	ch := make(chan os.Signal)
 	signal.Notify(ch, syscall.SIGINT)
 	_ = <-ch
@@ -216,6 +245,7 @@ func TCPServer(server net.Listener) {
 //RecvMessage 循环处理收到的包
 func RecvMessage(client net.Conn) {
 	var seq uint8 = 0
+	var dataPacket PacketData
 
 	defer client.Close() //关闭con
 	defer func() {
@@ -223,6 +253,7 @@ func RecvMessage(client net.Conn) {
 			OnSendMessage(&seq, client, MessageDialogBox, GAME_SERVER_ERROR)
 			fmt.Println("Client", client.RemoteAddr().String(), "suffered a fault !")
 			fmt.Println(err)
+			fmt.Println("Dump packet", dataPacket.Data, "offset:", dataPacket.CurOffset)
 			fmt.Println("Fault end!")
 			OnLeaveRoom(client, true)
 			DelUserWithConn(client)
@@ -250,7 +281,7 @@ func RecvMessage(client net.Conn) {
 		if !err {
 			goto close
 		}
-		dataPacket := PacketData{
+		dataPacket = PacketData{
 			bytes,
 			headPacket.Sequence,
 			headPacket.Length,

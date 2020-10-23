@@ -2,9 +2,11 @@ package typestruct
 
 const (
 	MessageCongratulate    = 11
-	MessageSystemImportant = 20
+	MessageNoticeImportant = 20
 	MessageDialogBox       = 21
-	MessageSystem          = 22
+	MessageNotice          = 22
+	MessageNotice2         = 23
+	MessageNotice3         = 24
 	MessageDialogBoxExit   = 60
 )
 

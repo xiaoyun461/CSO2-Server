@@ -615,3 +615,23 @@ func (u *User) CountWeaponKill(itemid uint32) {
 		u.WeaponKills[itemid] = 1
 	}
 }
+
+func (u *User) AddItem(itemid uint32) {
+	if u == nil {
+		return
+	}
+	u.UserMutex.Lock()
+	defer u.UserMutex.Unlock()
+	for k, v := range u.Inventory.Items {
+		if v.Id == itemid {
+			if u.Inventory.Items[k].Count < math.MaxUint16 {
+				u.Inventory.Items[k].Count++
+			}
+			return
+		}
+	}
+	u.Inventory.Items = append(u.Inventory.Items, UserInventoryItem{itemid, 1})
+	if u.Inventory.NumOfItem < math.MaxUint16 {
+		u.Inventory.NumOfItem++
+	}
+}

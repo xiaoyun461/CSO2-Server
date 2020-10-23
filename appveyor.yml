@@ -18,9 +18,13 @@ test_script:
 - cmd: >-
     move .\CSO2-Server.exe ..\
 
+    move .\local-console.bat ..\
+
     cd ..
 
     7z a .\CSO2-Server-0.3.11-Win64.7z .\CSO2-Server.exe
+
+    7z a .\CSO2-Server-0.3.11-Win64.7z .\local-console.bat
 
     7z a .\CSO2-Server-0.3.11-Win64.7z CSO2-Server\configure\server.conf
 

@@ -2,7 +2,10 @@ package chat
 
 import (
 	"net"
+	"strconv"
+	"strings"
 
+	. "github.com/KouKouChan/CSO2-Server/blademaster/core/message"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/typestruct"
 	. "github.com/KouKouChan/CSO2-Server/kerlong"
 	. "github.com/KouKouChan/CSO2-Server/servermanager"
@@ -32,6 +35,26 @@ func OnChatGlobalMessage(p *InChatPacket, client net.Conn) {
 		return
 	}
 	//发送数据
+	if strings.Fields(string(p.Message))[2] == "/users" {
+		idx := 0
+		for _, v := range rm.Users {
+			if v == nil {
+				continue
+			}
+			if v.CurrentIsIngame {
+				var rst []byte
+				if rm.HostUserID == v.Userid {
+					rst = BytesCombine([]byte("[Host] "), v.UserName)
+				} else {
+					rst = BytesCombine([]byte("["+strconv.Itoa(idx)+"] "), v.UserName)
+				}
+				idx++
+				OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageNotice, rst)
+			}
+		}
+		return
+	}
+
 	msg := BuildChatMessage(uPtr, p, ChatIngameGlobal)
 	for _, v := range rm.Users {
 		if v.CurrentIsIngame {

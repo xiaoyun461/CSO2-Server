@@ -16,10 +16,13 @@ func OnHostWeaponPoint(p *PacketData, client net.Conn) {
 		DebugInfo(2, "Error : Client from", client.RemoteAddr().String(), "sent a error WeaponPoint packet !")
 		return
 	}
+	if pkt.KillerID <= 0 || pkt.KillerWeaponID <= 0 {
+		return
+	}
 	//找到对应用户
 	uPtr := GetUserFromID(pkt.KillerID)
-	if uPtr != nil &&
-		uPtr.Userid > 0 {
+	if uPtr == nil ||
+		uPtr.Userid <= 0 {
 		log.Println("Error : Client from", client.RemoteAddr().String(), "sent WeaponPoint but killer not in server !")
 		return
 	}

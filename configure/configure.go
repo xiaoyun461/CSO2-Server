@@ -20,7 +20,6 @@ type CSO2Conf struct {
 	RedisPort        uint32
 	DebugLevel       uint32
 	LogFile          uint32
-	EnableConsole    uint32
 	EnableRegister   uint32
 	EnableMail       uint32
 	REGPort          uint32
@@ -29,6 +28,10 @@ type CSO2Conf struct {
 	REGSMTPaddr      string
 	LocaleFile       string
 	CodePage         string
+	EnableConsole    uint32
+	GMport           uint32
+	GMusername       string
+	GMpassword       string
 }
 
 type CSO2Locales struct {
@@ -94,11 +97,11 @@ func (conf *CSO2Conf) InitConf(path string) {
 		conf.RedisPort = 6379
 		conf.DebugLevel = 2
 		conf.LogFile = 1
-		conf.EnableConsole = 0
 		conf.EnableRegister = 1
 		conf.EnableMail = 0
 		Conf.LocaleFile = "zh-cn.ini"
 		Conf.CodePage = "gbk"
+		conf.EnableConsole = 0
 		return
 	}
 	conf.EnableRedis = ini_parser.IniGetUint32("Database", "EnableRedis")
@@ -119,7 +122,6 @@ func (conf *CSO2Conf) InitConf(path string) {
 		conf.DebugLevel = 2
 	}
 	conf.LogFile = ini_parser.IniGetUint32("Debug", "LogFile")
-	conf.EnableConsole = ini_parser.IniGetUint32("Debug", "EnableConsole")
 	conf.EnableRegister = ini_parser.IniGetUint32("Register", "EnableRegister")
 	conf.EnableMail = ini_parser.IniGetUint32("Register", "EnableMail")
 	conf.REGPort = ini_parser.IniGetUint32("Register", "REGPort")
@@ -128,6 +130,10 @@ func (conf *CSO2Conf) InitConf(path string) {
 	conf.REGSMTPaddr = ini_parser.IniGetString("Register", "REGSMTPaddr")
 	Conf.LocaleFile = ini_parser.IniGetString("Locale", "LocaleFile")
 	Conf.CodePage = ini_parser.IniGetString("Encode", "CodePage")
+	conf.EnableConsole = ini_parser.IniGetUint32("Console", "EnableConsole")
+	conf.GMport = ini_parser.IniGetUint32("Console", "GMport")
+	Conf.GMusername = ini_parser.IniGetString("Console", "GMusername")
+	Conf.GMpassword = ini_parser.IniGetString("Console", "GMpassword")
 }
 
 func (locales *CSO2Locales) InitLocales(path string) bool {

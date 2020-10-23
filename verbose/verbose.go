@@ -12,9 +12,7 @@ var (
 
 func DebugInfo(l uint32, v ...interface{}) {
 	if l <= Level {
-		if IsConsole == 0 {
-			log.Println(v...)
-		}
+		log.Println(v...)
 		if LogFile != 0 {
 			Loger.Println(v...)
 		}

@@ -1,5 +1,7 @@
 package kerlong
 
+import "fmt"
+
 //IntAbs 绝对值
 func IntAbs(num int) int {
 	ans, ok := Ternary(num > 0, num, -num).(int)
@@ -24,4 +26,20 @@ func IsAllNumber(str string) bool {
 		}
 	}
 	return true
+}
+
+//ScanLine 得到一行
+func ScanLine() string {
+	var c byte
+	var err error
+	var b []byte
+	for err == nil {
+		_, err = fmt.Scanf("%c", &c)
+		if c != '\n' {
+			b = append(b, c)
+		} else {
+			break
+		}
+	}
+	return string(b)
 }

@@ -17,7 +17,7 @@ import (
 
 var (
 	DB     *sql.DB
-	dblock sync.Mutex
+	Dblock sync.Mutex
 	DBPath string
 )
 
@@ -34,7 +34,7 @@ func GetUserFromDatabase(loginname string, passwd []byte) (*User, int) {
 			u := GetNewUser()
 			//var inventory []byte
 			//var clanID uint32
-			dblock.Lock()
+			Dblock.Lock()
 			dataEncoded, _ := ioutil.ReadFile(filepath)
 			// err = query.QueryRow(loginname).Scan(&u.UserName, &u.IngameName, &u.Password, &u.Level, &u.Rank,
 			// 	&u.RankFrame, &u.Points, &u.CurrentExp, &u.PlayedMatches, &u.Wins, &u.Kills,
@@ -44,7 +44,7 @@ func GetUserFromDatabase(loginname string, passwd []byte) (*User, int) {
 			// 	&u.VipLevel, &u.VipXp, &u.SkillHumanCurXp, &u.SkillHumanPoints, &u.SkillZombieCurXp,
 			// 	&u.SkillZombiePoints, &inventory, &u.UserMail)
 
-			dblock.Unlock()
+			Dblock.Unlock()
 			err = json.Unmarshal(dataEncoded, &u)
 			if err != nil {
 				DebugInfo(1, "Suffered a error while getting User", string(loginname)+"'s data !", err)
@@ -184,7 +184,7 @@ func AddUserToDB(u *User) error {
 
 	filepath := DBPath + string(u.UserName)
 	data, _ := json.MarshalIndent(u, "", "     ")
-	dblock.Lock()
+	Dblock.Lock()
 	err := ioutil.WriteFile(filepath, data, 0644)
 
 	// _, err = stmt.Exec(u.UserName, u.IngameName, u.Password, u.Level, u.Rank,
@@ -195,15 +195,15 @@ func AddUserToDB(u *User) error {
 	// 	u.VipLevel, u.VipXp, u.SkillHumanCurXp, u.SkillHumanPoints, u.SkillZombieCurXp,
 	// 	u.SkillZombiePoints, InventoryToBytes(&u.Inventory), u.UserMail)
 
-	dblock.Unlock()
+	Dblock.Unlock()
 	if err != nil {
 		return err
 	}
 
 	filepath = DBPath + string(u.IngameName) + ".check"
-	dblock.Lock()
+	Dblock.Lock()
 	err = ioutil.WriteFile(filepath, u.IngameName, 0644)
-	dblock.Unlock()
+	Dblock.Unlock()
 	if err != nil {
 		return err
 	}
@@ -229,7 +229,7 @@ func UpdateUserToDB(u *User) error {
 
 	filepath := DBPath + string(u.UserName)
 	data, _ := json.MarshalIndent(u, "", "     ")
-	dblock.Lock()
+	Dblock.Lock()
 	err := ioutil.WriteFile(filepath, data, 0644)
 
 	// _, err = stmt.Exec(u.Level, u.Rank,
@@ -240,7 +240,7 @@ func UpdateUserToDB(u *User) error {
 	// 	u.VipLevel, u.VipXp, u.SkillHumanCurXp, u.SkillHumanPoints, u.SkillZombieCurXp,
 	// 	u.SkillZombiePoints, InventoryToBytes(&u.Inventory), u.UserName)
 
-	dblock.Unlock()
+	Dblock.Unlock()
 	if err != nil {
 		return err
 	}
@@ -252,9 +252,9 @@ func IsExistsMail(mail []byte) bool {
 		query, err := DB.Prepare("SELECT * FROM userinfo WHERE UserMail = ?")
 		if err == nil {
 			defer query.Close()
-			dblock.Lock()
+			Dblock.Lock()
 			rows, err := query.Query(mail)
-			dblock.Unlock()
+			Dblock.Unlock()
 			if err != nil {
 				return false
 			}
