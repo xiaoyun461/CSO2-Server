@@ -59,10 +59,10 @@ func GetNewUserID() uint32 {
 }
 
 //getUserByLogin 假定nexonUsername是唯一
-func GetUserByLogin(account, passwd []byte) (*User, int) {
+func GetUserByLogin(account string, passwd []byte) (*User, int) {
 	//查看是否有已经登陆的同名用户
 	for _, v := range UsersManager.Users {
-		if string(v.UserName) == string(account) {
+		if string(v.UserName) == account {
 			return nil, USER_ALREADY_LOGIN
 		}
 	}

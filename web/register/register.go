@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"html/template"
 	"io/ioutil"
-	"log"
 	"math/rand"
 	"net/http"
 	"os"
@@ -22,7 +21,6 @@ import (
 	. "github.com/KouKouChan/CSO2-Server/verbose"
 )
 
-
 var (
 	mailvcode   = make(map[string]string)
 	Reglock     sync.Mutex
@@ -37,10 +35,6 @@ var (
 	}
 )
 
-func OnTest(w http.ResponseWriter, r *http.Request) {
-	log.Println("get a url", r.URL.RequestURI)
-}
-
 func OnRegister() {
 	defer func() {
 		if err := recover(); err != nil {
@@ -54,7 +48,6 @@ func OnRegister() {
 	MailService.SenderSMTP = Conf.REGSMTPaddr
 	http.HandleFunc("/", Register)
 	http.HandleFunc("/bg.jpg", OnJpg)
-	http.HandleFunc("/test/<filename>", OnTest)
 	fmt.Println("Web is running at", "[AnyAdapter]:"+strconv.Itoa(int(Conf.REGPort)))
 	if Conf.EnableMail != 0 {
 		fmt.Println("Mail Service is enabled !")

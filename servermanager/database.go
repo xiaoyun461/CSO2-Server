@@ -23,11 +23,11 @@ var (
 
 //从数据库中读取用户数据
 //如果是新用户则保存到数据库中
-func GetUserFromDatabase(loginname, passwd []byte) (*User, int) {
+func GetUserFromDatabase(loginname string, passwd []byte) (*User, int) {
 	if DB != nil {
 		//query, err := DB.Prepare("SELECT * FROM userinfo WHERE LoginName = ?")
 		//if err == nil {
-		filepath := DBPath + string(loginname)
+		filepath := DBPath + loginname
 		rst, err := PathExists(filepath)
 		if rst {
 			//defer query.Close()
@@ -72,7 +72,7 @@ func GetUserFromDatabase(loginname, passwd []byte) (*User, int) {
 	}
 	u := GetNewUser()
 	u.SetID(GetNewUserID())
-	u.SetUserName(loginname, loginname)
+	u.SetUserName([]byte(loginname), []byte(loginname))
 	u.Password = passwd
 	return &u, USER_LOGIN_SUCCESS
 }
