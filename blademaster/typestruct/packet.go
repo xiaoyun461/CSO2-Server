@@ -12,10 +12,9 @@ import (
 type (
 	//PacketHeader ,header of packet , 4 bytes len
 	PacketHeader struct {
-		Data         []byte
-		IsGoodPacket bool
-		Sequence     uint8
-		Length       uint16
+		Data     []byte
+		Sequence uint8
+		Length   uint16
 	}
 	//PacketData ,data part of packet
 	PacketData struct {
@@ -414,12 +413,12 @@ const (
 )
 
 func (p *PacketHeader) PraseHeadPacket() {
-	if p.Data[0] != PacketTypeSignature {
-		p.IsGoodPacket = false
-		return
-	}
-	p.IsGoodPacket = true
-	offset := 1
+	// if p.Data[0] != PacketTypeSignature {
+	// 	p.IsGoodPacket = false
+	// 	return
+	// }
+	// p.IsGoodPacket = true
+	offset := 0
 	p.Sequence = ReadUint8(p.Data, &offset)
 	p.Length = ReadUint16(p.Data, &offset)
 }

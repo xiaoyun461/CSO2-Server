@@ -46,7 +46,7 @@ func OnGameStartCountdown(p *PacketData, client net.Conn) {
 	if !curroom.CanStartGame() {
 		DebugInfo(2, "Error : User", string(uPtr.UserName), "try to start countdown but mode is illegal !")
 		OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageDialogBox,
-			GAME_ROOM_COUNT_MODE_ERROR)
+			GAME_ROOM_COUNTDOWN_FAILED_NOENEMIES)
 		return
 	}
 	//检查是否应该继续倒计时
@@ -61,7 +61,7 @@ func OnGameStartCountdown(p *PacketData, client net.Conn) {
 	//所有玩家发送倒计时数据
 	build := BuildCountdown(pkt, should)
 	for _, v := range curroom.Users {
-		rst := BytesCombine(BuildHeader(v.CurrentSequence, p.Id), build)
+		rst := BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeRoom), build)
 		SendPacket(rst, v.CurrentConnection)
 	}
 }

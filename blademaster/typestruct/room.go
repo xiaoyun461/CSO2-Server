@@ -224,8 +224,6 @@ func (rm *Room) SetStatus(status uint8) {
 }
 
 func (rm Room) CanStartGame() bool {
-	rm.RoomMutex.Lock()
-	defer rm.RoomMutex.Unlock()
 	switch rm.Setting.GameModeID {
 	case ModeDeathmatch, ModeOriginal, ModeOriginalmr, ModeCasualbomb,
 		ModeCasualoriginal, ModeEventmod01, ModeEventmod02, ModeDiy,
@@ -258,7 +256,7 @@ func (rm *Room) ProgressCountdown(num uint8) {
 	}
 	if rm.CountingDown == false {
 		rm.CountingDown = true
-		rm.Countdown = DefaultCountdownNum
+		//rm.Countdown = DefaultCountdownNum
 	}
 	rm.Countdown--
 	if rm.Countdown != num {
@@ -397,6 +395,8 @@ func (rm *Room) CheckIngameStatus() {
 
 func (rm Room) GetNumOfRealReadyPlayers() int {
 	num := 0
+	rm.RoomMutex.Lock()
+	defer rm.RoomMutex.Unlock()
 	for _, v := range rm.Users {
 		if v != nil && (v.IsUserReady() ||
 			v.Userid == rm.HostUserID) {

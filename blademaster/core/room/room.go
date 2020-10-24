@@ -32,7 +32,7 @@ func OnRoomRequest(p *PacketData, client net.Conn) {
 		case Feedback:
 			OnRoomFeedback(p, client)
 		default:
-			DebugInfo(2, "Unknown room packet", pkt.InRoomType, "from", client.RemoteAddr().String(), p.Data)
+			DebugInfo(2, "Unknown room packet", pkt.InRoomType, "from", client.RemoteAddr().String())
 		}
 	} else {
 		DebugInfo(2, "Error : Recived a illegal room packet from", client.RemoteAddr().String())

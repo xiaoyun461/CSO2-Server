@@ -1,6 +1,8 @@
 package typestruct
 
-import "unsafe"
+import (
+	"unsafe"
+)
 
 //每个房间的设置数据
 type RoomSettings struct {
@@ -154,11 +156,9 @@ func (dest *Room) ToUpdateSetting(src *InUpSettingReq) {
 	}
 	if lowFlag&0x1000000 != 0 {
 		dest.Setting.AreBotsEnabled = src.BotEnabled
-		if dest.Setting.AreBotsEnabled != 0 {
-			dest.Setting.BotDifficulty = src.BotDifficulty
-			dest.Setting.NumCtBots = src.NumCtBots
-			dest.Setting.NumTrBots = src.NumTrBots
-		}
+		dest.Setting.BotDifficulty = src.BotDifficulty
+		dest.Setting.NumCtBots = src.NumCtBots
+		dest.Setting.NumTrBots = src.NumTrBots
 	}
 
 	if lowFlag&0x2000000 != 0 {
