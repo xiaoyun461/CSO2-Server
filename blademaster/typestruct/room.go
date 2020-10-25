@@ -224,22 +224,30 @@ func (rm *Room) SetStatus(status uint8) {
 }
 
 func (rm Room) CanStartGame() bool {
+	//log.Println("mode", rm.Setting.GameModeID)
 	switch rm.Setting.GameModeID {
 	case ModeDeathmatch, ModeOriginal, ModeOriginalmr, ModeCasualbomb,
 		ModeCasualoriginal, ModeEventmod01, ModeEventmod02, ModeDiy,
 		ModeCampaign1, ModeCampaign2, ModeCampaign3, ModeCampaign4,
 		ModeCampaign5, ModeTdm_small, ModeDe_small, ModeMadcity, ModeMadcity_team,
 		ModeGunteamdeath, ModeGunteamdeath_re, ModeStealth, ModeTeamdeath,
-		ModeTeamdeath_mutation, ModePig:
+		ModeTeamdeath_mutation, ModePig, ModeGiant, ModeHide, ModeHide2, ModeHide_match, ModeHide_origin,
+		ModeHide_Item, ModeHide_multi, ModeGhost, ModeTag, ModeZombie, ModeZombiecraft,
+		ModeZombie_commander, ModeZombie_prop, ModeZombie_zeta, ModeGunball:
 		if rm.GetNumOfReadyPlayers() < 2 {
 			return false
 		}
-	case ModeGiant, ModeHide, ModeHide2, ModeHide_match, ModeHide_origin,
-		ModeHide_Item, ModeHide_multi, ModeGhost, ModeTag, ModeZombie, ModeZombiecraft,
-		ModeZombie_commander, ModeZombie_prop, ModeZombie_zeta:
-		if rm.GetNumOfRealReadyPlayers() < 2 {
-			return false
-		}
+		// case ModeGiant, ModeHide, ModeHide2, ModeHide_match, ModeHide_origin,
+		// 	ModeHide_Item, ModeHide_multi, ModeGhost, ModeTag, ModeZombie, ModeZombiecraft,
+		// 	ModeZombie_commander, ModeZombie_prop, ModeZombie_zeta, ModeGunball:
+		// 	if rm.GetNumOfRealReadyPlayers() < 2 {
+		// 		return false
+		// 	}
+		//default:
+		//	return true
+		// if rm.GetNumOfRealReadyPlayers() < 2 {
+		// 	//return false
+		// }
 	}
 	return true
 }
