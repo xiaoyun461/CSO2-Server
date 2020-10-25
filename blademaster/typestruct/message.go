@@ -27,4 +27,5 @@ var (
 	GAME_LOGIN_BAD_USERNAME              = []byte("#CSO2_LoginAuth_UserNotExists")
 	GAME_LOGIN_TENTH_FAILED              = []byte("#CSO2_LoginAuth_TempBlockedByLoginFail")
 	GAME_LOGIN_INVALID_USERINFO          = []byte("#CSO2_ServerMessage_INVALID_USERINFO")
+	GAME_REPORT_USER_SUCCEED             = []byte("#CSO2_POPUP_USER_REPORT_SUCCEED")
 )

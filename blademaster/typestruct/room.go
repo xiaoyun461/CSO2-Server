@@ -405,6 +405,19 @@ func (rm Room) GetNumOfRealReadyPlayers() int {
 	}
 	return num
 }
+
+func (rm Room) GetNumOfRealIngamePlayers() int {
+	num := 0
+	rm.RoomMutex.Lock()
+	defer rm.RoomMutex.Unlock()
+	for _, v := range rm.Users {
+		if v != nil && v.CurrentIsIngame {
+			num++
+		}
+	}
+	return num
+}
+
 func (rm Room) GetNumOfReadyPlayers() int {
 	botPlayers := int(rm.Setting.NumCtBots + rm.Setting.NumTrBots)
 	if rm.Setting.TeamBalanceType == WithBots {

@@ -23,6 +23,7 @@ import (
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/option"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/playerinfo"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/quick"
+	. "github.com/KouKouChan/CSO2-Server/blademaster/core/report"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/room"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/shop"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/user"
@@ -42,7 +43,7 @@ import (
 
 var (
 	//SERVERVERSION 版本号
-	SERVERVERSION = "v0.3.12"
+	SERVERVERSION = "v0.3.13"
 	Redis         redis.Conn
 )
 
@@ -135,9 +136,10 @@ func main() {
 		panic(err)
 	}
 	DBPath = path + "\\CSO2-Server\\database\\json\\"
+	ReportPath = path + "\\CSO2-Server\\database\\report\\"
 
 	//check folder
-	checkFolder()
+	checkFolder(path)
 
 	//read configure
 	Conf.InitConf(path)
@@ -339,10 +341,12 @@ func RecvMessage(client net.Conn) {
 			OnAutoMatch(&dataPacket, client)
 		case PacketTypeShop:
 			OnShopRequest(&dataPacket, client)
+		case PacketTypeReport:
+			OnReportRequest(&dataPacket, client)
 		//case PacketTypeFriend:
 		default:
-			DebugInfo(2, "Unknown packet", dataPacket.Id, "from", client.RemoteAddr().String())
-			//DebugInfo(2, "Unknown packet", dataPacket.Id, "from", client.RemoteAddr().String(), dataPacket.Data)
+			//DebugInfo(2, "Unknown packet", dataPacket.Id, "from", client.RemoteAddr().String())
+			DebugInfo(2, "Unknown packet", dataPacket.Id, "from", client.RemoteAddr().String(), dataPacket.Data)
 		}
 	}
 
@@ -367,14 +371,25 @@ func BroadcastRoomList() {
 	}
 }
 
-func checkFolder() {
+func checkFolder(path string) {
 	rst, _ := PathExists(DBPath)
 	if !rst {
 		err := os.Mkdir(DBPath, os.ModePerm)
 		if err != nil {
-			fmt.Println("mkdir failed!", err)
+			fmt.Println("mkdir1 failed!", err)
 		} else {
-			fmt.Println("mkdir success!")
+			fmt.Println("mkdir1 success!")
+		}
+	}
+
+	folderpath := path + "\\CSO2-Server\\database\\report\\"
+	rst, _ = PathExists(folderpath)
+	if !rst {
+		err := os.Mkdir(folderpath, os.ModePerm)
+		if err != nil {
+			fmt.Println("mkdir2 failed!", err)
+		} else {
+			fmt.Println("mkdir2 success!")
 		}
 	}
 }

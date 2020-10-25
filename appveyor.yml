@@ -22,23 +22,23 @@ test_script:
 
     cd ..
 
-    7z a .\CSO2-Server-0.3.12-Win64.7z .\CSO2-Server.exe
+    7z a .\CSO2-Server-0.3.13-Win64.7z .\CSO2-Server.exe
 
-    7z a .\CSO2-Server-0.3.12-Win64.7z .\local-console.bat
+    7z a .\CSO2-Server-0.3.13-Win64.7z .\local-console.bat
 
-    7z a .\CSO2-Server-0.3.12-Win64.7z CSO2-Server\configure\server.conf
+    7z a .\CSO2-Server-0.3.13-Win64.7z CSO2-Server\configure\server.conf
 
-    7z a .\CSO2-Server-0.3.12-Win64.7z CSO2-Server\database\sqlite\cso2.db
+    7z a .\CSO2-Server-0.3.13-Win64.7z CSO2-Server\database\sqlite\cso2.db
 
-    7z a .\CSO2-Server-0.3.12-Win64.7z CSO2-Server\assert\bg.jpg
+    7z a .\CSO2-Server-0.3.13-Win64.7z CSO2-Server\assert\bg.jpg
 
-    7z a .\CSO2-Server-0.3.12-Win64.7z CSO2-Server\assert\register.html
+    7z a .\CSO2-Server-0.3.13-Win64.7z CSO2-Server\assert\register.html
 
-    7z a .\CSO2-Server-0.3.12-Win64.7z CSO2-Server\assert\cstrike\
+    7z a .\CSO2-Server-0.3.13-Win64.7z CSO2-Server\assert\cstrike\
 
-    7z a .\CSO2-Server-0.3.12-Win64.7z CSO2-Server\locales\
+    7z a .\CSO2-Server-0.3.13-Win64.7z CSO2-Server\locales\
 
-    mv .\CSO2-Server-0.3.12-Win64.7z .\CSO2-Server\
+    mv .\CSO2-Server-0.3.13-Win64.7z .\CSO2-Server\
 
     cd .\CSO2-Server\
 artifacts:

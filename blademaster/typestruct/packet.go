@@ -60,7 +60,21 @@ type (
 		ChannelServerIndex uint8
 		ChannelIndex       uint8
 	}
-
+	InReportPacket struct {
+		Type uint8
+	}
+	InReportSearchUserPacket struct {
+		LenOfName uint8
+		Name      []byte
+	}
+	InReportMsgPacket struct {
+		LenOfName uint8
+		Name      []byte
+		Type      uint8
+		LenOfMsg  uint16
+		Msg       []byte
+		Unk00     uint16
+	}
 	InFavoritePacket struct {
 		PacketType uint8
 	}
@@ -389,6 +403,7 @@ const (
 	PacketTypeOption           = 76
 	PacketTypeFavorite         = 77
 	PacketTypeQuickJoin        = 80
+	PacketTypeReport           = 83
 	PacketTypeSignature        = 85
 	PacketTypeQuickStart       = 86
 	PacketTypeAutomatch        = 88
@@ -508,7 +523,39 @@ func (p *PacketData) PraseFavoriteSetCosmeticsPacket(dest *InFavoriteSetCosmetic
 	dest.ItemId = ReadUint32(p.Data, &p.CurOffset)
 	return true
 }
-
+func (p *PacketData) PraseReportPacket(dest *InReportPacket) bool {
+	// id + type = 2 bytes
+	if p.Length < 2 ||
+		dest == nil {
+		return false
+	}
+	dest.Type = ReadUint8(p.Data, &p.CurOffset)
+	return true
+}
+func (p *PacketData) PraseReportMsgPacket(dest *InReportMsgPacket) bool {
+	// id + type + type + len + type + unk = 9 bytes
+	if p.Length < 9 ||
+		dest == nil {
+		return false
+	}
+	dest.LenOfName = ReadUint8(p.Data, &p.CurOffset)
+	dest.Name = ReadString(p.Data, &p.CurOffset, int(dest.LenOfName))
+	dest.Type = ReadUint8(p.Data, &p.CurOffset)
+	dest.LenOfMsg = ReadUint16(p.Data, &p.CurOffset)
+	dest.Msg = ReadString(p.Data, &p.CurOffset, int(dest.LenOfMsg))
+	dest.Unk00 = ReadUint16(p.Data, &p.CurOffset)
+	return true
+}
+func (p *PacketData) PraseReportSearchUserPacket(dest *InReportSearchUserPacket) bool {
+	// id + type + type + len = 4 bytes
+	if p.Length < 4 ||
+		dest == nil {
+		return false
+	}
+	dest.LenOfName = ReadUint8(p.Data, &p.CurOffset)
+	dest.Name = ReadString(p.Data, &p.CurOffset, int(dest.LenOfName))
+	return true
+}
 func (p *PacketData) PraseChannelRequest(dest *InRoomListRequestPacket) bool {
 	// id + channelServerIndex + channelIndex = 3 bytes
 	if p.Length < 3 {

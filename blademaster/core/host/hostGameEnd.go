@@ -122,7 +122,8 @@ func BuildGameResultHeader(rm *Room) []byte {
 	case ModeGhost:
 		WriteUint8(&buf, 0, &offset)
 		WriteUint32(&buf, 0, &offset)
-	case ModeZombie, ModeZombiecraft, ModeZombie_commander, ModeZombie_prop, ModeZombie_zeta, ModeZ_scenario, ModeZ_scenario_side, ModeHeroes:
+	case ModeZombie, ModeZombiecraft, ModeZombie_commander, ModeZombie_prop, ModeZombie_zeta, ModeZ_scenario, ModeZ_scenario_side, ModeHeroes,
+		ModeHide, ModeHide2, ModeHide_Item, ModeHide_ice, ModeHide_match, ModeHide_multi, ModeHide_origin:
 
 	default:
 		WriteUint8(&buf, rm.WinnerTeam, &offset) //winner team？ 0x02 ，生化模式貌似没有？
@@ -130,9 +131,10 @@ func BuildGameResultHeader(rm *Room) []byte {
 		WriteUint8(&buf, rm.TrScore, &offset)    //TR winNum
 		WriteUint16(&buf, 0, &offset)            //unk00
 	}
-	WriteUint8(&buf, uint8(rm.GetNumOfRealReadyPlayers()), &offset) //usernum？
+	WriteUint8(&buf, uint8(rm.GetNumOfRealIngamePlayers()), &offset) //usernum？
 	buf = buf[:offset]
-	for k, v := range rm.Users {
+	idx := 1
+	for _, v := range rm.Users {
 		if v.CurrentIsIngame {
 			temp := make([]byte, 100)
 			offset = 0
@@ -171,7 +173,7 @@ func BuildGameResultHeader(rm *Room) []byte {
 
 			WriteUint8(&temp, uint8(v.Level), &offset)    //next level ？
 			WriteUint8(&temp, 0, &offset)                 //unk15
-			WriteUint8(&temp, uint8(k+1), &offset)        //rank
+			WriteUint8(&temp, uint8(idx), &offset)        //rank
 			WriteUint16(&temp, v.CurrentKillNum, &offset) //连续击杀数
 			WriteUint32(&temp, 0, &offset)                //unk16 ，maybe 4 bytes
 			WriteUint8(&temp, v.CurrentTeam, &offset)     //user team
@@ -181,13 +183,16 @@ func BuildGameResultHeader(rm *Room) []byte {
 			case ModeDeathmatch, ModeTeamdeath, ModeTeamdeath_mutation:
 			case ModeStealth:
 				WriteUint16(&temp, 0, &offset) //unk17
-			case ModeZombie, ModeZombiecraft, ModeZombie_commander, ModeZombie_prop, ModeZombie_zeta, ModeGhost, ModeZ_scenario, ModeZ_scenario_side, ModeHeroes:
+			case ModeZombie, ModeZombiecraft, ModeZombie_commander, ModeZombie_prop, ModeZombie_zeta, ModeZ_scenario, ModeZ_scenario_side, ModeHeroes,
+				ModeHide, ModeHide2, ModeHide_Item, ModeHide_ice, ModeHide_match, ModeHide_multi, ModeHide_origin:
 			default:
 				WriteUint32(&temp, 0, &offset) //unk17,貌似有时候不用
 			}
+			idx++
 			buf = BytesCombine(buf, temp[:offset])
 		}
 	}
+	//log.Println(buf)
 	return buf
 }
 

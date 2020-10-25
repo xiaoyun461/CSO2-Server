@@ -104,6 +104,10 @@ func RecvGMmsg(client net.Conn) {
 			additem(client, req)
 		case GMsave:
 			save(client, req)
+		case GMBeVIP:
+			vipUser(client, req)
+		case GMbeGM:
+			gmUser(client, req)
 		default:
 		}
 	}
@@ -114,6 +118,12 @@ end:
 }
 
 func login(client net.Conn, req []string) {
+	if len(req) < 3 {
+		DebugInfo(2, "Console from", client.RemoteAddr().String(), "sent a illegal login packet")
+		rst := []byte(GMLoginFailed)
+		GMSendPacket(&rst, client)
+		return
+	}
 	if req[1] == Conf.GMusername && req[2] == Conf.GMpassword {
 		clients[client.RemoteAddr().String()] = true
 		rst := []byte(GMLoginOk)
@@ -148,6 +158,12 @@ func userlist(client net.Conn, req []string) {
 }
 
 func kickUser(client net.Conn, req []string) {
+	if len(req) < 2 {
+		DebugInfo(2, "Console from", client.RemoteAddr().String(), "sent a illegal kick packet")
+		rst := []byte(GMKickFailed)
+		GMSendPacket(&rst, client)
+		return
+	}
 	if _, ok := clients[client.RemoteAddr().String()]; !ok || !clients[client.RemoteAddr().String()] {
 		DebugInfo(2, "Console from", client.RemoteAddr().String(), "sent a kick user req but not logged in")
 	}
@@ -172,6 +188,12 @@ func kickUser(client net.Conn, req []string) {
 }
 
 func additem(client net.Conn, req []string) {
+	if len(req) < 3 {
+		DebugInfo(2, "Console from", client.RemoteAddr().String(), "sent a illegal additem packet")
+		rst := []byte(GMAdditemFailed)
+		GMSendPacket(&rst, client)
+		return
+	}
 	if _, ok := clients[client.RemoteAddr().String()]; !ok || !clients[client.RemoteAddr().String()] {
 		DebugInfo(2, "Console from", client.RemoteAddr().String(), "sent a additem req but not logged in")
 	}
@@ -210,11 +232,11 @@ func additem(client net.Conn, req []string) {
 		Dblock.Unlock()
 
 		err := json.Unmarshal(dataEncoded, &u)
-		if err == nil {
-			rst := []byte(GMAdditemSuccess)
+		if err != nil {
+			rst := []byte(GMAdditemFailed)
 			GMSendPacket(&rst, client)
 
-			DebugInfo(1, "Console from", client.RemoteAddr().String(), "add item", id, "to User", string(u.UserName))
+			DebugInfo(1, "Console from", client.RemoteAddr().String(), "add item", id, "to User", string(u.UserName), "failed")
 			return
 
 		}
@@ -226,13 +248,14 @@ func additem(client net.Conn, req []string) {
 			rst := []byte(GMAdditemSuccess)
 			GMSendPacket(&rst, client)
 
-			DebugInfo(1, "Console from", client.RemoteAddr().String(), "add item", id, "to User", string(u.UserName))
+			DebugInfo(1, "Console from", client.RemoteAddr().String(), "add item", id, "to User", string(u.UserName), "success")
 			return
 
 		}
 	}
 	rst := []byte(GMAdditemFailed)
 	GMSendPacket(&rst, client)
+	DebugInfo(1, "Console from", client.RemoteAddr().String(), "add item", id, "to User", req[1], "not found")
 }
 
 func save(client net.Conn, req []string) {
@@ -255,4 +278,131 @@ func save(client net.Conn, req []string) {
 
 	rst := []byte(GMSaveSuccess)
 	GMSendPacket(&rst, client)
+}
+
+func vipUser(client net.Conn, req []string) {
+	if len(req) < 2 {
+		DebugInfo(2, "Console from", client.RemoteAddr().String(), "sent a illegal vip packet")
+		rst := []byte(GMBeVIPFailed)
+		GMSendPacket(&rst, client)
+		return
+	}
+	if _, ok := clients[client.RemoteAddr().String()]; !ok || !clients[client.RemoteAddr().String()] {
+		DebugInfo(2, "Console from", client.RemoteAddr().String(), "sent a vip user req but not logged in")
+	}
+	for _, v := range UsersManager.Users {
+		if v == nil {
+			continue
+		}
+		if string(v.UserName) == req[1] {
+			v.SetVIP()
+
+			rst := BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeUserInfo), BuildUserInfo(0XFFFFFFFF, NewUserInfo(v), v.Userid, true))
+			SendPacket(rst, v.CurrentConnection)
+
+			rst = []byte(GMBeVIPSuccess)
+			GMSendPacket(&rst, client)
+			DebugInfo(1, "Console from", client.RemoteAddr().String(), "set player", string(v.UserName), "vip success")
+			return
+		}
+	}
+
+	filepath := DBPath + req[1]
+	rb, _ := PathExists(filepath)
+	if rb {
+		u := GetNewUser()
+
+		Dblock.Lock()
+		dataEncoded, _ := ioutil.ReadFile(filepath)
+		Dblock.Unlock()
+
+		err := json.Unmarshal(dataEncoded, &u)
+		if err != nil {
+			rst := []byte(GMBeVIPFailed)
+			GMSendPacket(&rst, client)
+
+			DebugInfo(1, "Console from", client.RemoteAddr().String(), "set player", req[1], "vip failed")
+			return
+
+		}
+
+		u.SetVIP()
+
+		err = UpdateUserToDB(&u)
+
+		if err == nil {
+			rst := []byte(GMBeVIPSuccess)
+			GMSendPacket(&rst, client)
+			DebugInfo(1, "Console from", client.RemoteAddr().String(), "set player", req[1], "vip success")
+			return
+
+		}
+	}
+
+	rst := []byte(GMBeVIPFailed)
+	GMSendPacket(&rst, client)
+	DebugInfo(1, "Console from", client.RemoteAddr().String(), "set player", req[1], "vip failed")
+}
+
+func gmUser(client net.Conn, req []string) {
+	if len(req) < 2 {
+		DebugInfo(2, "Console from", client.RemoteAddr().String(), "sent a illegal gm packet")
+		rst := []byte(GMBeGMFailed)
+		GMSendPacket(&rst, client)
+		return
+	}
+	if _, ok := clients[client.RemoteAddr().String()]; !ok || !clients[client.RemoteAddr().String()] {
+		DebugInfo(2, "Console from", client.RemoteAddr().String(), "sent a gm user req but not logged in")
+	}
+	for _, v := range UsersManager.Users {
+		if v == nil {
+			continue
+		}
+		if string(v.UserName) == req[1] {
+			v.SetGM()
+			rst := BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeUserInfo), BuildUserInfo(0XFFFFFFFF, NewUserInfo(v), v.Userid, true))
+			SendPacket(rst, v.CurrentConnection)
+
+			rst = []byte(GMBeGMSuccess)
+			GMSendPacket(&rst, client)
+			DebugInfo(1, "Console from", client.RemoteAddr().String(), "set player", string(v.UserName), "gm success")
+			return
+		}
+	}
+
+	filepath := DBPath + req[1]
+	rb, _ := PathExists(filepath)
+	if rb {
+		u := GetNewUser()
+
+		Dblock.Lock()
+		dataEncoded, _ := ioutil.ReadFile(filepath)
+		Dblock.Unlock()
+
+		err := json.Unmarshal(dataEncoded, &u)
+		if err != nil {
+			rst := []byte(GMBeGMFailed)
+			GMSendPacket(&rst, client)
+
+			DebugInfo(1, "Console from", client.RemoteAddr().String(), "set player", req[1], "gm failed")
+			return
+
+		}
+
+		u.SetGM()
+
+		err = UpdateUserToDB(&u)
+
+		if err == nil {
+			rst := []byte(GMBeGMSuccess)
+			GMSendPacket(&rst, client)
+			DebugInfo(1, "Console from", client.RemoteAddr().String(), "set player", req[1], "gm success")
+			return
+
+		}
+	}
+
+	rst := []byte(GMBeGMFailed)
+	GMSendPacket(&rst, client)
+	DebugInfo(1, "Console from", client.RemoteAddr().String(), "set player", req[1], "gm failed")
 }

@@ -107,6 +107,24 @@ func (u User) IsVIP() bool {
 	return true
 }
 
+func (u *User) SetVIP() {
+	if u == nil {
+		return
+	}
+	u.UserMutex.Lock()
+	defer u.UserMutex.Unlock()
+	u.VipLevel = 1
+}
+
+func (u *User) SetGM() {
+	if u == nil {
+		return
+	}
+	u.UserMutex.Lock()
+	defer u.UserMutex.Unlock()
+	u.Gm = 1
+}
+
 func (u *User) SetID(id uint32) {
 	if u == nil {
 		return

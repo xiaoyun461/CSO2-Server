@@ -16,6 +16,9 @@ func ToConsoleHost(username, password, addr, port string) {
 	fmt.Println("	kick [username]       		  :kick user who called (username)")
 	fmt.Println("	save       			  :save all online user's data to database")
 	fmt.Println("	additem [username] [itemid]       :give user a item")
+	fmt.Println("	vip [username]       		  :give user a vip")
+	fmt.Println("	gm [username]       		  :give user a gm")
+	fmt.Println("	exit       			  :quit the console")
 	fmt.Println("")
 
 	server, err := net.Dial("tcp", addr+":"+port)
@@ -50,8 +53,9 @@ func ToConsoleHost(username, password, addr, port string) {
 	for {
 		fmt.Printf("]")
 		instream = ScanLine()
-
+		//log.Println(instream)
 		cmds := strings.Fields(instream)
+		//log.Println(cmds)
 
 		switch cmds[0] {
 		case GMReqUserList:
@@ -86,6 +90,15 @@ func ToConsoleHost(username, password, addr, port string) {
 		case GMsave:
 			rst := []byte(GMsave)
 			GMSendPacket(&rst, server)
+		case GMBeVIP:
+			rst := []byte(instream)
+			GMSendPacket(&rst, server)
+		case GMbeGM:
+			rst := []byte(instream)
+			GMSendPacket(&rst, server)
+		case GMexit:
+			server.Close()
+			return
 		default:
 			fmt.Println("Error command !")
 			continue
@@ -106,11 +119,11 @@ func readReply(con net.Conn) (GMpacket, bool) {
 	//读取3字节数据包头部
 	headBytes, err := GMReadHead(con)
 	if !err {
-		fmt.Println("Recv login packet failed !")
+		fmt.Println("Recv packet failed !")
 		return GMpacket{}, false
 	}
 	if headBytes[0] != GMSignature {
-		fmt.Println("Recived a illegal GM head from", con.RemoteAddr().String())
+		fmt.Println("Recived a illegal head from", con.RemoteAddr().String())
 		return GMpacket{}, false
 	}
 	offset := 1
@@ -118,7 +131,7 @@ func readReply(con net.Conn) (GMpacket, bool) {
 	//读取数据部分
 	bytes, err := GMReadData(con, Len)
 	if !err {
-		fmt.Println("Recv login packet data failed !")
+		fmt.Println("Recv packet data failed !")
 		return GMpacket{}, false
 	}
 	dataPacket := GMpacket{

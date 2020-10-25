@@ -29,17 +29,20 @@ func IsAllNumber(str string) bool {
 }
 
 //ScanLine 得到一行
-func ScanLine() string {
-	var c byte
-	var err error
-	var b []byte
-	for err == nil {
-		_, err = fmt.Scanf("%c", &c)
-		if c != '\n' {
-			b = append(b, c)
-		} else {
+func ScanLine() (line string) {
+	var buffer []rune
+	for {
+		var c rune
+		n, err := fmt.Scanf("%c", &c)
+
+		//FIXME: in windows,line feeds are '\r\n',but this may cause some problem in UNIX or MAXOS
+		if nil != err ||
+			1 != n ||
+			//'\r' == c ||
+			'\n' == c {
 			break
 		}
+		buffer = append(buffer, c)
 	}
-	return string(b)
+	return string(buffer)
 }

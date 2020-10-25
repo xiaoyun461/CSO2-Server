@@ -31,6 +31,9 @@ const (
 	GMKickUser       = "kick"
 	GMadditem        = "additem"
 	GMsave           = "save"
+	GMBeVIP          = "vip"
+	GMbeGM           = "gm"
+	GMexit           = "exit"
 	GMLoginOk        = "LoginSuccess"
 	GMLoginFailed    = "LoginFailed"
 	GMKickSuccess    = "KickSuccess"
@@ -39,6 +42,10 @@ const (
 	GMAdditemSuccess = "AddSuccess"
 	GMSaveSuccess    = "SaveSuccess"
 	GMSaveFailed     = "SaveFailed"
+	GMBeVIPSuccess   = "VIPSuccess"
+	GMBeVIPFailed    = "VIPFailed"
+	GMBeGMSuccess    = "GMSuccess"
+	GMBeGMFailed     = "GMFailed"
 )
 
 func GMReadHead(client net.Conn) ([]byte, bool) {
