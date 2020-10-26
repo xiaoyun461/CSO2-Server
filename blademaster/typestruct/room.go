@@ -349,6 +349,7 @@ func (rm Room) FindDesirableTeam() int {
 		} else if v.GetUserTeam() == UserForceCounterTerrorist {
 			ctNum++
 		} else {
+			rm.RoomMutex.Unlock()
 			DebugInfo(2, "Error : User", string(v.UserName), "is in Unknown team in room", string(rm.Setting.RoomName))
 			return 0
 		}
