@@ -30,11 +30,11 @@ CSOL2 服务器 v0.3.13
 
 ### 三、基本已完成的功能
 
-    登录、频道、房间、仓库、UDP、角色战绩(游戏结果界面)、数据库、个人信息、聊天
+    登录、频道、房间、仓库、UDP、角色战绩(游戏结果界面)、数据库、个人信息、聊天、命令行和数据库、新手教程
 
 ### 四、正在编写的功能
 
-    武器解锁、命令行和数据库(该版本将与旧版本的数据库不兼容！)
+    武器解锁
 
 ### 五、已知问题
 
@@ -99,7 +99,35 @@ START ./bin/launcher.exe -masterip IP地址 -enablecustom -username 用户名 -p
 - 如果你想开启邮箱注册，那么你需要一个邮箱账号并且申请到了密钥，将密钥填入配置文件，同时开启EnableMail。
 - 如果你是和别人联机玩，那么即使你的电脑运行着服务端也**不能**在bat文件里填127.0.0.1，不然对方无法通过你的ip连接你。
 
-### 十、自定义文件方法
+### 十、Console使用方法
+
+CSO2-Server自带管理员功能，可通过命令行参数打开console功能管理服务器，前提需要服务器已经在运行。
+
+1.运行服务器。
+
+2.使用local-console.bat连接本地服务器或者使用如下命令连接服务器：
+
+```
+CSO2-Server.exe -console -ip YOURIP -port YOURPORT -username GMNAME -password PASSWORD
+```
+
+默认参数如下:
+
+```
+Usage of CSO2-Server.exe:
+  -ip string
+        主机名，默认为localhost (default "localhost")
+  -password string
+        密码，默认为cso2server123 (default "cso2server123")
+  -port string
+        端口号，默认为1315 (default "1315")
+  -username string
+        账号，默认为admin (default "admin")
+```
+
+3.连接成功后可以使用命令管理服务器了，你可以踢出玩家，或者给予玩家物品等。
+
+### 十一、自定义文件方法
 
 1.下载CSOL2解包工具，[点击这里下载](https://pan.baidu.com/s/14q1SoIdHwp1casMWG2OS-w) 提取码：41bs
 
@@ -109,7 +137,7 @@ START ./bin/launcher.exe -masterip IP地址 -enablecustom -username 用户名 -p
 
 4.将文件放入csol2目录的custom文件夹下，打开游戏
 
-### 十一、Docker下使用方法
+### 十二、Docker下使用方法
 
 1.首先你需要拥有Docker,请下载并安装Docker,同时配置好Docker,比如Docker源
 
@@ -127,7 +155,7 @@ docker run -p 30001:30001 -p 30002:30002 koukouchan/cso2-server:latest
 
 4.接下来打开客户端，连接服务器
 
-### 十二、编译环境
+### 十三、编译环境
 
 *Go 1.14.2*
 
@@ -135,7 +163,7 @@ docker run -p 30001:30001 -p 30002:30002 koukouchan/cso2-server:latest
 
 貌似建立互联网服务器需要双方玩家都能内网穿透，实测局域网能够连接，互联网无法房间内加入主机，可能需要架设虚拟局域网。
 
-### 十三、编译方法
+### 十四、编译方法
 
 ```shell
 1. 在shell中执行 go get github.com/KouKouChan/CSO2-Server
@@ -144,7 +172,7 @@ docker run -p 30001:30001 -p 30002:30002 koukouchan/cso2-server:latest
 4. 运行生成的可执行文件即可
 ```
 
-### 十四、Docker下编译方法
+### 十五、Docker下编译方法
 
 1.首先你需要拥有Docker,请下载并安装Docker,同时配置好Docker,比如Docker源
 
@@ -164,7 +192,7 @@ docker run -p 30001:30001 -p 30002:30002 cso2-server
 
 *声明：Counter-Strike Online 2 归 NEXON 所有 ，本程序仅用于学习之用*
 
-### 十五、图片
+### 十六、图片
 
 ![Image](./photos/main.png)
 
