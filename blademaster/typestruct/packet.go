@@ -87,6 +87,12 @@ type (
 	InHostPacket struct {
 		InHostType uint8
 	}
+	InMailPacket struct {
+		InMailType uint8
+	}
+	InMailListPacket struct {
+		InType uint8
+	}
 
 	InQuickPacket struct {
 		InQuickType uint8
@@ -409,6 +415,7 @@ const (
 	PacketTypeAutomatch        = 88
 	PacketTypeFriend           = 89
 	PacketTypeUnlock           = 90
+	PacketTypeMail             = 91
 	PacketTypeGZ               = 95
 	PacketTypeAchievement      = 96
 	PacketTypeConfigInfo       = 106
@@ -889,6 +896,22 @@ func (p *PacketData) PraseHostPacket(dest *InHostPacket) bool {
 	return true
 }
 
+func (p *PacketData) PraseMailPacket(dest *InMailPacket) bool {
+	//id + type = 2 bytes
+	if p.Length < 2 {
+		return false
+	}
+	dest.InMailType = ReadUint8(p.Data, &p.CurOffset)
+	return true
+}
+func (p *PacketData) PraseMailListPacket(dest *InMailListPacket) bool {
+	//id + type = 2 bytes
+	if p.Length < 2 {
+		return false
+	}
+	dest.InType = ReadUint8(p.Data, &p.CurOffset)
+	return true
+}
 func (p *PacketData) PraseInKillPacket(dest *InKillPacket) bool {
 	//id + type + ... = 16 bytes
 	if p.Length < 16 ||

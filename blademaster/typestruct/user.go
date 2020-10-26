@@ -12,6 +12,7 @@ type (
 	User struct {
 		//个人信息
 		Userid               uint32 `json:"-"`
+		NexonID              uint64
 		UserName             []byte
 		IngameName           []byte
 		Password             []byte
@@ -40,6 +41,7 @@ type (
 		TitleId              uint16
 		UnlockedTitles       []byte
 		Signature            []byte
+		UnreadedMsg          uint8
 		BestGamemode         uint32
 		BestMap              uint32
 		UnlockedAchievements []byte
@@ -408,6 +410,7 @@ func GetNewUser() User {
 	var mutex sync.Mutex
 	return User{
 		0,
+		0,               //nexonid
 		[]byte{},        //loginname
 		[]byte{},        //username,looks can change it to another name
 		[]byte{},        //passwd
@@ -446,6 +449,7 @@ func GetNewUser() User {
 			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, // unlockedTitles
 		NewNullString(), // signature
+		0,               // unreadedmsg
 		0,               // bestGamemode
 		0,               // bestMap
 		[]uint8{0x00, 0x00, 0x18, 0x08, 0x00, 0x00, 0x00, 0x00, 0x42, 0x02,
@@ -488,9 +492,9 @@ func GetNewUser() User {
 		0,        //currentstatus
 		false,    //currentIsIngame
 		nil,      //sequence
-		0,
-		0,
-		0,
+		0,        //currentkillNum
+		0,        //currentAssists
+		0,        //currentdeathnum
 		UserNetInfo{
 			0,
 			0,

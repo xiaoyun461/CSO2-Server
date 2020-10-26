@@ -8,7 +8,7 @@ import (
 //发送出去的包结构，其中一些未知，知道后会加入user里去
 type UserInfo struct {
 	//flags                uint32 // should always be 0xFFFFFFFF for a full update
-	unk00                uint64 // nexon id?
+	NexonID              uint64 // nexon id?
 	userName             []byte
 	level                uint16
 	curExp               uint64
@@ -63,7 +63,7 @@ type UserInfo struct {
 	unk50                uint16
 	unlockedTitles       []uint8
 	signature            []byte
-	unk53                uint8
+	unreadedmsg          uint8
 	unk54                uint8
 	unk55                uint32
 	bestGamemode         uint32
@@ -105,7 +105,7 @@ func BuildUserInfo(flags uint32, info UserInfo, id uint32, needID bool) []byte {
 	}
 	WriteUint32(&infobuf, flags, &offset)
 	if flags&0x1 != 0 {
-		WriteUint64(&infobuf, info.unk00, &offset)
+		WriteUint64(&infobuf, info.NexonID, &offset)
 	}
 	if flags&0x2 != 0 {
 		ansiName, _ := Utf8ToLocal(string(info.userName))
@@ -212,7 +212,7 @@ func BuildUserInfo(flags uint32, info UserInfo, id uint32, needID bool) []byte {
 		WriteString(&infobuf, []byte(ansiString), &offset)
 	}
 	if flags&0x80000 != 0 {
-		WriteUint8(&infobuf, info.unk53, &offset)
+		WriteUint8(&infobuf, info.unreadedmsg, &offset)
 		WriteUint8(&infobuf, info.unk54, &offset)
 
 	}
@@ -283,7 +283,7 @@ func NewUserInfo(u *User) UserInfo {
 		isvip = 1
 	}
 	return UserInfo{
-		0x2241158F,
+		u.NexonID,
 		u.IngameName,
 		u.Level,
 		u.CurrentExp,

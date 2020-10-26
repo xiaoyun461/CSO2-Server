@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net"
+	"strconv"
 	"strings"
 
 	. "github.com/KouKouChan/CSO2-Server/kerlong"
@@ -76,7 +77,7 @@ func ToConsoleHost(username, password, addr, port string) {
 			}
 
 			for k, v := range pkt.UserNames {
-				fmt.Println("[", k+1, "]", v)
+				fmt.Println("["+strconv.Itoa(k+1)+"]", v)
 			}
 			fmt.Println("UserNum:", pkt.UserNum)
 

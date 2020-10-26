@@ -19,6 +19,7 @@ import (
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/holepunch"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/host"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/inventory"
+	. "github.com/KouKouChan/CSO2-Server/blademaster/core/mail"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/message"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/option"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/playerinfo"
@@ -343,10 +344,12 @@ func RecvMessage(client net.Conn) {
 			OnShopRequest(&dataPacket, client)
 		case PacketTypeReport:
 			OnReportRequest(&dataPacket, client)
+		case PacketTypeMail:
+			OnMail(&dataPacket, client)
 		//case PacketTypeFriend:
 		default:
-			//DebugInfo(2, "Unknown packet", dataPacket.Id, "from", client.RemoteAddr().String())
-			DebugInfo(2, "Unknown packet", dataPacket.Id, "from", client.RemoteAddr().String(), dataPacket.Data)
+			DebugInfo(2, "Unknown packet", dataPacket.Id, "from", client.RemoteAddr().String())
+			//DebugInfo(2, "Unknown packet", dataPacket.Id, "from", client.RemoteAddr().String(), dataPacket.Data)
 		}
 	}
 
