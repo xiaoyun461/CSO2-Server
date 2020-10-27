@@ -115,7 +115,18 @@ func (u *User) SetVIP() {
 	}
 	u.UserMutex.Lock()
 	defer u.UserMutex.Unlock()
-	u.VipLevel = 1
+	//u.VipLevel = 1
+	u.checkVIP()
+}
+
+func (u *User) checkVIP() {
+	if u == nil {
+		return
+	}
+	u.VipLevel = 1 + uint8(u.Level/5)
+	if u.VipLevel > 5 {
+		u.VipLevel = 5
+	}
 }
 
 func (u *User) SetGM() {
@@ -560,6 +571,7 @@ func (u *User) GetExp(num uint64) {
 			num = 0
 		}
 	}
+	u.checkVIP()
 }
 
 func (u *User) GetKills(num uint32) {
