@@ -571,7 +571,9 @@ func (u *User) GetExp(num uint64) {
 			num = 0
 		}
 	}
-	u.checkVIP()
+	if u.VipLevel > 0 {
+		u.checkVIP()
+	}
 }
 
 func (u *User) GetKills(num uint32) {
