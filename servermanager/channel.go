@@ -132,9 +132,9 @@ func DelChannelRoom(roomid uint16, chlid uint8, chlsrvid uint8) bool {
 			return false
 		}
 		chl.RoomNum--
+		DebugInfo(1, "Room", string(chl.Rooms[roomid].Setting.RoomName), "id", roomid, "had been deleted !")
 		delete(chl.RoomNums, chl.Rooms[roomid].RoomNumber)
 		delete(chl.Rooms, roomid)
-		DebugInfo(1, "Room", string(chl.Rooms[roomid].Setting.RoomName), "id", roomid, "had been deleted !")
 		return true
 	}
 	return false
@@ -159,9 +159,9 @@ func DelChannelRoomQuick(roomid uint16, chl *ChannelInfo) bool {
 			return false
 		}
 		chl.RoomNum--
+		DebugInfo(1, "Room", string(chl.Rooms[roomid].Setting.RoomName), "id", roomid, "had been deleted !")
 		delete(chl.RoomNums, chl.Rooms[roomid].RoomNumber)
 		delete(chl.Rooms, roomid)
-		DebugInfo(1, "Room", string(chl.Rooms[roomid].Setting.RoomName), "id", roomid, "had been deleted !")
 		return true
 	}
 	return false

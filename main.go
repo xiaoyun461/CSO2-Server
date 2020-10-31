@@ -20,7 +20,6 @@ import (
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/host"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/inventory"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/mail"
-	. "github.com/KouKouChan/CSO2-Server/blademaster/core/message"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/option"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/playerinfo"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/quick"
@@ -276,7 +275,7 @@ func RecvMessage(client net.Conn) {
 			OnSendMessage(&seq, client, MessageDialogBox, GAME_SERVER_ERROR)
 			fmt.Println("Client", client.RemoteAddr().String(), "suffered a fault !")
 			fmt.Println(err)
-			fmt.Println("Dump packet", dataPacket.Data, "offset:", dataPacket.CurOffset)
+			fmt.Println("Dump data", dataPacket.Data, "offset:", dataPacket.CurOffset)
 			fmt.Println("Fault end!")
 			OnLeaveRoom(client, true)
 			DelUserWithConn(client)

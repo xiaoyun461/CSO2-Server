@@ -318,6 +318,9 @@ func (rm Room) GetFreeSlots() int {
 }
 
 func (rm *Room) JoinUser(u *User) bool {
+	if rm == nil {
+		return false
+	}
 	destTeam := rm.FindDesirableTeam()
 	if destTeam <= 0 {
 		DebugInfo(2, "Error : Cant add User", string(u.UserName), "to room", string(rm.Setting.RoomName))
@@ -521,7 +524,7 @@ func (rm *Room) ResetRoomKillNum() {
 }
 
 func (rm *Room) RoomRemoveUser(id uint32) {
-	if rm.NumPlayers <= 0 {
+	if rm == nil || rm.NumPlayers <= 0 {
 		return
 	}
 	rm.RoomMutex.Lock()
