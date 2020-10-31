@@ -20,6 +20,7 @@ import (
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/host"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/inventory"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/mail"
+	. "github.com/KouKouChan/CSO2-Server/blademaster/core/message"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/option"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/playerinfo"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/quick"
