@@ -37,6 +37,8 @@ func OnChatGlobalMessage(p *InChatPacket, client net.Conn) {
 	//发送数据
 	if strings.Fields(string(p.Message))[2] == "/users" {
 		idx := 0
+		rm.RoomMutex.Lock()
+		defer rm.RoomMutex.Unlock()
 		for _, v := range rm.Users {
 			if v == nil {
 				continue
@@ -56,6 +58,8 @@ func OnChatGlobalMessage(p *InChatPacket, client net.Conn) {
 	}
 
 	msg := BuildChatMessage(uPtr, p, ChatIngameGlobal)
+	rm.RoomMutex.Lock()
+	defer rm.RoomMutex.Unlock()
 	for _, v := range rm.Users {
 		if v.CurrentIsIngame {
 			SendPacket(BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeChat), msg), v.CurrentConnection)

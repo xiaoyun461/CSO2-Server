@@ -36,6 +36,7 @@ func OnHostGameEnd(p *PacketData, client net.Conn) {
 	//修改房间信息
 	rm.SetStatus(StatusWaiting)
 	header := BuildGameResultHeader(rm)
+	rm.RoomMutex.Lock()
 	for _, v := range rm.Users {
 		//修改用户状态
 		v.SetUserStatus(UserNotReady)
@@ -67,6 +68,7 @@ func OnHostGameEnd(p *PacketData, client net.Conn) {
 			SendPacket(rst, k.CurrentConnection)
 		}
 	}
+	rm.RoomMutex.Unlock()
 	rm.ResetRoomKillNum()
 	rm.ResetRoomScore()
 	rm.ResetRoomWinner()

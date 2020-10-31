@@ -323,18 +323,26 @@ func (rm *Room) JoinUser(u *User) bool {
 		DebugInfo(2, "Error : Cant add User", string(u.UserName), "to room", string(rm.Setting.RoomName))
 		return false
 	}
-	rm.RoomMutex.Lock()
-	rm.NumPlayers++
-	rm.RoomMutex.Unlock()
 	u.JoinRoom(rm.Id, uint8(destTeam))
 	rm.RoomMutex.Lock()
 	defer rm.RoomMutex.Unlock()
+	rm.NumPlayers++
 	if _, ok := rm.Users[u.Userid]; !ok {
 		rm.Users[u.Userid] = u
 		return true
 	}
 	u.QuitRoom()
 	return false
+}
+
+func (rm *Room) SyncUserNum(num uint8) {
+	if rm == nil {
+		return
+	}
+	rm.RoomMutex.Lock()
+	defer rm.RoomMutex.Unlock()
+	rm.NumPlayers = num
+	return
 }
 
 func (rm Room) FindDesirableTeam() int {

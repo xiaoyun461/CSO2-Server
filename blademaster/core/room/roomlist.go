@@ -63,6 +63,26 @@ func OnBroadcastRoomList(chlsrvid uint8, chlid uint8, u *User) {
 		log.Println("Error : Client from", u.CurrentConnection.RemoteAddr().String(), "request a unknown channel !")
 		return
 	}
+	//检索房间是否正常
+	chl.ChannelMutex.Lock()
+	for k, v := range chl.Rooms {
+		num, orgnum := 0, 0
+		v.RoomMutex.Lock()
+		for _, k := range v.Users {
+			if k != nil {
+				num++
+			}
+		}
+		orgnum = int(v.NumPlayers)
+		v.RoomMutex.Unlock()
+		if num <= 0 {
+			DelChannelRoomQuick(k, chl)
+		} else if num != orgnum {
+			v.SyncUserNum(uint8(num))
+		}
+	}
+	chl.ChannelMutex.Unlock()
+	//发送房间数据
 	rst := BuildRoomList(u.CurrentSequence, chl)
 	SendPacket(rst, u.CurrentConnection)
 	DebugInfo(2, "Sent a roomList packet to", u.CurrentConnection.RemoteAddr().String())

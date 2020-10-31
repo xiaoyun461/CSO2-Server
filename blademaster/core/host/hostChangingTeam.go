@@ -42,6 +42,8 @@ func OnChangingTeam(p *PacketData, client net.Conn) {
 	//log.Println(p.data)
 	destUser.SetUserTeam(pkt.NewTeam)
 	result := BuildChangingTeam(destUser.Userid, destUser.CurrentTeam)
+	rm.RoomMutex.Lock()
+	defer rm.RoomMutex.Unlock()
 	for _, v := range rm.Users {
 		rst := BytesCombine(BuildHeader(v.CurrentSequence, p.Id), result)
 		SendPacket(rst, v.CurrentConnection)

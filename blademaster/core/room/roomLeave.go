@@ -65,11 +65,14 @@ func OnLeaveRoom(client net.Conn, end bool) {
 }
 func SentUserLeaveMes(uPtr *User, rm *Room) {
 	//发送离开消息
+	rm.RoomMutex.Lock()
 	if rm.HostUserID == uPtr.Userid {
 		//选出新房主
 		for _, v := range rm.Users {
+			rm.RoomMutex.Unlock()
 			rm.SetRoomHost(v)
 			DebugInfo(2, "Set User", string(v.UserName), "id", v.Userid, "to host in room", string(rm.Setting.RoomName), "id", rm.Id)
+			rm.RoomMutex.Lock()
 			if !v.CurrentIsIngame {
 				v.SetUserStatus(UserNotReady)
 				temp := BuildUserReadyStatus(v)
@@ -80,10 +83,11 @@ func SentUserLeaveMes(uPtr *User, rm *Room) {
 			}
 			break
 		}
+		sethost := BuildSetHost(rm.HostUserID)
+		rm.RoomMutex.Unlock()
 		numInGame := 0
 		leave := BuildUserLeave(uPtr.Userid)
-		sethost := BuildSetHost(rm.HostUserID)
-
+		rm.RoomMutex.Lock()
 		for _, v := range rm.Users {
 			if v.CurrentIsIngame {
 				numInGame++
@@ -104,6 +108,7 @@ func SentUserLeaveMes(uPtr *User, rm *Room) {
 			// SendPacket(rst, hostu.CurrentConnection)
 		}
 
+		rm.RoomMutex.Unlock()
 		if numInGame == 0 {
 			rm.SetStatus(StatusWaiting)
 			// setting := BuildRoomSetting(rm, 0x404000)
@@ -113,6 +118,7 @@ func SentUserLeaveMes(uPtr *User, rm *Room) {
 			// }
 		}
 		DebugInfo(2, "Sent a set roomHost packet to other users")
+		return
 	} else {
 		leave := BuildUserLeave(uPtr.Userid)
 		for _, v := range rm.Users {
@@ -120,7 +126,9 @@ func SentUserLeaveMes(uPtr *User, rm *Room) {
 			rst1 = BytesCombine(rst1, leave)
 			SendPacket(rst1, v.CurrentConnection)
 		}
+		rm.RoomMutex.Unlock()
 		DebugInfo(2, "Sent a leave room packet to other users")
+		return
 	}
 }
 func BuildUserLeave(id uint32) []byte {

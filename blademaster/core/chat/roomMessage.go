@@ -33,6 +33,8 @@ func OnChatRoomMessage(p *InChatPacket, client net.Conn) {
 	}
 	//发送数据
 	msg := BuildChatMessage(uPtr, p, ChatRoom)
+	rm.RoomMutex.Lock()
+	defer rm.RoomMutex.Unlock()
 	for _, v := range rm.Users {
 		if !v.CurrentIsIngame {
 			SendPacket(BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeChat), msg), v.CurrentConnection)

@@ -38,6 +38,8 @@ func OnChatTeamMessage(p *InChatPacket, client net.Conn) {
 
 	if strings.Fields(string(p.Message))[2] == "/users" {
 		idx := 0
+		rm.RoomMutex.Lock()
+		defer rm.RoomMutex.Unlock()
 		for _, v := range rm.Users {
 			if v == nil {
 				continue
@@ -56,6 +58,8 @@ func OnChatTeamMessage(p *InChatPacket, client net.Conn) {
 		return
 	}
 	msg := BuildChatMessage(uPtr, p, ChatIngameTeam)
+	rm.RoomMutex.Lock()
+	defer rm.RoomMutex.Unlock()
 	for _, v := range rm.Users {
 		if v.CurrentIsIngame && v.GetUserTeam() == uPtr.GetUserTeam() {
 			SendPacket(BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeChat), msg), v.CurrentConnection)
