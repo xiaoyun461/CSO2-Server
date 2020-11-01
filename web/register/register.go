@@ -141,9 +141,9 @@ func Register(w http.ResponseWriter, r *http.Request) {
 			return
 		} else if mailvcode[addrtmp] == vercodetmp {
 			u := GetNewUser()
-			u.SetUserName([]byte(usernametmp), []byte(ingamenametmp))
+			u.SetUserName(usernametmp, ingamenametmp)
 			u.Password = []byte(fmt.Sprintf("%x", md5.Sum([]byte(usernametmp+passwordtmp))))
-			u.UserMail = []byte(addrtmp)
+			u.UserMail = addrtmp
 			if tf := AddUserToDB(&u); tf != nil {
 				wth.Tip = DATABASE_ERROR
 				t.Execute(w, wth)
@@ -190,9 +190,9 @@ func Register(w http.ResponseWriter, r *http.Request) {
 			return
 		} else {
 			u := GetNewUser()
-			u.SetUserName([]byte(usernametmp), []byte(ingamenametmp))
+			u.SetUserName(usernametmp, ingamenametmp)
 			u.Password = []byte(fmt.Sprintf("%x", md5.Sum([]byte(usernametmp+passwordtmp))))
-			u.UserMail = []byte("Unkown")
+			u.UserMail = "Unkown"
 			if tf := AddUserToDB(&u); tf != nil {
 				wth.Tip = DATABASE_ERROR
 				t.Execute(w, wth)

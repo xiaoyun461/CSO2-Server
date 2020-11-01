@@ -22,7 +22,7 @@ func OnChatDirectMessage(p *InChatPacket, client net.Conn) {
 		DebugInfo(2, "Error : Client from", client.RemoteAddr().String(), "sent DirectMessage but not in server !")
 		return
 	}
-	if CompareBytes(uPtr.IngameName, p.Destination) {
+	if CompareBytes([]byte(uPtr.IngameName), p.Destination) {
 		DebugInfo(2, "Error : User", string(uPtr.UserName), "sent DirectMessage to self !")
 		return
 	}
@@ -45,7 +45,7 @@ func BuildDirectMessage(sender *User, reciver *User, isReciver uint8, p *InChatP
 		WriteUint8(&temp, ChatDirectMessage, &offset)
 		WriteUint8(&temp, sender.Gm, &offset)
 		WriteUint8(&temp, 1, &offset)
-		WriteString(&temp, sender.IngameName, &offset)
+		WriteString(&temp, []byte(sender.IngameName), &offset)
 
 		if sender.IsVIP() {
 			WriteUint8(&temp, 1, &offset)
@@ -62,7 +62,7 @@ func BuildDirectMessage(sender *User, reciver *User, isReciver uint8, p *InChatP
 	WriteUint8(&temp, ChatDirectMessage, &offset)
 	WriteUint8(&temp, reciver.Gm, &offset)
 	WriteUint8(&temp, 0, &offset)
-	WriteString(&temp, reciver.IngameName, &offset)
+	WriteString(&temp, []byte(reciver.IngameName), &offset)
 
 	if sender.IsVIP() {
 		WriteUint8(&temp, 1, &offset)

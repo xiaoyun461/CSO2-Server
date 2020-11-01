@@ -124,9 +124,10 @@ func BuildGameResultHeader(rm *Room) []byte {
 	case ModeGhost:
 		WriteUint8(&buf, 0, &offset)
 		WriteUint32(&buf, 0, &offset)
-	case ModeZombie, ModeZombiecraft, ModeZombie_commander, ModeZombie_prop, ModeZombie_zeta, ModeZ_scenario, ModeZ_scenario_side, ModeHeroes,
+	case ModeZombie, ModeZombiecraft, ModeZombie_commander, ModeZombie_prop, ModeZombie_zeta, ModeZ_scenario, ModeZ_scenario_side,
 		ModeHide, ModeHide2, ModeHide_Item, ModeHide_ice, ModeHide_match, ModeHide_multi, ModeHide_origin:
-
+	case ModeHeroes:
+		WriteUint8(&buf, rm.WinnerTeam, &offset)
 	default:
 		WriteUint8(&buf, rm.WinnerTeam, &offset) //winner team？ 0x02 ，生化模式貌似没有？
 		WriteUint8(&buf, rm.CtScore, &offset)    //CT winNum
@@ -140,8 +141,9 @@ func BuildGameResultHeader(rm *Room) []byte {
 		if v.CurrentIsIngame {
 			temp := make([]byte, 100)
 			offset = 0
-			WriteUint32(&temp, v.Userid, &offset)           //userid
-			WriteUint8(&temp, 0, &offset)                   //unk01
+			WriteUint32(&temp, v.Userid, &offset) //userid
+
+			WriteUint8(&temp, 0, &offset)                   //unk02
 			WriteUint64(&temp, 0, &offset)                  //unk03
 			WriteUint64(&temp, 0, &offset)                  //unk04
 			WriteUint16(&temp, v.CurrentKillNum, &offset)   //killnum

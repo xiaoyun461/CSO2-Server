@@ -9,7 +9,7 @@ import (
 type UserInfo struct {
 	//flags                uint32 // should always be 0xFFFFFFFF for a full update
 	NexonID              uint64 // nexon id?
-	userName             []byte
+	userName             string
 	level                uint16
 	curExp               uint64
 	maxExp               uint64

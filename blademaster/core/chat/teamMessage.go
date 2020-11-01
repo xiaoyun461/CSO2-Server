@@ -47,9 +47,9 @@ func OnChatTeamMessage(p *InChatPacket, client net.Conn) {
 			if v.CurrentIsIngame {
 				var rst []byte
 				if rm.HostUserID == v.Userid {
-					rst = BytesCombine([]byte("[Host] "), v.UserName)
+					rst = BytesCombine([]byte("[Host] "), []byte(v.UserName))
 				} else {
-					rst = BytesCombine([]byte("["+strconv.Itoa(idx)+"] "), v.UserName)
+					rst = BytesCombine([]byte("["+strconv.Itoa(idx)+"] "), []byte(v.UserName))
 				}
 				idx++
 				OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageNotice, rst)

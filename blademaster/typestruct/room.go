@@ -484,7 +484,7 @@ func (rm *Room) SetRoomHost(u *User) {
 	rm.RoomMutex.Lock()
 	defer rm.RoomMutex.Unlock()
 	rm.HostUserID = u.Userid
-	rm.HostUserName = u.IngameName
+	rm.HostUserName = []byte(u.IngameName)
 }
 
 func (rm *Room) ResetRoomWinner() {

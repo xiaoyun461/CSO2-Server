@@ -130,8 +130,8 @@ func BuildUserStart(u *User) []byte {
 	userbuf := make([]byte, 9+int(len(u.UserName))+int(len(u.IngameName)))
 	offset := 0
 	WriteUint32(&userbuf, u.Userid, &offset)
-	WriteString(&userbuf, u.UserName, &offset)
-	WriteString(&userbuf, u.IngameName, &offset)
+	WriteString(&userbuf, []byte(u.UserName), &offset)
+	WriteString(&userbuf, []byte(u.IngameName), &offset)
 	WriteUint8(&userbuf, 1, &offset)
 	WriteUint16(&userbuf, uint16(Conf.HolePunchPort), &offset)
 	return userbuf

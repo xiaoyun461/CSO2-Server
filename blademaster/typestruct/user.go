@@ -13,8 +13,8 @@ type (
 		//个人信息
 		Userid               uint32 `json:"-"`
 		NexonID              uint64
-		UserName             []byte
-		IngameName           []byte
+		UserName             string
+		IngameName           string
 		Password             []byte
 		Gm                   uint8
 		Level                uint16
@@ -55,7 +55,7 @@ type (
 		SkillZombieCurXp     uint64
 		SkillZombieMaxXp     uint64
 		SkillZombiePoints    uint8
-		UserMail             []byte
+		UserMail             string
 		//连接
 		CurrentConnection net.Conn `json:"-"`
 		//频道房间信息
@@ -159,7 +159,7 @@ func (u *User) SetNewMutex() {
 	u.UserMutex = &mutex
 }
 
-func (u *User) SetUserName(loginName, username []byte) {
+func (u *User) SetUserName(loginName, username string) {
 	if u == nil {
 		return
 	}
@@ -426,8 +426,8 @@ func GetNewUser() User {
 	return User{
 		0,
 		0,               //nexonid
-		[]byte{},        //loginname
-		[]byte{},        //username,looks can change it to another name
+		"",              //loginname
+		"",              //username,looks can change it to another name
 		[]byte{},        //passwd
 		0,               //Gm
 		1,               //level
@@ -490,26 +490,26 @@ func GetNewUser() User {
 			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00,
 			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3E, 0x00, 0x00}, // unlockedAvatars
-		0,        //viplevel
-		0,        //vipXp
-		0,        //skillHumanCurXp
-		0x19AC,   //skillHumanMaxXp
-		0,        //skillHumanPoints
-		0,        //skillZombieCurXp
-		0x16F6,   //skillZombieMaxXp
-		0,        //skillZombiePoints
-		[]byte{}, //mail
-		nil,      //connection
-		1,        //serverid
-		0,        //channelid
-		0,        //roomid
-		0,        //currentTeam
-		0,        //currentstatus
-		false,    //currentIsIngame
-		nil,      //sequence
-		0,        //currentkillNum
-		0,        //currentAssists
-		0,        //currentdeathnum
+		0,      //viplevel
+		0,      //vipXp
+		0,      //skillHumanCurXp
+		0x19AC, //skillHumanMaxXp
+		0,      //skillHumanPoints
+		0,      //skillZombieCurXp
+		0x16F6, //skillZombieMaxXp
+		0,      //skillZombiePoints
+		"",     //mail
+		nil,    //connection
+		1,      //serverid
+		0,      //channelid
+		0,      //roomid
+		0,      //currentTeam
+		0,      //currentstatus
+		false,  //currentIsIngame
+		nil,    //sequence
+		0,      //currentkillNum
+		0,      //currentAssists
+		0,      //currentdeathnum
 		UserNetInfo{
 			0,
 			0,

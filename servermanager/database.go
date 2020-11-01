@@ -72,7 +72,7 @@ func GetUserFromDatabase(loginname string, passwd []byte) (*User, int) {
 	}
 	u := GetNewUser()
 	u.SetID(GetNewUserID())
-	u.SetUserName([]byte(loginname), []byte(loginname))
+	u.SetUserName(loginname, loginname)
 	u.Password = passwd
 	return &u, USER_LOGIN_SUCCESS
 }
@@ -202,7 +202,7 @@ func AddUserToDB(u *User) error {
 
 	filepath = DBPath + string(u.IngameName) + ".check"
 	Dblock.Lock()
-	err = ioutil.WriteFile(filepath, u.IngameName, 0644)
+	err = ioutil.WriteFile(filepath, []byte(u.UserName), 0644)
 	Dblock.Unlock()
 	if err != nil {
 		return err

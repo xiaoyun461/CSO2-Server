@@ -100,7 +100,7 @@ func GetUserFromIngameName(name []byte) *User {
 		return nil
 	}
 	for _, v := range UsersManager.Users {
-		if CompareBytes(v.IngameName, name) {
+		if CompareBytes([]byte(v.IngameName), name) {
 			return v
 		}
 	}

@@ -35,7 +35,7 @@ func BuildChatMessage(sender *User, p *InChatPacket, chattype uint8) []byte {
 	offset := 0
 	WriteUint8(&temp, chattype, &offset)
 	WriteUint8(&temp, sender.Gm, &offset)
-	WriteString(&temp, sender.IngameName, &offset)
+	WriteString(&temp, []byte(sender.IngameName), &offset)
 
 	if sender.IsVIP() {
 		WriteUint8(&temp, 1, &offset)
