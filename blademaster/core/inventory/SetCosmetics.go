@@ -25,7 +25,7 @@ func OnFavoriteSetCosmetics(p *PacketData, client net.Conn) {
 	}
 	//设置武器
 	setCosmetic(pkt.Slot, pkt.ItemId, uPtr)
-	DebugInfo(1, "Setting User", string(uPtr.UserName), "new Cosmetic", pkt.ItemId, "to slot", pkt.Slot)
+	DebugInfo(1, "Setting User", uPtr.UserName, "new Cosmetic", pkt.ItemId, "to slot", pkt.Slot)
 	//找到对应房间玩家
 	rm := GetRoomFromID(uPtr.GetUserChannelServerID(),
 		uPtr.GetUserChannelID(),
@@ -59,7 +59,7 @@ func setCosmetic(slot uint8, itemId uint32, u *User) {
 	case 7:
 		u.Inventory.SprayItem = itemId
 	default:
-		log.Println("Error : User", string(u.UserName), "try to setCosmetic invalid slot", slot)
+		log.Println("Error : User", u.UserName, "try to setCosmetic invalid slot", slot)
 		return
 	}
 }

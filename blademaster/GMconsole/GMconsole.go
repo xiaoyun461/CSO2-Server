@@ -149,7 +149,7 @@ func userlist(client net.Conn, req []string) {
 			rst.UserNum--
 			continue
 		}
-		rst.UserNames = append(rst.UserNames, string(v.UserName))
+		rst.UserNames = append(rst.UserNames, v.UserName)
 	}
 	jsondata, _ := json.Marshal(rst)
 	GMSendPacket(&jsondata, client)
@@ -171,7 +171,7 @@ func kickUser(client net.Conn, req []string) {
 		if v == nil {
 			continue
 		}
-		if string(v.UserName) == req[1] {
+		if v.UserName == req[1] {
 			OnSendMessage(v.CurrentSequence, v.CurrentConnection, MessageDialogBox, GAME_SERVER_ERROR)
 			OnLeaveRoom(v.CurrentConnection, true)
 			DelUserWithConn(v.CurrentConnection)
@@ -179,7 +179,7 @@ func kickUser(client net.Conn, req []string) {
 
 			rst := []byte(GMKickSuccess)
 			GMSendPacket(&rst, client)
-			DebugInfo(1, "Console from", client.RemoteAddr().String(), "kicked player", string(v.UserName))
+			DebugInfo(1, "Console from", client.RemoteAddr().String(), "kicked player", v.UserName)
 			return
 		}
 	}
@@ -208,7 +208,7 @@ func additem(client net.Conn, req []string) {
 		if v == nil {
 			continue
 		}
-		if string(v.UserName) == req[1] {
+		if v.UserName == req[1] {
 
 			v.AddItem(uint32(id))
 
@@ -218,7 +218,7 @@ func additem(client net.Conn, req []string) {
 			rst = []byte(GMAdditemSuccess)
 			GMSendPacket(&rst, client)
 
-			DebugInfo(1, "Console from", client.RemoteAddr().String(), "add item", id, "to User", string(v.UserName))
+			DebugInfo(1, "Console from", client.RemoteAddr().String(), "add item", id, "to User", v.UserName)
 			return
 		}
 	}
@@ -236,7 +236,7 @@ func additem(client net.Conn, req []string) {
 			rst := []byte(GMAdditemFailed)
 			GMSendPacket(&rst, client)
 
-			DebugInfo(1, "Console from", client.RemoteAddr().String(), "add item", id, "to User", string(u.UserName), "failed")
+			DebugInfo(1, "Console from", client.RemoteAddr().String(), "add item", id, "to User", u.UserName, "failed")
 			return
 
 		}
@@ -248,7 +248,7 @@ func additem(client net.Conn, req []string) {
 			rst := []byte(GMAdditemSuccess)
 			GMSendPacket(&rst, client)
 
-			DebugInfo(1, "Console from", client.RemoteAddr().String(), "add item", id, "to User", string(u.UserName), "success")
+			DebugInfo(1, "Console from", client.RemoteAddr().String(), "add item", id, "to User", u.UserName, "success")
 			return
 
 		}
@@ -294,7 +294,7 @@ func vipUser(client net.Conn, req []string) {
 		if v == nil {
 			continue
 		}
-		if string(v.UserName) == req[1] {
+		if v.UserName == req[1] {
 			v.SetVIP()
 
 			rst := BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeUserInfo), BuildUserInfo(0XFFFFFFFF, NewUserInfo(v), v.Userid, true))
@@ -302,7 +302,7 @@ func vipUser(client net.Conn, req []string) {
 
 			rst = []byte(GMBeVIPSuccess)
 			GMSendPacket(&rst, client)
-			DebugInfo(1, "Console from", client.RemoteAddr().String(), "set player", string(v.UserName), "vip success")
+			DebugInfo(1, "Console from", client.RemoteAddr().String(), "set player", v.UserName, "vip success")
 			return
 		}
 	}
@@ -358,14 +358,14 @@ func gmUser(client net.Conn, req []string) {
 		if v == nil {
 			continue
 		}
-		if string(v.UserName) == req[1] {
+		if v.UserName == req[1] {
 			v.SetGM()
 			rst := BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeUserInfo), BuildUserInfo(0XFFFFFFFF, NewUserInfo(v), v.Userid, true))
 			SendPacket(rst, v.CurrentConnection)
 
 			rst = []byte(GMBeGMSuccess)
 			GMSendPacket(&rst, client)
-			DebugInfo(1, "Console from", client.RemoteAddr().String(), "set player", string(v.UserName), "gm success")
+			DebugInfo(1, "Console from", client.RemoteAddr().String(), "set player", v.UserName, "gm success")
 			return
 		}
 	}

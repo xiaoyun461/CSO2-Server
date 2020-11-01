@@ -323,7 +323,7 @@ func (rm *Room) JoinUser(u *User) bool {
 	}
 	destTeam := rm.FindDesirableTeam()
 	if destTeam <= 0 {
-		DebugInfo(2, "Error : Cant add User", string(u.UserName), "to room", string(rm.Setting.RoomName))
+		DebugInfo(2, "Error : Cant add User", u.UserName, "to room", string(rm.Setting.RoomName))
 		return false
 	}
 	u.JoinRoom(rm.Id, uint8(destTeam))
@@ -361,7 +361,7 @@ func (rm Room) FindDesirableTeam() int {
 			ctNum++
 		} else {
 			//rm.RoomMutex.Unlock()
-			DebugInfo(2, "Error : User", string(v.UserName), "is in Unknown team in room", string(rm.Setting.RoomName))
+			DebugInfo(2, "Error : User", v.UserName, "is in Unknown team in room", string(rm.Setting.RoomName))
 			//return 0
 		}
 	}
@@ -385,7 +385,7 @@ func (rm Room) FindDesirableTeam() int {
 				return UserForceTerrorist
 			}
 		} else {
-			DebugInfo(2, "Error : Host", string(u.UserName), "is in Unknown team in room", string(rm.Setting.RoomName))
+			DebugInfo(2, "Error : Host", u.UserName, "is in Unknown team in room", string(rm.Setting.RoomName))
 			//return 0
 		}
 	}

@@ -15,15 +15,12 @@ func OnHostAssistPacket(p *PacketData, client net.Conn) {
 		DebugInfo(2, "Error : Client from", client.RemoteAddr().String(), "sent a error HostKill packet !")
 		return
 	}
-	//log.Println(p.data)
 	//找到对应用户
 	uPtr := GetUserFromID(pkt.AssisterID)
 	if uPtr == nil ||
 		uPtr.Userid <= 0 {
-		//log.Println("Error : Client from", client.RemoteAddr().String(), "sent HostKill but not in server or is bot !")
 		return
 	}
 	//修改玩家当前数据
 	uPtr.CountAssistNum()
-	//log.Println("User", string(uPtr.username), "assisted")
 }

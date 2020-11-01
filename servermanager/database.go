@@ -62,7 +62,7 @@ func GetUserFromDatabase(loginname string, passwd []byte) (*User, int) {
 			// //设置仓库
 			// u.Inventory = praseInventory(inventory)
 			//设置战队...
-			DebugInfo(1, "User", string(u.UserName), "data found !")
+			DebugInfo(1, "User", u.UserName, "data found !")
 			u.SetID(GetNewUserID())
 			//u.MaxExp = LevelExp[u.Level-1]
 			return &u, USER_LOGIN_SUCCESS
@@ -182,7 +182,7 @@ func AddUserToDB(u *User) error {
 	// }
 	// defer stmt.Close()
 
-	filepath := DBPath + string(u.UserName)
+	filepath := DBPath + u.UserName
 	data, _ := json.MarshalIndent(u, "", "     ")
 	Dblock.Lock()
 	err := ioutil.WriteFile(filepath, data, 0644)
@@ -200,7 +200,7 @@ func AddUserToDB(u *User) error {
 		return err
 	}
 
-	filepath = DBPath + string(u.IngameName) + ".check"
+	filepath = DBPath + u.IngameName + ".check"
 	Dblock.Lock()
 	err = ioutil.WriteFile(filepath, []byte(u.UserName), 0644)
 	Dblock.Unlock()
@@ -227,7 +227,7 @@ func UpdateUserToDB(u *User) error {
 	// }
 	// defer stmt.Close()
 
-	filepath := DBPath + string(u.UserName)
+	filepath := DBPath + u.UserName
 	data, _ := json.MarshalIndent(u, "", "     ")
 	Dblock.Lock()
 	err := ioutil.WriteFile(filepath, data, 0644)

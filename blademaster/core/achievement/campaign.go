@@ -29,35 +29,35 @@ func OnAchievementCampaign(p *PacketData, client net.Conn) {
 		reward := OutAchievementCampaign{}
 		rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeAchievement), BuildAchievementCampaign(0, &reward, pkt.CampaignId))
 		SendPacket(rst, uPtr.CurrentConnection)
-		DebugInfo(1, "User", string(uPtr.UserName), "get achievement campaign id", pkt.CampaignId)
+		DebugInfo(1, "User", uPtr.UserName, "get achievement campaign id", pkt.CampaignId)
 	case Campaign_1:
 		reward := OutAchievementCampaign{0, 0, 0, 0, 0, 3000, 0, []OutAchievementCampaignItems{}, 0}
 		rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeAchievement), BuildAchievementCampaign(0x20, &reward, pkt.CampaignId))
 		SendPacket(rst, uPtr.CurrentConnection)
-		DebugInfo(1, "User", string(uPtr.UserName), "get achievement campaign id", pkt.CampaignId)
+		DebugInfo(1, "User", uPtr.UserName, "get achievement campaign id", pkt.CampaignId)
 	case Campaign_2:
 		reward := OutAchievementCampaign{0, 0, 0, 0, 5000, 0, 0, []OutAchievementCampaignItems{}, 0}
 		rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeAchievement), BuildAchievementCampaign(0x10, &reward, pkt.CampaignId))
 		SendPacket(rst, uPtr.CurrentConnection)
-		DebugInfo(1, "User", string(uPtr.UserName), "get achievement campaign id", pkt.CampaignId)
+		DebugInfo(1, "User", uPtr.UserName, "get achievement campaign id", pkt.CampaignId)
 	case Campaign_3:
 		reward := OutAchievementCampaign{0, 0, 0, 24, 0, 0, 0, []OutAchievementCampaignItems{}, 0}
 		rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeAchievement), BuildAchievementCampaign(0x8, &reward, pkt.CampaignId))
 		SendPacket(rst, uPtr.CurrentConnection)
-		DebugInfo(1, "User", string(uPtr.UserName), "get achievement campaign id", pkt.CampaignId)
+		DebugInfo(1, "User", uPtr.UserName, "get achievement campaign id", pkt.CampaignId)
 	case Campaign_4:
 		reward := OutAchievementCampaign{0, 0, 0, 0, 0, 0, 2, []OutAchievementCampaignItems{{1002, 1, 0}, {1004, 1, 0}}, 0}
 		rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeAchievement), BuildAchievementCampaign(0x40, &reward, pkt.CampaignId))
 		SendPacket(rst, uPtr.CurrentConnection)
-		DebugInfo(1, "User", string(uPtr.UserName), "get achievement campaign id", pkt.CampaignId)
+		DebugInfo(1, "User", uPtr.UserName, "get achievement campaign id", pkt.CampaignId)
 	case Campaign_5:
 		reward := OutAchievementCampaign{0, 0, 0, 0, 0, 0, 2, []OutAchievementCampaignItems{{54, 1, 0}, {55, 1, 0}}, 0}
 		rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeAchievement), BuildAchievementCampaign(0x40, &reward, pkt.CampaignId))
 		SendPacket(rst, uPtr.CurrentConnection)
-		DebugInfo(1, "User", string(uPtr.UserName), "get achievement campaign id", pkt.CampaignId)
+		DebugInfo(1, "User", uPtr.UserName, "get achievement campaign id", pkt.CampaignId)
 	case Campaign_6:
 
-		DebugInfo(1, "User", string(uPtr.UserName), "get achievement campaign id", pkt.CampaignId)
+		DebugInfo(1, "User", uPtr.UserName, "get achievement campaign id", pkt.CampaignId)
 	default:
 		DebugInfo(2, "Error : Client from", client.RemoteAddr().String(), "sent a unkown AchievementCampaign packet id", pkt.CampaignId)
 	}

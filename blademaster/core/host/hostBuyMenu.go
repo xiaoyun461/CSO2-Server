@@ -35,7 +35,7 @@ func OnHostSetUserBuyMenu(p *PacketData, client net.Conn) {
 		uPtr.GetUserRoomID())
 	if rm == nil ||
 		rm.Id <= 0 {
-		DebugInfo(2, "Error : User", string(uPtr.UserName), "try to send BuyMenu but in a null room !")
+		DebugInfo(2, "Error : User", uPtr.UserName, "try to send BuyMenu but in a null room !")
 		return
 	}
 	destRm := GetRoomFromID(dest.GetUserChannelServerID(),
@@ -43,22 +43,22 @@ func OnHostSetUserBuyMenu(p *PacketData, client net.Conn) {
 		dest.GetUserRoomID())
 	if destRm == nil ||
 		destRm.Id <= 0 {
-		DebugInfo(2, "Error : User", string(dest.UserName), "try to send BuyMenu but in a null room !")
+		DebugInfo(2, "Error : User", dest.UserName, "try to send BuyMenu but in a null room !")
 		return
 	}
 	if rm.Id != destRm.Id {
-		DebugInfo(2, "Error : User", string(dest.UserName), "try to send BuyMenu to", string(dest.UserName), "but not a same room !")
+		DebugInfo(2, "Error : User", dest.UserName, "try to send BuyMenu to", dest.UserName, "but not a same room !")
 		return
 	}
 	//是不是房主
 	if rm.HostUserID != uPtr.Userid {
-		DebugInfo(2, "Error : User", string(uPtr.UserName), "try to send BuyMenu but isn't host !")
+		DebugInfo(2, "Error : User", uPtr.UserName, "try to send BuyMenu but isn't host !")
 		return
 	}
 	//发送数据包
 	rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, p.Id), BuildSetBuyMenu(dest.Userid, &dest.Inventory))
 	SendPacket(rst, uPtr.CurrentConnection)
-	DebugInfo(2, "Send User", string(dest.UserName), "BuyMenu to host", string(uPtr.UserName))
+	DebugInfo(2, "Send User", dest.UserName, "BuyMenu to host", uPtr.UserName)
 
 }
 

@@ -28,18 +28,18 @@ func OnChangeTeam(p *PacketData, client net.Conn) {
 		uPtr.GetUserRoomID())
 	if rm == nil ||
 		rm.Id <= 0 {
-		DebugInfo(2, "Error : User", string(uPtr.UserName), "try to change team in a null room !")
+		DebugInfo(2, "Error : User", uPtr.UserName, "try to change team in a null room !")
 		uPtr.QuitRoom()
 		return
 	}
 	//检查用户所在房间
 	if rm.Id != uPtr.CurrentRoomId {
-		DebugInfo(2, "Error : User", string(uPtr.UserName), "try to change team but in another room !")
+		DebugInfo(2, "Error : User", uPtr.UserName, "try to change team but in another room !")
 		return
 	}
 	//检查用户状态
 	if uPtr.IsUserReady() {
-		DebugInfo(2, "Error : User", string(uPtr.UserName), "try to change team but is ready !")
+		DebugInfo(2, "Error : User", uPtr.UserName, "try to change team but is ready !")
 		return
 	}
 
@@ -69,7 +69,7 @@ func OnChangeTeam(p *PacketData, client net.Conn) {
 		// 	}
 		// }
 	}
-	DebugInfo(2, "User", string(uPtr.UserName), "changed team to", uPtr.CurrentTeam, "in room", string(rm.Setting.RoomName), "id", rm.Id)
+	DebugInfo(2, "User", uPtr.UserName, "changed team to", uPtr.CurrentTeam, "in room", string(rm.Setting.RoomName), "id", rm.Id)
 }
 
 func BuildChangTeam(id uint32, team uint8) []byte {

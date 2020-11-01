@@ -23,16 +23,16 @@ func OnToggleReady(p *PacketData, client net.Conn) {
 		uPtr.GetUserRoomID())
 	if curroom == nil ||
 		curroom.Id <= 0 {
-		DebugInfo(2, "Error : User", string(uPtr.UserName), "try to toggle in a null room !")
+		DebugInfo(2, "Error : User", uPtr.UserName, "try to toggle in a null room !")
 		return
 	}
 	if curroom.HostUserID == uPtr.Userid {
-		DebugInfo(2, "Error : User", string(uPtr.UserName), "try to toggle but is host !")
+		DebugInfo(2, "Error : User", uPtr.UserName, "try to toggle but is host !")
 		return
 	}
 	//检查用户所在房间
 	if curroom.Id != uPtr.CurrentRoomId {
-		DebugInfo(2, "Error : User", string(uPtr.UserName), "try to toggle but in another room !")
+		DebugInfo(2, "Error : User", uPtr.UserName, "try to toggle but in another room !")
 		return
 	}
 	// if uPtr.currentIsIngame {
@@ -41,16 +41,16 @@ func OnToggleReady(p *PacketData, client net.Conn) {
 	// }
 	u := curroom.RoomGetUser(uPtr.Userid)
 	if u == nil {
-		DebugInfo(2, "Error : User", string(uPtr.UserName), "try to toggle but in null in room !")
+		DebugInfo(2, "Error : User", uPtr.UserName, "try to toggle but in null in room !")
 		return
 	}
 	//设置新的状态
 	if uPtr.Currentstatus == UserReady {
 		uPtr.SetUserStatus(UserNotReady)
-		DebugInfo(2, "User", string(uPtr.UserName), "unreadied in room", string(curroom.Setting.RoomName), "id", curroom.Id)
+		DebugInfo(2, "User", uPtr.UserName, "unreadied in room", string(curroom.Setting.RoomName), "id", curroom.Id)
 	} else {
 		uPtr.SetUserStatus(UserReady)
-		DebugInfo(2, "User", string(uPtr.UserName), "readied in room", string(curroom.Setting.RoomName), "id", curroom.Id)
+		DebugInfo(2, "User", uPtr.UserName, "readied in room", string(curroom.Setting.RoomName), "id", curroom.Id)
 
 	}
 	//对房间所有玩家发送该玩家的状态

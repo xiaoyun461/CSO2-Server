@@ -35,18 +35,18 @@ func OnHostItemUsing(p *PacketData, client net.Conn) {
 		uPtr.GetUserRoomID())
 	if rm == nil ||
 		rm.Id <= 0 {
-		DebugInfo(2, "Error : User", string(uPtr.UserName), "try to send ItemUsing but in a null room !")
+		DebugInfo(2, "Error : User", uPtr.UserName, "try to send ItemUsing but in a null room !")
 		return
 	}
 	//是不是房主
 	if rm.HostUserID != uPtr.Userid {
-		DebugInfo(2, "Error : User", string(uPtr.UserName), "try to send ItemUsing but isn't host !")
+		DebugInfo(2, "Error : User", uPtr.UserName, "try to send ItemUsing but isn't host !")
 		return
 	}
 	//发送用户背包数据
 	rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeHost), BuildItemUsing(pkt.UserID, pkt.ItemID))
 	SendPacket(rst, uPtr.CurrentConnection)
-	DebugInfo(2, "Send User", string(dest.UserName), "ItemUsed packet to host", string(uPtr.UserName))
+	DebugInfo(2, "Send User", dest.UserName, "ItemUsed packet to host", uPtr.UserName)
 }
 
 func BuildItemUsing(uid uint32, itemid uint32) []byte {

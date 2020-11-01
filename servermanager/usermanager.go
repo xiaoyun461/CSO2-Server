@@ -62,7 +62,7 @@ func GetNewUserID() uint32 {
 func GetUserByLogin(account string, passwd []byte) (*User, int) {
 	//查看是否有已经登陆的同名用户
 	for _, v := range UsersManager.Users {
-		if string(v.UserName) == account {
+		if v.UserName == account {
 			return nil, USER_ALREADY_LOGIN
 		}
 	}

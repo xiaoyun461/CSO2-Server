@@ -30,21 +30,21 @@ func OnGameStartCountdown(p *PacketData, client net.Conn) {
 		uPtr.GetUserRoomID())
 	if curroom == nil ||
 		curroom.Id <= 0 {
-		DebugInfo(2, "Error : User", string(uPtr.UserName), "try to start counting in a null room !")
+		DebugInfo(2, "Error : User", uPtr.UserName, "try to start counting in a null room !")
 		return
 	}
 	if curroom.HostUserID != uPtr.Userid {
-		DebugInfo(2, "Error : User", string(uPtr.UserName), "try to start counting but is not the host !")
+		DebugInfo(2, "Error : User", uPtr.UserName, "try to start counting but is not the host !")
 		return
 	}
 	//检查用户所在房间
 	if curroom.Id != uPtr.CurrentRoomId {
-		DebugInfo(2, "Error : User", string(uPtr.UserName), "try to start counting but in another room !")
+		DebugInfo(2, "Error : User", uPtr.UserName, "try to start counting but in another room !")
 		return
 	}
 	//检查当前游戏模式
 	if !curroom.CanStartGame() {
-		DebugInfo(2, "Error : User", string(uPtr.UserName), "try to start countdown but mode is illegal !")
+		DebugInfo(2, "Error : User", uPtr.UserName, "try to start countdown but mode is illegal !")
 		OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageDialogBox,
 			GAME_ROOM_COUNTDOWN_FAILED_NOENEMIES)
 		return
@@ -53,10 +53,10 @@ func OnGameStartCountdown(p *PacketData, client net.Conn) {
 	should := pkt.ShouldCountdown()
 	if should {
 		curroom.ProgressCountdown(pkt.Count)
-		DebugInfo(2, "User", string(uPtr.UserName), "countdown at", curroom.GetCountdown(), "host is", pkt.Count)
+		DebugInfo(2, "User", uPtr.UserName, "countdown at", curroom.GetCountdown(), "host is", pkt.Count)
 	} else {
 		curroom.StopCountdown()
-		DebugInfo(2, "User", string(uPtr.UserName), "cancled room countdown")
+		DebugInfo(2, "User", uPtr.UserName, "cancled room countdown")
 	}
 	//所有玩家发送倒计时数据
 	build := BuildCountdown(pkt, should)

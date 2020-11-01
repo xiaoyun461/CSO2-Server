@@ -50,7 +50,7 @@ func OnCloseResultRequest(p *PacketData, client net.Conn) {
 	//发送数据
 	rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeHost), BuildCloseResultWindow())
 	SendPacket(rst, uPtr.CurrentConnection)
-	DebugInfo(2, "User", string(uPtr.UserName), "closed game result window from room id", uPtr.CurrentRoomId)
+	DebugInfo(2, "User", uPtr.UserName, "closed game result window from room id", uPtr.CurrentRoomId)
 
 	//在线时间奖励或进度等
 	//...

@@ -23,19 +23,19 @@ func OnChatDirectMessage(p *InChatPacket, client net.Conn) {
 		return
 	}
 	if CompareBytes([]byte(uPtr.IngameName), p.Destination) {
-		DebugInfo(2, "Error : User", string(uPtr.UserName), "sent DirectMessage to self !")
+		DebugInfo(2, "Error : User", uPtr.UserName, "sent DirectMessage to self !")
 		return
 	}
 	reciver := GetUserFromIngameName(p.Destination)
 	if reciver == nil ||
 		reciver.Userid <= 0 {
-		DebugInfo(2, "Error : User", string(uPtr.UserName), "sent DirectMessage but reciver not in server !")
+		DebugInfo(2, "Error : User", uPtr.UserName, "sent DirectMessage but reciver not in server !")
 		return
 	}
 	//发送数据
 	SendPacket(BuildDirectMessage(uPtr, reciver, 0, p), uPtr.CurrentConnection)
 	SendPacket(BuildDirectMessage(uPtr, reciver, 1, p), reciver.CurrentConnection)
-	DebugInfo(1, "User", string(uPtr.IngameName), "say <", string(p.Message), "> to User", string(reciver.UserName))
+	DebugInfo(1, "User", uPtr.IngameName, "say <", string(p.Message), "> to User", reciver.UserName)
 }
 
 func BuildDirectMessage(sender *User, reciver *User, isReciver uint8, p *InChatPacket) []byte {

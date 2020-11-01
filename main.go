@@ -27,6 +27,7 @@ import (
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/report"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/room"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/shop"
+	. "github.com/KouKouChan/CSO2-Server/blademaster/core/supply"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/user"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/version"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/typestruct"
@@ -347,7 +348,8 @@ func RecvMessage(client net.Conn) {
 			OnReportRequest(&dataPacket, client)
 		case PacketTypeMail:
 			OnMail(&dataPacket, client)
-		//case PacketTypeFriend:
+		case PacketTypeSupply:
+			OnSupplyRequest(&dataPacket, client)
 		default:
 			DebugInfo(2, "Unknown packet", dataPacket.Id, "from", client.RemoteAddr().String())
 			//DebugInfo(2, "Unknown packet", dataPacket.Id, "from", client.RemoteAddr().String(), dataPacket.Data)

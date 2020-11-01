@@ -85,7 +85,7 @@ func OnLogin(seq *uint8, dataPacket *PacketData, client net.Conn) {
 	//UserStart部分
 	rst := BytesCombine(BuildHeader(u.CurrentSequence, PacketTypeUserStart), BuildUserStart(u))
 	SendPacket(rst, u.CurrentConnection)
-	DebugInfo(1, "User", string(u.UserName), "from", client.RemoteAddr().String(), "logged in !")
+	DebugInfo(1, "User", u.UserName, "from", client.RemoteAddr().String(), "logged in !")
 
 	//UserInfo部分
 	rst = BytesCombine(BuildHeader(u.CurrentSequence, PacketTypeUserInfo), BuildUserInfo(0XFFFFFFFF, NewUserInfo(u), u.Userid, true))

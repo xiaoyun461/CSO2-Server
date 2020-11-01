@@ -25,12 +25,12 @@ func OnHostGameEnd(p *PacketData, client net.Conn) {
 		uPtr.GetUserRoomID())
 	if rm == nil ||
 		rm.Id <= 0 {
-		DebugInfo(2, "Error : User", string(uPtr.UserName), "try to send GameEnd but in a null room !")
+		DebugInfo(2, "Error : User", uPtr.UserName, "try to send GameEnd but in a null room !")
 		return
 	}
 	//是不是房主
 	if rm.HostUserID != uPtr.Userid {
-		DebugInfo(2, "Error : User", string(uPtr.UserName), "try to send GameEnd but isn't host !")
+		DebugInfo(2, "Error : User", uPtr.UserName, "try to send GameEnd but isn't host !")
 		return
 	}
 	//修改房间信息
@@ -52,7 +52,7 @@ func OnHostGameEnd(p *PacketData, client net.Conn) {
 			//发送游戏战绩
 			rst = BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeRoom), header, BuildGameResult(v))
 			SendPacket(rst, v.CurrentConnection)
-			DebugInfo(2, "Sent game result to User", string(v.UserName))
+			DebugInfo(2, "Sent game result to User", v.UserName)
 			//修改用户状态
 			v.SetUserIngame(false)
 		}

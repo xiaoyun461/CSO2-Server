@@ -23,6 +23,6 @@ func OnHostBuyItem(p *PacketData, client net.Conn) {
 		return
 	}
 	for _, v := range pkt.Items {
-		DebugInfo(2, "User", string(uPtr.UserName), "bought", v)
+		DebugInfo(2, "User", uPtr.UserName, "bought", v)
 	}
 }

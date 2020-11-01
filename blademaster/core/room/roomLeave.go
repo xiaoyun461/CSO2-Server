@@ -15,7 +15,6 @@ func OnLeaveRoom(client net.Conn, end bool) {
 	uPtr := GetUserFromConnection(client)
 	if uPtr == nil ||
 		uPtr.Userid <= 0 {
-		//DebugInfo(2, "Error : Client from", client.RemoteAddr().String(), "try to leave room but not in server !")
 		return
 	}
 	//找到玩家的房间
@@ -24,13 +23,12 @@ func OnLeaveRoom(client net.Conn, end bool) {
 		uPtr.GetUserRoomID())
 	if rm == nil ||
 		rm.Id <= 0 {
-		//DebugInfo(2, "Error : User", string(uPtr.Username), "try to leave a null room !")
 		return
 	}
 	//检查玩家游戏状态，准备情况下并且开始倒计时了，那么就不允许离开房间
 	if uPtr.IsUserReady() &&
 		rm.IsGlobalCountdownInProgress() {
-		DebugInfo(2, "Error : User", string(uPtr.UserName), "try to leave room but is started !")
+		DebugInfo(2, "Error : User", uPtr.UserName, "try to leave room but is started !")
 		return
 	}
 	//房间移除玩家
@@ -61,7 +59,7 @@ func OnLeaveRoom(client net.Conn, end bool) {
 	}
 	//房间状态
 	rm.CheckIngameStatus()
-	DebugInfo(2, "User", string(uPtr.UserName), "id", uPtr.Userid, "left room", string(rm.Setting.RoomName), "id", rm.Id)
+	DebugInfo(2, "User", uPtr.UserName, "id", uPtr.Userid, "left room", string(rm.Setting.RoomName), "id", rm.Id)
 }
 func SentUserLeaveMes(uPtr *User, rm *Room) {
 	//发送离开消息
@@ -71,7 +69,7 @@ func SentUserLeaveMes(uPtr *User, rm *Room) {
 		for _, v := range rm.Users {
 			rm.RoomMutex.Unlock()
 			rm.SetRoomHost(v)
-			DebugInfo(2, "Set User", string(v.UserName), "id", v.Userid, "to host in room", string(rm.Setting.RoomName), "id", rm.Id)
+			DebugInfo(2, "Set User", v.UserName, "id", v.Userid, "to host in room", string(rm.Setting.RoomName), "id", rm.Id)
 			rm.RoomMutex.Lock()
 			if !v.CurrentIsIngame {
 				v.SetUserStatus(UserNotReady)

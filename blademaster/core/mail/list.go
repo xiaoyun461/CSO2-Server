@@ -26,7 +26,7 @@ func OnMailList(p *PacketData, client net.Conn) {
 	//发送数据
 	rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeMail), BuildMailList())
 	SendPacket(rst, uPtr.CurrentConnection)
-	DebugInfo(2, "Sent a null mail list to User", string(uPtr.UserName))
+	DebugInfo(2, "Sent a null mail list to User", uPtr.UserName)
 
 }
 

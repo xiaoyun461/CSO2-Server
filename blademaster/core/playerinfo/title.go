@@ -27,7 +27,7 @@ func OnSetTitle(p *PacketData, client net.Conn) {
 	//发送数据包
 	rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeUserInfo), BuildSetTitlePacket(uPtr.Userid, pkt.TitleId))
 	SendPacket(rst, uPtr.CurrentConnection)
-	DebugInfo(1, "User", string(uPtr.UserName), "Set Title to", pkt.TitleId)
+	DebugInfo(1, "User", uPtr.UserName, "Set Title to", pkt.TitleId)
 	//如果是在房间内
 }
 

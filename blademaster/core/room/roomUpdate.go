@@ -30,21 +30,21 @@ func OnUpdateRoom(p *PacketData, client net.Conn) {
 		uPtr.GetUserRoomID())
 	if curroom == nil ||
 		curroom.Id <= 0 {
-		DebugInfo(2, "Error : User:", string(uPtr.UserName), "try to update a null room but in server !")
+		DebugInfo(2, "Error : User:", uPtr.UserName, "try to update a null room but in server !")
 		return
 	}
 	if curroom.HostUserID != uPtr.Userid {
-		DebugInfo(2, "Error : User:", string(uPtr.UserName), "try to update a room but isn't host !")
+		DebugInfo(2, "Error : User:", uPtr.UserName, "try to update a room but isn't host !")
 		return
 	}
 	//检查用户所在房间
 	if curroom.Id != uPtr.CurrentRoomId {
-		DebugInfo(2, "Error : User:", string(uPtr.UserName), "try to update a room but not in !")
+		DebugInfo(2, "Error : User:", uPtr.UserName, "try to update a room but not in !")
 		return
 	}
 	//检查当前是不是正在倒计时
 	if curroom.IsGlobalCountdownInProgress() {
-		DebugInfo(2, "Error : User:", string(uPtr.UserName), "try to update a room but is counting !")
+		DebugInfo(2, "Error : User:", uPtr.UserName, "try to update a room but is counting !")
 		return
 	}
 	//更新房间设置
@@ -56,5 +56,5 @@ func OnUpdateRoom(p *PacketData, client net.Conn) {
 		SendPacket(rst, v.CurrentConnection)
 		//log.Println("["+strconv.Itoa(k+1)+"/"+strconv.Itoa(int((*curroom).numPlayers))+"] Updated room for", v.currentConnection.RemoteAddr().String(), "!")
 	}
-	DebugInfo(2, "Host", string(uPtr.UserName), "updated room", string(curroom.Setting.RoomName), "id", curroom.Id)
+	DebugInfo(2, "Host", uPtr.UserName, "updated room", string(curroom.Setting.RoomName), "id", curroom.Id)
 }

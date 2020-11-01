@@ -24,7 +24,7 @@ func OnGameStart(p *PacketData, client net.Conn) {
 		uPtr.GetUserRoomID())
 	if rm == nil ||
 		rm.Id <= 0 {
-		DebugInfo(2, "Error : User", string(uPtr.UserName), "try to start game in a null room !")
+		DebugInfo(2, "Error : User", uPtr.UserName, "try to start game in a null room !")
 		return
 	}
 	//房主开始游戏,设置房间状态
@@ -74,13 +74,13 @@ func OnGameStart(p *PacketData, client net.Conn) {
 		rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeHost), BuildGameStart(uPtr.Userid))
 
 		SendPacket(rst, uPtr.CurrentConnection)
-		DebugInfo(2, "Host", string(uPtr.UserName), "started game in room", string(rm.Setting.RoomName))
+		DebugInfo(2, "Host", uPtr.UserName, "started game in room", string(rm.Setting.RoomName))
 
 	} else if rm.Setting.IsIngame != 0 {
 		host := rm.RoomGetUser(rm.HostUserID)
 		if host == nil ||
 			host.Userid <= 0 {
-			DebugInfo(2, "Error : User", string(uPtr.UserName), "try to start game but host is null !")
+			DebugInfo(2, "Error : User", uPtr.UserName, "try to start game but host is null !")
 			return
 		}
 		//设置用户状态
@@ -108,7 +108,7 @@ func OnGameStart(p *PacketData, client net.Conn) {
 				SendPacket(rst, k.CurrentConnection)
 			}
 		}
-		DebugInfo(2, "User", string(uPtr.UserName), "joined in game in room", string(rm.Setting.RoomName), "id", rm.Id)
+		DebugInfo(2, "User", uPtr.UserName, "joined in game in room", string(rm.Setting.RoomName), "id", rm.Id)
 	}
 }
 

@@ -30,11 +30,11 @@ func OnRoomFeedback(p *PacketData, client net.Conn) {
 
 	switch pkt.ErrorCode {
 	case connecting:
-		DebugInfo(2, "User", string(uPtr.UserName), "try to join a match ...")
+		DebugInfo(2, "User", uPtr.UserName, "try to join a match ...")
 	case joinFailed:
-		DebugInfo(2, "User", string(uPtr.UserName), "try to join a match but failed !")
+		DebugInfo(2, "User", uPtr.UserName, "try to join a match but failed !")
 	default:
-		DebugInfo(2, "User", string(uPtr.UserName), "send unkown feedback packet code", pkt.ErrorCode)
+		DebugInfo(2, "User", uPtr.UserName, "send unkown feedback packet code", pkt.ErrorCode)
 
 	}
 }

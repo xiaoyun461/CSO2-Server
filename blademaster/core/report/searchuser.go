@@ -33,12 +33,12 @@ func OnReportSearchUser(p *PacketData, client net.Conn) {
 	if IsExistsIngameName(pkt.Name) {
 		rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeReport), BuildSearchResult(found))
 		SendPacket(rst, uPtr.CurrentConnection)
-		DebugInfo(2, "Send report-SearchResult-Found of destUser", string(pkt.Name), " to User", string(uPtr.UserName))
+		DebugInfo(2, "Send report-SearchResult-Found of destUser", string(pkt.Name), " to User", uPtr.UserName)
 		return
 	}
 	rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeReport), BuildSearchResult(notfound))
 	SendPacket(rst, uPtr.CurrentConnection)
-	DebugInfo(2, "Send report-SearchResult-NotFound of destUser", string(pkt.Name), " to User", string(uPtr.UserName))
+	DebugInfo(2, "Send report-SearchResult-NotFound of destUser", string(pkt.Name), " to User", uPtr.UserName)
 
 }
 

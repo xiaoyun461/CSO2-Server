@@ -28,7 +28,7 @@ func OnSetSignature(p *PacketData, client net.Conn) {
 	//发送数据包
 	rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeUserInfo), BuildSetSignaturePacket(uPtr.Userid, pkt.Signature, pkt.Len))
 	SendPacket(rst, uPtr.CurrentConnection)
-	DebugInfo(1, "User", string(uPtr.UserName), "Set Signature to", string(pkt.Signature))
+	DebugInfo(1, "User", uPtr.UserName, "Set Signature to", string(pkt.Signature))
 	//如果是在房间内
 }
 
