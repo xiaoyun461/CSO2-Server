@@ -4,6 +4,7 @@ import (
 	"net"
 
 	. "github.com/KouKouChan/CSO2-Server/blademaster/typestruct"
+	. "github.com/KouKouChan/CSO2-Server/configure"
 	. "github.com/KouKouChan/CSO2-Server/kerlong"
 	. "github.com/KouKouChan/CSO2-Server/servermanager"
 	. "github.com/KouKouChan/CSO2-Server/verbose"
@@ -30,7 +31,7 @@ func OnFavoriteSetLoadout(p *PacketData, client net.Conn) {
 		return
 	}
 	uPtr.Inventory.Loadouts[pkt.Loadout].Items[pkt.WeaponSlot] = pkt.ItemId
-	DebugInfo(1, "Setting User", uPtr.UserName, "new weapon", pkt.ItemId, "to slot", pkt.WeaponSlot, "in loadout", pkt.Loadout)
+	DebugInfo(1, "Setting User", uPtr.UserName, "new weapon", ItemList[pkt.ItemId].Name, "id", pkt.ItemId, "to slot", pkt.WeaponSlot, "in loadout", pkt.Loadout)
 }
 func BuildLoadout(inventory *UserInventory) []byte {
 	buf := make([]byte, 5+len(inventory.Loadouts)*96)

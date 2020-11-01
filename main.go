@@ -147,6 +147,8 @@ func main() {
 	Conf.InitConf(path)
 
 	InitCSV(path)
+	FullInventoryItem = CreateFullInventoryItem()
+	FullInventoryReply = BuildFullInventoryInfo()
 
 	//read locales
 	Locales.InitMotd(path)

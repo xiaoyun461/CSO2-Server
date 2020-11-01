@@ -5,6 +5,7 @@ import (
 	"net"
 
 	. "github.com/KouKouChan/CSO2-Server/blademaster/typestruct"
+	. "github.com/KouKouChan/CSO2-Server/configure"
 	. "github.com/KouKouChan/CSO2-Server/servermanager"
 	. "github.com/KouKouChan/CSO2-Server/verbose"
 )
@@ -25,7 +26,7 @@ func OnFavoriteSetCosmetics(p *PacketData, client net.Conn) {
 	}
 	//设置武器
 	setCosmetic(pkt.Slot, pkt.ItemId, uPtr)
-	DebugInfo(1, "Setting User", uPtr.UserName, "new Cosmetic", pkt.ItemId, "to slot", pkt.Slot)
+	DebugInfo(1, "Setting User", uPtr.UserName, "new Cosmetic", ItemList[pkt.ItemId].Name, "id", pkt.ItemId, "to slot", pkt.Slot)
 	//找到对应房间玩家
 	rm := GetRoomFromID(uPtr.GetUserChannelServerID(),
 		uPtr.GetUserChannelID(),

@@ -52,7 +52,7 @@ func GetUserFromDatabase(loginname string, passwd []byte) (*User, int) {
 			}
 			//检查密码
 			str := fmt.Sprintf("%x", md5.Sum([]byte(string(loginname)+string(passwd))))
-			for i := 0; i < 16; i++ {
+			for i := 0; i < 32; i++ {
 				if str[i] != u.Password[i] {
 					//u = GetNewUser()
 					//u.SetID(0)
