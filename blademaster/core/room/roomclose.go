@@ -17,6 +17,36 @@ func OnCloseResultRequest(p *PacketData, client net.Conn) {
 		DebugInfo(2, "Error : Client from", client.RemoteAddr().String(), "try to close result but not in server !")
 		return
 	}
+
+	//检查房间
+	rm := GetRoomFromID(uPtr.GetUserChannelServerID(),
+		uPtr.GetUserChannelID(),
+		uPtr.GetUserRoomID())
+	if rm == nil ||
+		rm.Id <= 0 {
+		DebugInfo(2, "Error : Client from", client.RemoteAddr().String(), "close result window in null room !")
+	} else {
+		switch rm.Setting.GameModeID { //清除无用房间
+		case ModeZd_boss1,
+			ModeZd_boss2,
+			ModeZd_boss3,
+			ModeCampaign1,
+			ModeCampaign2,
+			ModeCampaign3,
+			ModeCampaign4,
+			ModeCampaign5,
+			ModeCampaign6,
+			ModeCampaign7,
+			ModeCampaign8,
+			ModeCampaign9:
+			DelChannelRoom(rm.Id,
+				uPtr.GetUserChannelID(),
+				uPtr.GetUserChannelServerID())
+			uPtr.QuitRoom()
+			uPtr.QuitChannel()
+		default:
+		}
+	}
 	//发送数据
 	rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeHost), BuildCloseResultWindow())
 	SendPacket(rst, uPtr.CurrentConnection)
