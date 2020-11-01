@@ -1,4 +1,4 @@
-; item id,next item id,mode 0,map 0,npc id 0,condition flag 0,count 0,desc 0,mode 1,map 1,npc id 1,condition flag 1,count 1,desc 1,mode 2,map 2,npc id 2,condition flag 2,count 2,desc 2,mode 3,map 3,npc id 3,condition flag 3,count 3,desc 3,mode 4,map 4,npc id 4,condition flag 4,count 4,category,desc 4
+item id,next item id,mode 0,map 0,npc id 0,condition flag 0,count 0,desc 0,mode 1,map 1,npc id 1,condition flag 1,count 1,desc 1,mode 2,map 2,npc id 2,condition flag 2,count 2,desc 2,mode 3,map 3,npc id 3,condition flag 3,count 3,desc 3,mode 4,map 4,npc id 4,condition flag 4,count 4,category,desc 4
 0,2,0,0,0,0,1,CSO2_UI_UNLOCK_default,0,0,0,0,1,,0,0,0,0,0,,0,0,0,0,0,,0,0,0,0,0,1,
 2,1,0,0,0,2,20,CSO2_UI_UNLOCK_glock18_p228_1,0,0,0,0,0,,0,0,0,0,0,,0,0,0,0,0,,0,0,0,0,0,1,
 1,9,0,0,0,2,30,CSO2_UI_UNLOCK_p228_elites_1,0,0,0,0,0,,0,0,0,0,0,,0,0,0,0,0,,0,0,0,0,0,1,

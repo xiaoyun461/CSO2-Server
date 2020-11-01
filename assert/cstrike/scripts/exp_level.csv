@@ -1,5 +1,4 @@
-;Level,Exp,LevelDesc
-;int,int,string
+Level,Exp,LevelDesc
 1,0,#CSO2_LV1
 2,4000,#CSO2_LV2
 3,7256,#CSO2_LV3
@@ -99,4 +98,3 @@
 97,11449278,#CSO2_LV97
 98,11692349,#CSO2_LV98
 99,11941349,#CSO2_LV99
-

@@ -9,11 +9,11 @@ import (
 )
 
 const (
-	WeaponListCSV  = "/CSO2-Server/assert/cstrike/scripts/cso2_item_rev2.csv"
-	ExpLevelCSV    = "/CSO2-Server/assert/cstrike/scripts/cso2_exp.csv"
-	UnlockCSV      = "/CSO2-Server/assert/cstrike/scripts/cso2_item_unlock.csv"
-	BoxCSV         = "/CSO2-Server/assert/cstrike/scripts/cso2_itembox_pool.csv"
-	AchievementCSV = "/CSO2-Server/assert/cstrike/scripts/cso2_achievement.csv"
+	WeaponListCSV = "/CSO2-Server/assert/cstrike/scripts/item_list.csv"
+	ExpLevelCSV   = "/CSO2-Server/assert/cstrike/scripts/exp_level.csv"
+	UnlockCSV     = "/CSO2-Server/assert/cstrike/scripts/item_unlock.csv"
+	BoxCSV        = "/CSO2-Server/assert/cstrike/scripts/itembox_pool.csv"
+	VipCSV        = "/CSO2-Server/assert/cstrike/scripts/vip_info.csv"
 )
 
 type ItemData struct {
@@ -42,6 +42,11 @@ var (
 
 func InitCSV(path string) {
 	fmt.Println("Reading game data file ...")
+	readWeaponList(path)
+	readUnlockList(path)
+}
+
+func readWeaponList(path string) {
 	//读取武器数据
 	filepath := path + WeaponListCSV
 
@@ -67,9 +72,9 @@ func InitCSV(path string) {
 			itemd := ItemData{
 				uint32(id),
 				record[1][16:],
+				record[4],
 				record[5],
 				record[6],
-				record[7],
 			}
 
 			ItemList[itemd.ItemID] = itemd
@@ -78,16 +83,19 @@ func InitCSV(path string) {
 		}
 	}
 
-	//读取武器解锁数据
-	filepath = path + UnlockCSV
+}
 
-	file, err = os.Open(filepath)
+func readUnlockList(path string) {
+	//读取武器解锁数据
+	filepath := path + UnlockCSV
+
+	file, err := os.Open(filepath)
 	if err != nil {
 		panic(err)
 	}
 	defer file.Close()
 
-	reader = csv.NewReader(file)
+	reader := csv.NewReader(file)
 	for {
 		record, err := reader.Read()
 		if err == io.EOF {
@@ -144,5 +152,4 @@ func InitCSV(path string) {
 			continue
 		}
 	}
-	//fmt.Println(UnlockList)
 }
