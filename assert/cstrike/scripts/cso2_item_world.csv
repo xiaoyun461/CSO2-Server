@@ -1,26 +1,0 @@
-;//아이템명,아이템 클래스명,MDL경로,ITEMID,PRICE,DefaultValueRandomMin,DefaultValueRandomMax,SpritePath,SoundGet,SoundDrop
-;ItemName,ItemClassName,MDLPath,ItemID,Price,DefaultValueRandomMin,DefaultValueRandomMax,SpritePath,SoundGet,SoundDrop
-;string,string,string,int,int,int,int,string,string,string
-CSO2_ITEM_AMMO_PISTOL,cso2_item_world,models/props_zc/item_ammo_pistol.mdl,80000,100,2,12,,ZCity.Item.Get.Bullet,ZCity.Item.DropImpact.Bullet
-CSO2_ITEM_AMMO_SHOTGUN,cso2_item_world,models/props_zc/item_ammo_shotgun.mdl,80001,500,2,10,,ZCity.Item.Get.Bullet,ZCity.Item.DropImpact.Bullet
-CSO2_ITEM_AMMO_SMG,cso2_item_world,models/props_zc/item_ammo_smg.mdl,80002,100,10,50,,ZCity.Item.Get.Bullet,ZCity.Item.DropImpact.Bullet
-CSO2_ITEM_AMMO_RIFLE,cso2_item_world,models/props_zc/item_ammo_rifle.mdl,80003,100,5,40,,ZCity.Item.Get.Bullet,ZCity.Item.DropImpact.Bullet
-CSO2_ITEM_AMMO_SNIPE,cso2_item_world,models/props_zc/item_ammo_snipe.mdl,80004,750,1,6,,ZCity.Item.Get.Bullet,ZCity.Item.DropImpact.Bullet
-CSO2_ITEM_AMMO_HEAVY,cso2_item_world,models/props_zc/item_ammo_heavy.mdl,80005,150,10,40,,ZCity.Item.Get.Bullet,ZCity.Item.DropImpact.Bullet
-CSO2_ITEM_AMMO_SPECIAL,cso2_item_world,models/props_zc/item_ammo_special.mdl,80006,750,1,6,,ZCity.Item.Get.Bullet,ZCity.Item.DropImpact.Bullet
-CSO2_ITEM_LEGHOLDTRAP,cso2_item_world,models/props/bc_item/bc_millet_box_back.mdl,80102,3500,1,1,,ZCity.Item.Get.Bullet,ZCity.Item.DropImpact.Bullet
-CSO2_ITEM_ARMOUR,cso2_item_world,models/props/bc_item/bc_kevlarsuit.mdl,80100,4000,1,1,,ZCity.Item.Get.BodyAmor,ZCity.Item.DropImpact.BodyAmor
-CSO2_ITEM_MEDKIT,cso2_item_world,models/props/bc_item/bc_firstaid.mdl,80101,4000,1,1,,ZCity.Item.Get.FirstAid,ZCity.Item.DropImpact.FirstAid
-CSO2_ITEM_MONEY,cso2_item_money,models/props_zc/item_money_M.mdl,0,0,1,1,,ZCity.Item.Get.Money,ZCity.Item.DropImpact.Money
-CSO2_ITEM_MONEY_S,cso2_item_money,models/props_zc/item_money_S.mdl,0,0,10,100,,ZCity.Item.Get.Money,ZCity.Item.DropImpact.Money
-CSO2_ITEM_MONEY_M,cso2_item_money,models/props_zc/item_money_M.mdl,0,0,101,999,,ZCity.Item.Get.Money,ZCity.Item.DropImpact.Money
-CSO2_ITEM_MONEY_L,cso2_item_money,models/props_zc/item_money_L.mdl,0,0,1000,2000,,ZCity.Item.Get.Money,ZCity.Item.DropImpact.Money
-CSO2_ITEM_MONEY_GOLD,cso2_item_money,models/props_zc/item_money_L.mdl,0,0,10000,10000,materials/sprites/ItemEX.vmt,ZCity.Item.Get.Money,ZCity.Item.DropImpact.Money
-CSO2_ITEM_FLASK_S,cso2_item_flask,models/props_zc/item_flask_s.mdl,0,0,500,500,,ZCity.Item.Get.Flask,ZCity.Item.DropImpact.Flask
-CSO2_ITEM_FLASK_M,cso2_item_flask,models/props_zc/item_flask_m.mdl,0,0,3000,3000,,ZCity.Item.Get.Flask,ZCity.Item.DropImpact.Flask
-CSO2_ITEM_FLASK_L,cso2_item_flask,models/props_zc/item_flask_l.mdl,0,0,5000,5000,,ZCity.Item.Get.Flask,ZCity.Item.DropImpact.Flask
-CSO2_ITEM_FLASK_FULL,cso2_item_flask,models/props_zc/item_flask_full.mdl,0,0,1,1,,ZCity.Item.Get.Flask,ZCity.Item.DropImpact.Flask
-CSO2_ITEM_BACKPACK_LV1,cso2_item_world,models/props_zc/backpack_lv1.mdl,80103,0,4,0,,ZCity.Item.Get.BodyAmor,ZCity.Item.DropImpact.BodyAmor
-CSO2_ITEM_BACKPACK_LV2,cso2_item_world,models/props_zc/backpack_lv2.mdl,80104,0,8,0,,ZCity.Item.Get.BodyAmor,ZCity.Item.DropImpact.BodyAmor
-CSO2_ITEM_BACKPACK_LV3,cso2_item_world,models/props_zc/backpack_lv3.mdl,80105,0,12,0,,ZCity.Item.Get.BodyAmor,ZCity.Item.DropImpact.BodyAmor
-

@@ -148,6 +148,7 @@ func main() {
 	InitCSV(path)
 
 	//read locales
+	Locales.InitMotd(path)
 	if Locales.InitLocales(path) {
 		SetLocales()
 	}

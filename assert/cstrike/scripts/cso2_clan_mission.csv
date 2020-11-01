@@ -1,37 +1,0 @@
-;//ID,,미션명,미션설명,대표이미지,난이도,보상,미션방법,미션반복,미션파라메터,,,,미션속성,미션주기(일단위)
-;ID,DevComment,MissionName,MissionDesc,ResourceName,Level,Reward,Method,TargetCount,arg1,arg2,arg3,arg4,condition,Interval_D
-;int,string,string,string,string,int,string,string,int,string,string,string,string,string,int
-100,클래식미션 모드 플레이 1회,CSO2_CLANMISSION_NAME_PLAY_ORGINAL,CSO2_CLANMISSION_DESC_PLAY_ORGINAL,assets/img_all/modeEX_ORIGINAL,1,2101;,modplay,3,1,,,2500,,1
-101,클래식미션 모드 플레이 2회,CSO2_CLANMISSION_NAME_PLAY_ORGINAL,CSO2_CLANMISSION_DESC_PLAY_ORGINAL,assets/img_all/modeEX_ORIGINAL,2,2101;,modplay,10,1,,,5000,,1
-102,클래식미션 모드 플레이 3회,CSO2_CLANMISSION_NAME_PLAY_ORGINAL,CSO2_CLANMISSION_DESC_PLAY_ORGINAL,assets/img_all/modeEX_ORIGINAL,3,2101;,modplay,30,1,,,10000,,1
-200,팀데스매치 모드 플레이 1회,CSO2_CLANMISSION_NAME_PLAY_DEATHMATCH,CSO2_CLANMISSION_DESC_PLAY_DEATHMATCH,assets/img_all/modeEX_DEATHMATCH,1,2101;,modplay,3,2,,,2500,,1
-201,팀데스매치 모드 플레이 2회,CSO2_CLANMISSION_NAME_PLAY_DEATHMATCH,CSO2_CLANMISSION_DESC_PLAY_DEATHMATCH,assets/img_all/modeEX_DEATHMATCH,2,2101;,modplay,10,2,,,5000,,1
-202,팀데스매치 모드 플레이 3회,CSO2_CLANMISSION_NAME_PLAY_DEATHMATCH,CSO2_CLANMISSION_DESC_PLAY_DEATHMATCH,assets/img_all/modeEX_DEATHMATCH,3,2101;,modplay,30,2,,,10000,,1
-300,좀비 모드 플레이 1회,CSO2_CLANMISSION_NAME_PLAY_ZOMBIE,CSO2_CLANMISSION_DESC_PLAY_ZOMBIE,assets/img_all/modeEX_ZOMBIE,1,2101;,modplay,3,3,,,2500,,1
-301,좀비 모드 플레이 2회,CSO2_CLANMISSION_NAME_PLAY_ZOMBIE,CSO2_CLANMISSION_DESC_PLAY_ZOMBIE,assets/img_all/modeEx_ZOMBIE,2,2101;,modplay,10,3,,,5000,,1
-302,좀비 모드 플레이 3회,CSO2_CLANMISSION_NAME_PLAY_ZOMBIE,CSO2_CLANMISSION_DESC_PLAY_ZOMBIE,assets/img_all/modeEx_ZOMBIE,3,2101;,modplay,30,3,,,10000,,1
-400,스텔스 모드 플레이,CSO2_CLANMISSION_NAME_PLAY_STEALTH,CSO2_CLANMISSION_DESC_PLAY_STEALTH,assets/img_all/modeEx_STEALTH,1,2101;,modplay,3,4,,,2500,,1
-401,스텔스 모드 플레이,CSO2_CLANMISSION_NAME_PLAY_STEALTH,CSO2_CLANMISSION_DESC_PLAY_STEALTH,assets/img_all/modeEx_STEALTH,2,2101;,modplay,10,4,,,5000,,1
-402,스텔스 모드 플레이,CSO2_CLANMISSION_NAME_PLAY_STEALTH,CSO2_CLANMISSION_DESC_PLAY_STEALTH,assets/img_all/modeEx_STEALTH,3,2101;,modplay,30,4,,,10000,,1
-700,숨바꼭질류 모드 플레이,CSO2_CLANMISSION_NAME_PLAY_HIDEGROUP,CSO2_CLANMISSION_DESC_PLAY_HIDEGROUP,assets/img_all/modeEx_HIDE,1,2101;,modplay,3,7;50;43;40,,,2500,,1
-701,숨바꼭질류 모드 플레이,CSO2_CLANMISSION_NAME_PLAY_HIDEGROUP,CSO2_CLANMISSION_DESC_PLAY_HIDEGROUP,assets/img_all/modeEx_HIDE,2,2101;,modplay,10,7;50;43;40,,,5000,,1
-702,숨바꼭질류 모드 플레이,CSO2_CLANMISSION_NAME_PLAY_HIDEGROUP,CSO2_CLANMISSION_DESC_PLAY_HIDEGROUP,assets/img_all/modeEx_HIDE,3,2101;,modplay,30,7;50;43;40,,,10000,,1
-3600,좀비크러쉬 모드 플레이,CSO2_CLANMISSION_NAME_PLAY_SCENARIO,CSO2_CLANMISSION_DESC_PLAY_SCENARIO,assets/img_all/modeEx_Z_SCENARIO,1,2101;,modplay,3,36,,,2500,,1
-3601,좀비크러쉬 모드 플레이,CSO2_CLANMISSION_NAME_PLAY_SCENARIO,CSO2_CLANMISSION_DESC_PLAY_SCENARIO,assets/img_all/modeEx_Z_SCENARIO,2,2101;,modplay,10,36,,,5000,,1
-3602,좀비크러쉬 모드 플레이,CSO2_CLANMISSION_NAME_PLAY_SCENARIO,CSO2_CLANMISSION_DESC_PLAY_SCENARIO,assets/img_all/modeEx_Z_SCENARIO,3,2101;,modplay,30,36,,,10000,,1
-3700,좀비하우스 모드 플레이,CSO2_CLANMISSION_NAME_PLAY_ZOMBIE_PROP,CSO2_CLANMISSION_DESC_PLAY_ZOMBIE_PROP,assets/img_all/modeEx_ZOMBIE_PROP,1,2101;,modplay,3,37,,,2500,,1
-3701,좀비하우스 모드 플레이,CSO2_CLANMISSION_NAME_PLAY_ZOMBIE_PROP,CSO2_CLANMISSION_DESC_PLAY_ZOMBIE_PROP,assets/img_all/modeEx_ZOMBIE_PROP,2,2101;,modplay,10,37,,,5000,,1
-3702,좀비하우스 모드 플레이,CSO2_CLANMISSION_NAME_PLAY_ZOMBIE_PROP,CSO2_CLANMISSION_DESC_PLAY_ZOMBIE_PROP,assets/img_all/modeEX_ZOMBIE_PROP,3,2101;,modplay,30,37,,,10000,,1
-200100,투척무기킬,CSO2_CLANMISSION_NAME_granadekill,CSO2_CLANMISSION_DESC_granadekill,assets/img_all/clan_mission_default;assets/img_hud_kill/kill_granadekill,1,2101;,throwKill,3,,,,1500,,1
-200101,투척무기킬,CSO2_CLANMISSION_NAME_granadekill,CSO2_CLANMISSION_DESC_granadekill,assets/img_all/clan_mission_default;assets/img_hud_kill/kill_granadekill,2,2101;,throwKill,10,,,,3000,,1
-200102,투척무기킬,CSO2_CLANMISSION_NAME_granadekill,CSO2_CLANMISSION_DESC_granadekill,assets/img_all/clan_mission_default;assets/img_hud_kill/kill_granadekill,3,2101;,throwKill,30,,,,6000,,1
-200200,헤드샷,CSO2_CLANMISSION_NAME_headshot,CSO2_CLANMISSION_DESC_headshot,assets/img_all/clan_mission_default;assets/img_hud_kill/kill_headshot,1,2101;,headShot,10,,,,1500,,1
-200201,헤드샷,CSO2_CLANMISSION_NAME_headshot,CSO2_CLANMISSION_DESC_headshot,assets/img_all/clan_mission_default;assets/img_hud_kill/kill_headshot,2,2101;,headShot,50,,,,3000,,1
-200202,헤드샷,CSO2_CLANMISSION_NAME_headshot,CSO2_CLANMISSION_DESC_headshot,assets/img_all/clan_mission_default;assets/img_hud_kill/kill_headshot,3,2101;,headShot,250,,,,6000,,1
-200300,킬,CSO2_CLANMISSION_NAME_kill,CSO2_CLANMISSION_DESC_kill,assets/img_all/clan_mission_default;assets/img_hud_kill/kill_kill,1,2101;,kill,50,,,,1500,,1
-200301,킬,CSO2_CLANMISSION_NAME_kill,CSO2_CLANMISSION_DESC_kill,assets/img_all/clan_mission_default;assets/img_hud_kill/kill_kill,2,2101;,kill,100,,,,3000,,1
-200302,킬,CSO2_CLANMISSION_NAME_kill,CSO2_CLANMISSION_DESC_kill,assets/img_all/clan_mission_default;assets/img_hud_kill/kill_kill,3,2101;,kill,500,,,,6000,,1
-200400,어시스트,CSO2_CLANMISSION_NAME_assist,CSO2_CLANMISSION_DESC_assist,assets/img_all/clan_mission_default;assets/img_hud_kill/kill_assist,1,2101;,assist,50,,,,1500,,1
-200401,어시스트,CSO2_CLANMISSION_NAME_assist,CSO2_CLANMISSION_DESC_assist,assets/img_all/clan_mission_default;assets/img_hud_kill/kill_assist,2,2101;,assist,100,,,,3000,,1
-200402,어시스트,CSO2_CLANMISSION_NAME_assist,CSO2_CLANMISSION_DESC_assist,assets/img_all/clan_mission_default;assets/img_hud_kill/kill_assist,3,2101;,assist,500,,,,6000,,1
-

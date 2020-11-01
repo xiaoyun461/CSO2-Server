@@ -2,6 +2,7 @@ package configure
 
 import (
 	"fmt"
+	"io/ioutil"
 
 	. "github.com/KouKouChan/CSO2-Server/blademaster/typestruct"
 	. "github.com/KouKouChan/CSO2-Server/kerlong"
@@ -54,6 +55,8 @@ type CSO2Locales struct {
 	NAME_ERROR                 string
 	DATABASE_ERROR             string
 	REGISTER_SUCCESS           string
+
+	MOTD []byte
 }
 
 var (
@@ -167,6 +170,22 @@ func (locales *CSO2Locales) InitLocales(path string) bool {
 	locales.DATABASE_ERROR = ini_parser.IniGetString("Register", "DATABASE_ERROR")
 	locales.REGISTER_SUCCESS = ini_parser.IniGetString("Register", "REGISTER_SUCCESS")
 	return true
+}
+
+func (locales *CSO2Locales) InitMotd(path string) {
+	if locales == nil {
+		return
+	}
+	fmt.Printf("Reading motd ...\n")
+	filepath := path + "\\CSO2-Server\\locales\\motd.txt"
+	dataEncoded, err := ioutil.ReadFile(filepath)
+	if err != nil {
+		fmt.Printf("Using default motd ...\n")
+		locales.MOTD = []byte("You are playing Counter-Strike Online 2 on CSO2-Server.Please delete in 24 hours after loading !Visit the github web site github.com/KouKouChan/CSO2-Server")
+		return
+	}
+	locales.MOTD = dataEncoded
+	return
 }
 
 func SetLocales() {

@@ -117,6 +117,8 @@ func OnLogin(seq *uint8, dataPacket *PacketData, client net.Conn) {
 	//ServerList部分
 	OnServerList(u.CurrentConnection)
 
+	//motd
+	OnSendMessage(u.CurrentSequence, u.CurrentConnection, MessageNotice, Locales.MOTD)
 }
 
 //BuildUserStart 返回结构
