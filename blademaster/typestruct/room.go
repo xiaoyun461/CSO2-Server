@@ -53,6 +53,8 @@ type (
 		CtKillNum     uint32
 		TrKillNum     uint32
 		WinnerTeam    uint8
+		Cache         []byte
+		PageNum       uint8
 
 		RoomMutex *sync.Mutex
 	}
@@ -63,6 +65,7 @@ const (
 
 	GameStart         = 0
 	HostJoin          = 1
+	HostRestart       = 2
 	HostStop          = 3
 	LeaveResultWindow = 4
 	GameContinue      = 5
@@ -534,4 +537,14 @@ func (rm *Room) RoomRemoveUser(id uint32) {
 		delete(rm.Users, id)
 		rm.NumPlayers--
 	}
+}
+
+func (rm *Room) RoomSaveCache(pagenum uint8, data []byte) {
+	if rm == nil || rm.NumPlayers <= 0 {
+		return
+	}
+	rm.RoomMutex.Lock()
+	defer rm.RoomMutex.Unlock()
+	rm.Cache = data
+	rm.PageNum = pagenum
 }

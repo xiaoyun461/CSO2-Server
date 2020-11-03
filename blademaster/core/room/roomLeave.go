@@ -69,6 +69,7 @@ func SentUserLeaveMes(uPtr *User, rm *Room) {
 		for _, v := range rm.Users {
 			rm.RoomMutex.Unlock()
 			rm.SetRoomHost(v)
+
 			DebugInfo(2, "Set User", v.UserName, "id", v.Userid, "to host in room", string(rm.Setting.RoomName), "id", rm.Id)
 			rm.RoomMutex.Lock()
 			if !v.CurrentIsIngame {
@@ -82,9 +83,11 @@ func SentUserLeaveMes(uPtr *User, rm *Room) {
 			break
 		}
 		sethost := BuildSetHost(rm.HostUserID)
+		//hostrestart := BuildHostRestart(rm.HostUserID, true)
 		rm.RoomMutex.Unlock()
 		numInGame := 0
 		leave := BuildUserLeave(uPtr.Userid)
+		//发送数据包
 		rm.RoomMutex.Lock()
 		for _, v := range rm.Users {
 			if v.CurrentIsIngame {
@@ -94,9 +97,14 @@ func SentUserLeaveMes(uPtr *User, rm *Room) {
 			rst1 = BytesCombine(rst1, leave)
 			rst2 := append(BuildHeader(v.CurrentSequence, PacketTypeRoom), OUTSetHost)
 			rst2 = BytesCombine(rst2, sethost)
+			// rst3 := append(BuildHeader(v.CurrentSequence, PacketTypeHost), HostRestart)
+			// rst3 = BytesCombine(rst3, hostrestart)
+			rst := BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeHost), BuildGameData(rm.PageNum, rm.Cache))
 
+			SendPacket(rst, v.CurrentConnection)
 			SendPacket(rst1, v.CurrentConnection)
 			SendPacket(rst2, v.CurrentConnection)
+			//SendPacket(rst3, v.CurrentConnection)
 
 			// hostu := GetUserFromID(rm.HostUserID)
 			// rst := BytesCombine(BuildHeader(hostu.CurrentSequence, PacketTypeHost), BuildGameContinue(rm.HostUserID))
@@ -129,24 +137,43 @@ func SentUserLeaveMes(uPtr *User, rm *Room) {
 		return
 	}
 }
+
 func BuildUserLeave(id uint32) []byte {
 	buf := make([]byte, 4)
 	offset := 0
 	WriteUint32(&buf, id, &offset)
 	return buf
 }
+
 func BuildSetHost(id uint32) []byte {
-	buf := make([]byte, 5)
+	buf := make([]byte, 20)
 	offset := 0
 	WriteUint32(&buf, id, &offset)
-	buf[4] = 1
-	return buf
+	WriteUint8(&buf, 1, &offset)
+	WriteUint8(&buf, 0, &offset)
+	WriteUint8(&buf, 0, &offset)
+	return buf[:offset]
 }
 
-func BuildGameContinue(id uint32) []byte {
-	buf := make([]byte, 5)
+func BuildHostRestart(id uint32, isHost bool) []byte {
+	buf := make([]byte, 20)
 	offset := 0
-	WriteUint8(&buf, GameStart, &offset)
 	WriteUint32(&buf, id, &offset)
+	WriteUint8(&buf, 0, &offset)
+	WriteUint8(&buf, 0, &offset)
+	// WriteUint8(&buf, 1, &offset)
+	// WriteUint32(&buf, id, &offset)
 	return buf[:offset]
+}
+
+func BuildGameData(pagenum uint8, data []byte) []byte {
+	buf := make([]byte, 10)
+	offset := 0
+	WriteUint8(&buf, GameContinue, &offset)
+	WriteUint8(&buf, pagenum, &offset)
+	WriteUint8(&buf, pagenum, &offset)
+	WriteUint16(&buf, uint16(len(data)), &offset)
+	WriteUint16(&buf, uint16(len(data)), &offset)
+	buf = BytesCombine(buf[:offset], data)
+	return buf
 }

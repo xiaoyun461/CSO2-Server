@@ -327,7 +327,21 @@ type (
 		Unk03        uint16
 		AssisterTeam uint8 //待定,也可能是杀手的队伍
 	}
-
+	InHostDataPacket struct {
+		DataType uint8
+	}
+	InHostDataUsersPacket struct {
+		UserNum uint8
+		UserIDs []uint32
+		PageNum uint8
+		Unk00   uint8 //1
+	}
+	InHostDataCachePacket struct {
+		PageNum uint8
+		Unk00   uint8 //0
+		Length  uint16
+		Cache   []byte
+	}
 	InHostSetBuyMenu struct {
 		Userid uint32
 	}
@@ -1029,6 +1043,44 @@ func (p *PacketData) PraseInAssistPacket(dest *InAssistPacket) bool {
 	return true
 }
 
+func (p *PacketData) PraseInHostDataPacket(dest *InHostDataPacket) bool {
+	//id + type + datatype = 3 bytes
+	if p.Length < 3 ||
+		dest == nil {
+		return false
+	}
+	dest.DataType = ReadUint8(p.Data, &p.CurOffset)
+	return true
+}
+
+func (p *PacketData) PraseInHostDataCachePacket(dest *InHostDataCachePacket) bool {
+	//id + type + datatype + page + unk + length = 7 bytes
+	if p.Length < 7 ||
+		dest == nil {
+		return false
+	}
+	dest.PageNum = ReadUint8(p.Data, &p.CurOffset)
+	dest.Unk00 = ReadUint8(p.Data, &p.CurOffset)
+	dest.Length = ReadUint16(p.Data, &p.CurOffset)
+	dest.Cache = ReadString(p.Data, &p.CurOffset, int(dest.Length))
+	return true
+}
+
+func (p *PacketData) PraseInHostDataUsersPacket(dest *InHostDataUsersPacket) bool {
+	//id + type + datatype + usernum + page + unk = 6 bytes
+	if p.Length < 6 ||
+		dest == nil {
+		return false
+	}
+	dest.UserNum = ReadUint8(p.Data, &p.CurOffset)
+	num := int(dest.UserNum)
+	for i := 0; i < num; i++ {
+		dest.UserIDs = append(dest.UserIDs, ReadUint32(p.Data, &p.CurOffset))
+	}
+	dest.PageNum = ReadUint8(p.Data, &p.CurOffset)
+	dest.Unk00 = ReadUint8(p.Data, &p.CurOffset)
+	return true
+}
 func (p *PacketData) PraseSetBuyMenuPacket(dest *InHostSetBuyMenu) bool {
 	//id + type + userid = 6 bytes
 	if dest == nil ||

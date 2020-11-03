@@ -217,6 +217,7 @@ func CreateRoom(pkt InNewRoomPacket, u *User) Room {
 	rm.Setting.NumTrBots = 0
 	rm.Setting.BotDifficulty = 0
 	rm.Setting.IsIngame = 0 //false = 0,true = 1
+	rm.Cache = []byte{}
 	var mutex sync.Mutex
 	rm.RoomMutex = &mutex
 	return rm
