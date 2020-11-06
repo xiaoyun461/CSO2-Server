@@ -158,6 +158,7 @@ func BuildSetHost(id uint32) []byte {
 func BuildHostRestart(id uint32, isHost bool) []byte {
 	buf := make([]byte, 20)
 	offset := 0
+
 	WriteUint32(&buf, id, &offset)
 	WriteUint8(&buf, 0, &offset)
 	WriteUint8(&buf, 0, &offset)
