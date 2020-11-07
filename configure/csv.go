@@ -33,6 +33,7 @@ type UnlockData struct {
 	Count1         uint32
 	ConditionFlag2 uint32
 	Count2         uint32
+	Category       uint32
 }
 
 type BoxData struct {
@@ -50,6 +51,7 @@ var (
 	ItemList   = make(map[uint32]ItemData)
 	UnlockList = make(map[uint32]UnlockData)
 	BoxList    = make(map[uint32]BoxData)
+	BoxIDs     = []uint32{}
 )
 
 func InitCSV(path string) {
@@ -149,6 +151,10 @@ func readUnlockList(path string) {
 			if err != nil {
 				continue
 			}
+			cat, err := strconv.Atoi(record[31])
+			if err != nil {
+				continue
+			}
 			itemd := UnlockData{
 				uint32(id),
 				uint32(nextid),
@@ -158,9 +164,10 @@ func readUnlockList(path string) {
 				uint32(count1),
 				uint32(flag2),
 				uint32(count2),
+				uint32(cat),
 			}
 
-			UnlockList[itemd.ItemID] = itemd
+			UnlockList[itemd.NextItemID] = itemd
 		} else {
 			continue
 		}
@@ -219,6 +226,7 @@ func readBoxList(path string) {
 					[]BoxItem{item},
 					value,
 				}
+				BoxIDs = append(BoxIDs, uint32(boxid))
 			}
 		} else {
 			continue

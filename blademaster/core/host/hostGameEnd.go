@@ -1,11 +1,15 @@
 package host
 
 import (
+	"math/rand"
 	"net"
+	"time"
 
 	. "github.com/KouKouChan/CSO2-Server/blademaster/Exp"
+	. "github.com/KouKouChan/CSO2-Server/blademaster/core/inventory"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/room"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/typestruct"
+	. "github.com/KouKouChan/CSO2-Server/configure"
 	. "github.com/KouKouChan/CSO2-Server/kerlong"
 	. "github.com/KouKouChan/CSO2-Server/servermanager"
 	. "github.com/KouKouChan/CSO2-Server/verbose"
@@ -50,8 +54,18 @@ func OnHostGameEnd(p *PacketData, client net.Conn) {
 			rst = BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeHost), BuildHostStop())
 			SendPacket(rst, v.CurrentConnection)
 			//发送游戏战绩
-			rst = BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeRoom), header, BuildGameResult(v))
-			SendPacket(rst, v.CurrentConnection)
+			if (rm.Setting.GameModeID == ModeZ_scenario || rm.Setting.GameModeID == ModeZ_scenario_side) && rm.WinnerTeam == v.CurrentTeam {
+				boxid := GetRandomBox()
+				v.AddItem(boxid)
+				rst = BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeRoom), header, BuildGameResult(v, boxid, true))
+				SendPacket(rst, v.CurrentConnection)
+				rst := BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeInventory_Create),
+					BuildInventoryInfoSingle(v, boxid))
+				SendPacket(rst, v.CurrentConnection)
+			} else {
+				rst = BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeRoom), header, BuildGameResult(v, 0, false))
+				SendPacket(rst, v.CurrentConnection)
+			}
 			DebugInfo(2, "Sent game result to User", v.UserName)
 			//修改用户状态
 			v.SetUserIngame(false)
@@ -77,22 +91,27 @@ func OnHostGameEnd(p *PacketData, client net.Conn) {
 func BuildHostStop() []byte {
 	return []byte{HostStop}
 }
-func BuildGameResult(u *User) []byte {
+func BuildGameResult(u *User, boxid uint32, reward bool) []byte {
 	buf := make([]byte, 128)
 	offset := 0
 	WriteUint64(&buf, u.CurrentExp+LevelExpTotal[u.Level-1], &offset) //now total EXP
 	WriteUint64(&buf, u.Points, &offset)                              //now total point
 	WriteUint8(&buf, 0, &offset)                                      //unk18
-	WriteString(&buf, []byte("Good"), &offset)
-	WriteString(&buf, []byte("Good"), &offset)
-	WriteUint32(&buf, 0, &offset)
-	// WriteUint8(&buf, 1, &offset)     //num of gifts
-	// WriteUint32(&buf, 2008, &offset) //item id
-	// WriteUint16(&buf, 1, &offset)    //item count
-	// WriteUint64(&buf, 0, &offset)    //unk22
-	// WriteUint16(&buf, 0, &offset)    //unk23 ，maybe 2 bytes
-	// WriteUint8(&buf, 0, &offset)     //unk24
-	// WriteUint16(&buf, 0, &offset)    //unk25 ，maybe 2 bytes
+	WriteUint8(&buf, 0, &offset)                                      // str len
+	WriteUint8(&buf, 0, &offset)                                      // str len
+	//WriteString(&buf, []byte("Good"), &offset)
+	//WriteString(&buf, []byte("Good"), &offset)
+	if reward {
+		WriteUint8(&buf, 1, &offset)      //num of gifts
+		WriteUint32(&buf, boxid, &offset) //item id
+		WriteUint16(&buf, 1, &offset)     //item count
+		WriteUint64(&buf, 0, &offset)     //unk22
+		WriteUint16(&buf, 0, &offset)     //unk23 ，maybe 2 bytes
+		WriteUint8(&buf, 0, &offset)      //unk24
+		WriteUint16(&buf, 0, &offset)     //unk25 ，maybe 2 bytes
+	} else {
+		WriteUint32(&buf, 0, &offset)
+	}
 	return buf[:offset]
 }
 
@@ -221,4 +240,9 @@ func GetGainPoints(u *User, bot uint8) uint64 {
 		return 400
 	}
 	return 400
+}
+
+func GetRandomBox() uint32 {
+	rand.Seed(time.Now().UnixNano())
+	return BoxIDs[rand.Intn(len(BoxIDs))]
 }

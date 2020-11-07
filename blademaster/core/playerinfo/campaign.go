@@ -3,6 +3,9 @@ package playerinfo
 import (
 	"net"
 
+	. "github.com/KouKouChan/CSO2-Server/blademaster/core/achievement"
+	. "github.com/KouKouChan/CSO2-Server/blademaster/core/inventory"
+	. "github.com/KouKouChan/CSO2-Server/blademaster/core/message"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/typestruct"
 	. "github.com/KouKouChan/CSO2-Server/kerlong"
 	. "github.com/KouKouChan/CSO2-Server/servermanager"
@@ -37,6 +40,53 @@ func OnSetCampaign(p *PacketData, client net.Conn) {
 			//发送数据包
 			rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeUserInfo), BuildUserInfo(0x1000, NewUserInfo(uPtr), uPtr.Userid, true))
 			SendPacket(rst, uPtr.CurrentConnection)
+			switch pkt.CampaignId {
+			case 1:
+				for _, v := range RewardCapmgaign1 {
+					uPtr.AddItem(v.ItemId)
+					rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeInventory_Create),
+						BuildInventoryInfoSingle(uPtr, v.ItemId))
+					SendPacket(rst, uPtr.CurrentConnection)
+				}
+				uPtr.GetExp(3000)
+				rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeUserInfo), BuildUserInfo(0XFFFFFFFF, NewUserInfo(uPtr), uPtr.Userid, true))
+				SendPacket(rst, uPtr.CurrentConnection)
+				OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageDialogBox, GAME_USER_NEW_ITEM_RESTART)
+			case 2:
+				for _, v := range RewardCapmgaign2 {
+					uPtr.AddItem(v.ItemId)
+					rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeInventory_Create),
+						BuildInventoryInfoSingle(uPtr, v.ItemId))
+					SendPacket(rst, uPtr.CurrentConnection)
+				}
+				uPtr.GetPoints(5000)
+				rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeUserInfo), BuildUserInfo(0XFFFFFFFF, NewUserInfo(uPtr), uPtr.Userid, true))
+				SendPacket(rst, uPtr.CurrentConnection)
+				OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageDialogBox, GAME_USER_NEW_ITEM_RESTART)
+			case 3:
+				for _, v := range RewardCapmgaign3 {
+					uPtr.AddItem(v.ItemId)
+					rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeInventory_Create),
+						BuildInventoryInfoSingle(uPtr, v.ItemId))
+					SendPacket(rst, uPtr.CurrentConnection)
+				}
+				OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageDialogBox, GAME_USER_NEW_ITEM_RESTART)
+			case 4:
+				for _, v := range RewardCapmgaign4 {
+					uPtr.AddItem(v.ItemId)
+					rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeInventory_Create),
+						BuildInventoryInfoSingle(uPtr, v.ItemId))
+					SendPacket(rst, uPtr.CurrentConnection)
+				}
+				OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageDialogBox, GAME_USER_NEW_ITEM_RESTART)
+			case 5:
+				for _, v := range RewardCapmgaign5 {
+					uPtr.AddItem(v.ItemId)
+					rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeInventory_Create),
+						BuildInventoryInfoSingle(uPtr, v.ItemId))
+					SendPacket(rst, uPtr.CurrentConnection)
+				}
+			}
 			DebugInfo(1, "User", uPtr.UserName, "finished Campaign ", pkt.CampaignId)
 		} else {
 			DebugInfo(2, "User", uPtr.UserName, "sent a invalid SetCampaign packet id", pkt.CampaignId)

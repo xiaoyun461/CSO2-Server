@@ -150,6 +150,7 @@ func main() {
 	FullInventoryItem = CreateFullInventoryItem()
 	FullInventoryReply = BuildFullInventoryInfo()
 	InitBoxReply()
+	InitCampaignReward()
 
 	//read locales
 	Locales.InitMotd(path)

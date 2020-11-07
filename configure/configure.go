@@ -46,6 +46,7 @@ type CSO2Locales struct {
 	GAME_CHANNEL_MESSAGE_NOT_IN string
 	GAME_GM_NO_AUTHORIZE        string
 	GAME_USER_NEW_ITEM          string
+	GAME_USER_NEW_ITEM_RESTART  string
 	GAME_CHANNEL_MESSAGE        string
 
 	MAIL_EMPTY       string
@@ -167,6 +168,7 @@ func (locales *CSO2Locales) InitLocales(path string) bool {
 	locales.GAME_CHANNEL_MESSAGE_NOT_IN = ini_parser.IniGetString("System", "GAME_CHANNEL_MESSAGE_NOT_IN")
 	locales.GAME_GM_NO_AUTHORIZE = ini_parser.IniGetString("System", "GAME_GM_NO_AUTHORIZE")
 	locales.GAME_USER_NEW_ITEM = ini_parser.IniGetString("System", "GAME_USER_NEW_ITEM")
+	locales.GAME_USER_NEW_ITEM_RESTART = ini_parser.IniGetString("System", "GAME_USER_NEW_ITEM_RESTART")
 	locales.GAME_CHANNEL_MESSAGE = ini_parser.IniGetString("System", "GAME_CHANNEL_MESSAGE")
 
 	locales.MAIL_EMPTY = ini_parser.IniGetString("Register", "MAIL_EMPTY")
@@ -212,6 +214,7 @@ func SetLocales() {
 	GAME_CHANNEL_MESSAGE_NOT_IN = []byte(Locales.GAME_CHANNEL_MESSAGE_NOT_IN)
 	GAME_GM_NO_AUTHORIZE = []byte(Locales.GAME_GM_NO_AUTHORIZE)
 	GAME_USER_NEW_ITEM = []byte(Locales.GAME_USER_NEW_ITEM)
+	GAME_USER_NEW_ITEM_RESTART = []byte(Locales.GAME_USER_NEW_ITEM_RESTART)
 	GAME_CHANNEL_MESSAGE = Locales.GAME_CHANNEL_MESSAGE
 
 	MAIL_EMPTY = Locales.MAIL_EMPTY
