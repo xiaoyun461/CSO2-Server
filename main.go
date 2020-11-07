@@ -246,6 +246,16 @@ func main() {
 	ch := make(chan os.Signal)
 	signal.Notify(ch, syscall.SIGINT)
 	_ = <-ch
+
+	if SaveAllUsers() {
+		fmt.Println("Save all users data success !")
+	} else {
+		fmt.Println("Save all users data failed !")
+	}
+	fmt.Println("Press CTRL+C again to close server")
+
+	signal.Notify(ch, syscall.SIGINT)
+	_ = <-ch
 }
 
 func TCPServer(server net.Listener) {

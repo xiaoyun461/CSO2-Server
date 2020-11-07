@@ -11,6 +11,7 @@ import (
 func OnChat(p *PacketData, client net.Conn) {
 	var pkt InChatPacket
 	if p.PraseInChatPacket(&pkt) {
+
 		switch pkt.Type {
 		case ChatDirectMessage:
 			OnChatDirectMessage(&pkt, client)
