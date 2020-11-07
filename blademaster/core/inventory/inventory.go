@@ -238,7 +238,7 @@ func CreateFullInventoryItem() []UserInventoryItem {
 	// }
 	var i uint32
 	//用户角色
-	for i = 1001; i <= 1060; i++ {
+	for i = 1001; i <= 1058; i++ {
 		items = append(items, UserInventoryItem{i, 1})
 	}
 	//添加默认武器
