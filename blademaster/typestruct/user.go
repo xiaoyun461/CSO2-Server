@@ -675,3 +675,22 @@ func (u *User) AddItem(itemid uint32) {
 		u.Inventory.NumOfItem++
 	}
 }
+
+func (u *User) SetInventoryItems(items *[]UserInventoryItem) {
+	if u == nil {
+		return
+	}
+	u.UserMutex.Lock()
+	defer u.UserMutex.Unlock()
+	u.Inventory.Items = *items
+	u.Inventory.NumOfItem = uint16(len(u.Inventory.Items))
+}
+
+func (u User) IsGM() bool {
+	u.UserMutex.Lock()
+	defer u.UserMutex.Unlock()
+	if u.Gm == 1 {
+		return true
+	}
+	return false
+}

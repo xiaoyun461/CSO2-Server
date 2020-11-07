@@ -35,13 +35,18 @@ func OnChatChannelMessage(p *InChatPacket, client net.Conn) {
 	//发送数据
 
 	if string(p.Message) == "/addallitems" {
-		uPtr.Inventory.Items = FullInventoryItem
+		if !uPtr.IsGM() {
+			OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageNotice, GAME_GM_NO_AUTHORIZE)
+			return
+		}
+		uPtr.SetInventoryItems(&FullInventoryItem)
 		rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeInventory_Add),
 			BuildInventoryInfo(uPtr))
 		SendPacket(rst, uPtr.CurrentConnection)
-		OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageNotice, GAME_USER_ADD_ALLWEAPONS)
+		OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageNotice, GAME_GM_ADD_ALLWEAPONS)
 		return
 	}
+
 	msg := BuildChannelMessage(uPtr, p)
 	for _, v := range UsersManager.Users {
 		if !v.CurrentIsIngame && v.GetUserChannelServerID() == chlsrv.ServerIndex && v.GetUserChannelID() == chl.ChannelID {
