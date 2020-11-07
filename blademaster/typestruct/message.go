@@ -6,7 +6,6 @@ const (
 	MessageDialogBox       = 21
 	MessageNotice          = 22
 	MessageNotice2         = 23
-	MessageNotice3         = 24
 	MessageDialogBoxExit   = 60
 )
 
@@ -17,6 +16,9 @@ var (
 	GAME_LOGIN_ERROR                     = []byte("登录过程发生错误，请联系服务器管理员并提供报错信息以便管理员查找和修复错误！")
 	GAME_ROOM_COUNT_MODE_ERROR           = []byte("无法开始游戏！请检查你的房间设置，比如是否有2人及以上或者开启bot")
 	GAME_ROOM_JOIN_ERROR                 = []byte("加入房间发生错误！")
+	GAME_USER_ADD_ALLWEAPONS             = []byte("所有武器以存入你的仓库!")
+	GAME_CHANNEL_MESSAGE_NOT_IN          = []byte("你未进入任何频道!")
+	GAME_CHANNEL_MESSAGE                 = "频道"
 	GAME_ROOM_JOIN_FAILED_CLOSED         = []byte("#CSO2_POPUP_ROOM_JOIN_FAILED_CLOSED")
 	GAME_ROOM_JOIN_FAILED_FULL           = []byte("#CSO2_POPUP_ROOM_JOIN_FAILED_FULL")
 	GAME_ROOM_JOIN_FAILED_BAD_PASSWORD   = []byte("#CSO2_POPUP_ROOM_JOIN_FAILED_INVALID_PASSWD")
