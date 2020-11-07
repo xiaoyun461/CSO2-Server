@@ -12,7 +12,7 @@ const (
 	WeaponListCSV = "/CSO2-Server/assert/cstrike/scripts/item_list.csv"
 	ExpLevelCSV   = "/CSO2-Server/assert/cstrike/scripts/exp_level.csv"
 	UnlockCSV     = "/CSO2-Server/assert/cstrike/scripts/item_unlock.csv"
-	BoxCSV        = "/CSO2-Server/assert/cstrike/scripts/itembox_pool.csv"
+	BoxCSV        = "/CSO2-Server/assert/cstrike/scripts/supplyList.csv"
 	VipCSV        = "/CSO2-Server/assert/cstrike/scripts/vip_info.csv"
 )
 
@@ -35,15 +35,28 @@ type UnlockData struct {
 	Count2         uint32
 }
 
+type BoxData struct {
+	BoxID      uint32
+	Items      []BoxItem
+	TotalValue int
+}
+
+type BoxItem struct {
+	ItemID uint32
+	Value  int
+}
+
 var (
 	ItemList   = make(map[uint32]ItemData)
 	UnlockList = make(map[uint32]UnlockData)
+	BoxList    = make(map[uint32]BoxData)
 )
 
 func InitCSV(path string) {
 	fmt.Println("Reading game data file ...")
 	readWeaponList(path)
 	readUnlockList(path)
+	readBoxList(path)
 }
 
 func readWeaponList(path string) {
@@ -148,6 +161,65 @@ func readUnlockList(path string) {
 			}
 
 			UnlockList[itemd.ItemID] = itemd
+		} else {
+			continue
+		}
+	}
+}
+
+func readBoxList(path string) {
+	//读取箱子数据
+	filepath := path + BoxCSV
+
+	file, err := os.Open(filepath)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	reader := csv.NewReader(file)
+
+	for {
+		record, err := reader.Read()
+		if err == io.EOF {
+			break
+		} else if err != nil {
+			panic(err)
+		}
+		if err == nil {
+			boxid, err := strconv.Atoi(record[0])
+			if err != nil {
+				continue
+			}
+			itemid, err := strconv.Atoi(record[1])
+			if err != nil {
+				continue
+			}
+			value, err := strconv.Atoi(record[2])
+			if err != nil {
+				continue
+			}
+			//保存当前物品数据
+			if value <= 0 {
+				fmt.Println("Warning ! illeagal value", value, "for item", itemid, "in box", boxid)
+				continue
+			}
+			item := BoxItem{
+				uint32(itemid),
+				value,
+			}
+			if v, ok := BoxList[uint32(boxid)]; ok {
+				//如果该box数据已经存在
+				v.Items = append(v.Items, item)
+				v.TotalValue += value
+				BoxList[uint32(boxid)] = v
+			} else {
+				BoxList[uint32(boxid)] = BoxData{
+					uint32(boxid),
+					[]BoxItem{item},
+					value,
+				}
+			}
 		} else {
 			continue
 		}

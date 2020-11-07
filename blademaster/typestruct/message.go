@@ -19,6 +19,7 @@ var (
 	GAME_GM_ADD_ALLWEAPONS               = []byte("所有武器已存入你的仓库!")
 	GAME_CHANNEL_MESSAGE_NOT_IN          = []byte("你未进入任何频道!")
 	GAME_GM_NO_AUTHORIZE                 = []byte("你没有权限进行此操作!")
+	GAME_USER_NEW_ITEM                   = []byte("你获得了管理员给予的物品!")
 	GAME_CHANNEL_MESSAGE                 = "频道"
 	GAME_ROOM_JOIN_FAILED_CLOSED         = []byte("#CSO2_POPUP_ROOM_JOIN_FAILED_CLOSED")
 	GAME_ROOM_JOIN_FAILED_FULL           = []byte("#CSO2_POPUP_ROOM_JOIN_FAILED_FULL")

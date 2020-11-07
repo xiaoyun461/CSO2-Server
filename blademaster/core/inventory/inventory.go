@@ -30,6 +30,43 @@ func BuildInventoryInfo(u *User) []byte {
 	return buf[:offset]
 }
 
+func BuildInventoryInfoSingle(u *User, itemid uint32) []byte {
+	buf := make([]byte, 25)
+	offset := 0
+	WriteUint16(&buf, 1, &offset)
+	for k, v := range u.Inventory.Items {
+		if v.Id != itemid {
+			continue
+		}
+		WriteUint16(&buf, uint16(k), &offset)
+		WriteUint8(&buf, 1, &offset)
+		WriteUint32(&buf, v.Id, &offset)
+		WriteUint16(&buf, v.Count, &offset)
+		WriteUint8(&buf, 1, &offset)
+		WriteUint8(&buf, 0, &offset)
+		WriteUint64(&buf, 0, &offset)
+	}
+	return buf[:offset]
+}
+
+func BuildInventoryItemUsed(u *User, itemid uint32, idx int, count uint16) []byte {
+	buf := make([]byte, 25)
+	offset := 0
+	WriteUint16(&buf, 1, &offset)
+	WriteUint16(&buf, uint16(idx), &offset)
+	if count <= 0 {
+		WriteUint8(&buf, 0, &offset) //existed
+	} else {
+		WriteUint8(&buf, 1, &offset)
+	}
+	WriteUint32(&buf, itemid, &offset)
+	WriteUint16(&buf, count, &offset)
+	WriteUint8(&buf, 1, &offset)
+	WriteUint8(&buf, 0, &offset)
+	WriteUint64(&buf, 0, &offset)
+	return buf[:offset]
+}
+
 func BuildFullInventoryInfo() []byte {
 	buf := make([]byte, 5+uint16(len(FullInventoryItem))*19)
 	offset := 0

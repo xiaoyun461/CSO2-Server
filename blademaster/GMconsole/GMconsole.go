@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"strings"
 
+	. "github.com/KouKouChan/CSO2-Server/blademaster/core/inventory"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/message"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/room"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/typestruct"
@@ -102,6 +103,8 @@ func RecvGMmsg(client net.Conn) {
 			kickUser(client, req)
 		case GMadditem:
 			additem(client, req)
+		case GMremoveitem:
+			removeitem(client, req)
 		case GMsave:
 			save(client, req)
 		case GMBeVIP:
@@ -212,8 +215,10 @@ func additem(client net.Conn, req []string) {
 
 			v.AddItem(uint32(id))
 
-			rst := BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeUserInfo), BuildUserInfo(0XFFFFFFFF, NewUserInfo(v), v.Userid, true))
+			rst := BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeInventory_Create),
+				BuildInventoryInfoSingle(v, uint32(id)))
 			SendPacket(rst, v.CurrentConnection)
+			OnSendMessage(v.CurrentSequence, v.CurrentConnection, MessageNotice, GAME_USER_NEW_ITEM)
 
 			rst = []byte(GMAdditemSuccess)
 			GMSendPacket(&rst, client)
@@ -256,6 +261,77 @@ func additem(client net.Conn, req []string) {
 	rst := []byte(GMAdditemFailed)
 	GMSendPacket(&rst, client)
 	DebugInfo(1, "Console from", client.RemoteAddr().String(), "add item", id, "to User", req[1], "not found")
+}
+
+func removeitem(client net.Conn, req []string) {
+	if len(req) < 3 {
+		DebugInfo(2, "Console from", client.RemoteAddr().String(), "sent a illegal removeitem packet")
+		rst := []byte(GMRemoveitemFailed)
+		GMSendPacket(&rst, client)
+		return
+	}
+	if _, ok := clients[client.RemoteAddr().String()]; !ok || !clients[client.RemoteAddr().String()] {
+		DebugInfo(2, "Console from", client.RemoteAddr().String(), "sent a removeitem req but not logged in")
+	}
+
+	id, err := strconv.Atoi(req[2])
+	if err != nil {
+		rst := []byte(GMRemoveitemFailed)
+		GMSendPacket(&rst, client)
+	}
+
+	for _, v := range UsersManager.Users {
+		if v == nil {
+			continue
+		}
+		if v.UserName == req[1] {
+
+			v.RemoveItem(uint32(id))
+
+			rst := BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeUserInfo), BuildUserInfo(0XFFFFFFFF, NewUserInfo(v), v.Userid, true))
+			SendPacket(rst, v.CurrentConnection)
+
+			rst = []byte(GMRemoveitemSuccess)
+			GMSendPacket(&rst, client)
+
+			DebugInfo(1, "Console from", client.RemoteAddr().String(), "removed item", id, "to User", v.UserName)
+			return
+		}
+	}
+	filepath := DBPath + req[1]
+	rb, _ := PathExists(filepath)
+	if rb {
+		u := GetNewUser()
+
+		Dblock.Lock()
+		dataEncoded, _ := ioutil.ReadFile(filepath)
+		Dblock.Unlock()
+
+		err := json.Unmarshal(dataEncoded, &u)
+		if err != nil {
+			rst := []byte(GMRemoveitemFailed)
+			GMSendPacket(&rst, client)
+
+			DebugInfo(1, "Console from", client.RemoteAddr().String(), "remove item", id, "to User", u.UserName, "failed")
+			return
+
+		}
+
+		u.RemoveItem(uint32(id))
+		err = UpdateUserToDB(&u)
+
+		if err == nil {
+			rst := []byte(GMRemoveitemSuccess)
+			GMSendPacket(&rst, client)
+
+			DebugInfo(1, "Console from", client.RemoteAddr().String(), "removed item", id, "to User", u.UserName, "success")
+			return
+
+		}
+	}
+	rst := []byte(GMRemoveitemFailed)
+	GMSendPacket(&rst, client)
+	DebugInfo(1, "Console from", client.RemoteAddr().String(), "remove item", id, "to User", req[1], "not found")
 }
 
 func save(client net.Conn, req []string) {

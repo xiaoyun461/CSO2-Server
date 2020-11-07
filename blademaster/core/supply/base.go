@@ -9,6 +9,7 @@ import (
 
 const (
 	requestList = 0
+	openbox     = 1
 )
 
 func OnSupplyRequest(p *PacketData, client net.Conn) {
@@ -17,6 +18,8 @@ func OnSupplyRequest(p *PacketData, client net.Conn) {
 		switch pkt.Type {
 		case requestList:
 			OnSupplyList(p, client)
+		case openbox:
+			OnSupplyOpenBox(p, client)
 		default:
 			DebugInfo(2, "Unknown supply packet", pkt.Type, "from", client.RemoteAddr().String(), p.Data)
 		}
