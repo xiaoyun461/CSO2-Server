@@ -3,6 +3,8 @@ package chat
 import (
 	"net"
 
+	. "github.com/KouKouChan/CSO2-Server/blademaster/core/inventory"
+	. "github.com/KouKouChan/CSO2-Server/blademaster/core/message"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/typestruct"
 	. "github.com/KouKouChan/CSO2-Server/kerlong"
 	. "github.com/KouKouChan/CSO2-Server/servermanager"
@@ -21,20 +23,34 @@ func OnChatChannelMessage(p *InChatPacket, client net.Conn) {
 	chlsrv := GetChannelServerWithID(uPtr.GetUserChannelServerID())
 	if chlsrv == nil || chlsrv.ServerIndex <= 0 {
 		DebugInfo(2, "Error : User", string(uPtr.IngameName), "sent ChannelMessage but not in channelserver !")
+		OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageNotice, GAME_CHANNEL_MESSAGE_NOT_IN)
 		return
 	}
 	chl := GetChannelWithID(uPtr.GetUserChannelID(), chlsrv)
 	if chl == nil || chl.ChannelID <= 0 {
 		DebugInfo(2, "Error : User", string(uPtr.IngameName), "sent ChannelMessage but not in channel !")
+		OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageNotice, GAME_CHANNEL_MESSAGE_NOT_IN)
 		return
 	}
 	//发送数据
-	msg := BuildChatMessage(uPtr, p, ChatChannel)
+
+	if string(p.Message) == "/addallitems" {
+		uPtr.Inventory.Items = FullInventoryItem
+		rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeInventory_Add),
+			BuildInventoryInfo(uPtr))
+		SendPacket(rst, uPtr.CurrentConnection)
+		OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageNotice, GAME_USER_ADD_ALLWEAPONS)
+		return
+	}
+	msg := BuildChannelMessage(uPtr, p)
 	for _, v := range UsersManager.Users {
 		if !v.CurrentIsIngame && v.GetUserChannelServerID() == chlsrv.ServerIndex && v.GetUserChannelID() == chl.ChannelID {
-			//DebugInfo(2, v.Userid)
-			SendPacket(BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeChat), msg), v.CurrentConnection)
+			OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageNotice, msg)
 		}
 	}
 	DebugInfo(1, "User", string(uPtr.IngameName), "say <", string(p.Message), "> in channel", chl.ChannelID, "channelserver", chlsrv.ServerIndex)
+}
+
+func BuildChannelMessage(u *User, p *InChatPacket) []byte {
+	return BytesCombine([]byte("["+GAME_CHANNEL_MESSAGE+"] "+u.UserName+" : "), p.Message)
 }
