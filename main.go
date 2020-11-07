@@ -412,24 +412,3 @@ func checkFolder(path string) {
 		}
 	}
 }
-
-// func OutSupply(path string) {
-// 	f, _ := os.Create(path + "\\OutputSupply.csv") //创建文件
-// 	defer f.Close()
-// 	lists := []byte(Str)
-// 	offset := 2
-// 	numofbox := ReadUint8(lists, &offset)
-// 	f.WriteString(fmt.Sprintf("boxid,nextOptIndex,itemid,value\n"))
-// 	for i := 0; i < int(numofbox); i++ {
-// 		boxid := ReadUint32(lists, &offset)
-// 		optionid := ReadUint32(lists, &offset)
-// 		itemnum := ReadUint8(lists, &offset)
-// 		for j := 0; j < int(itemnum); j++ {
-// 			itemid := ReadUint32(lists, &offset)
-// 			ReadUint32(lists, &offset)
-// 			ReadUint64(lists, &offset)
-// 			f.WriteString(fmt.Sprintf("%d,%d,%d,10\n", boxid, optionid, itemid)) //写入文件(字节数组)
-// 		}
-// 		ReadUint8(lists, &offset)
-// 	}
-// }
