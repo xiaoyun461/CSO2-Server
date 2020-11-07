@@ -72,9 +72,10 @@ func BuildUnlockReply(u *User) []byte {
 	offset := 0
 	WriteUint8(&buf, 1, &offset)                            //type ?
 	WriteUint16(&buf, uint16(len(UnlockFullList)), &offset) //num of weapons
-	for _, v := range UnlockFullList {
+	for k, v := range UnlockFullList {
 		WriteUint32(&buf, v.Itemid, &offset)
-		WriteUint32(&buf, v.Seq, &offset)
+		//WriteUint32(&buf, v.Seq, &offset)
+		WriteUint32(&buf, uint32(k), &offset)
 		WriteUint8(&buf, v.CostType, &offset)
 		WriteUint32(&buf, v.Price, &offset)
 	}
