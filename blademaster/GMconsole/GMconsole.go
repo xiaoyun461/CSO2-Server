@@ -262,18 +262,11 @@ func save(client net.Conn, req []string) {
 	if _, ok := clients[client.RemoteAddr().String()]; !ok || !clients[client.RemoteAddr().String()] {
 		DebugInfo(2, "Console from", client.RemoteAddr().String(), "sent a additem req but not logged in")
 	}
-	for _, v := range UsersManager.Users {
-		if v == nil {
-			continue
-		}
-
-		if UpdateUserToDB(v) != nil {
-			rst := []byte(GMSaveFailed)
-			GMSendPacket(&rst, client)
-			return
-		}
+	if !SaveAllUsers() {
+		rst := []byte(GMSaveFailed)
+		GMSendPacket(&rst, client)
+		return
 	}
-
 	DebugInfo(1, "Console from", client.RemoteAddr().String(), "request to save all data")
 
 	rst := []byte(GMSaveSuccess)

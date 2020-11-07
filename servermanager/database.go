@@ -327,3 +327,18 @@ func PathExists(path string) (bool, error) {
 	}
 	return false, err
 }
+
+func SaveAllUsers() bool {
+	UsersManager.Lock.Lock()
+	defer UsersManager.Lock.Unlock()
+	for _, v := range UsersManager.Users {
+		if v == nil {
+			continue
+		}
+
+		if UpdateUserToDB(v) != nil {
+			return false
+		}
+	}
+	return true
+}
