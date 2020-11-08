@@ -38,7 +38,7 @@ func BuildInventoryInfo(u *User) []byte {
 }
 
 func BuildInventoryInfoSingle(u *User, itemid uint32) []byte {
-	buf := make([]byte, 25)
+	buf := make([]byte, 128)
 	offset := 0
 	WriteUint16(&buf, 1, &offset)
 	for k, v := range u.Inventory.Items {
@@ -56,6 +56,7 @@ func BuildInventoryInfoSingle(u *User, itemid uint32) []byte {
 		WriteUint8(&buf, 1, &offset)
 		WriteUint8(&buf, 0, &offset)
 		WriteUint64(&buf, 0, &offset)
+		break
 	}
 	return buf[:offset]
 }
