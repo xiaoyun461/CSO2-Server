@@ -17,6 +17,7 @@ func ToConsoleHost(username, password, addr, port string) {
 	fmt.Println("	kick [username]       		  :kick user who called (username)")
 	fmt.Println("	save       			  :save all online user's data to database")
 	fmt.Println("	additem [username] [itemid]       :give user a item")
+	fmt.Println("	removeitem [username] [itemid]    :remove a item for user")
 	fmt.Println("	vip [username]       		  :give user a vip")
 	fmt.Println("	gm [username]       		  :give user a gm")
 	fmt.Println("	exit       			  :quit the console")
@@ -86,6 +87,9 @@ func ToConsoleHost(username, password, addr, port string) {
 			rst := []byte(instream)
 			GMSendPacket(&rst, server)
 		case GMadditem:
+			rst := []byte(instream)
+			GMSendPacket(&rst, server)
+		case GMremoveitem:
 			rst := []byte(instream)
 			GMSendPacket(&rst, server)
 		case GMsave:

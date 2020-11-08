@@ -27,6 +27,10 @@ type (
 	}
 )
 
+var (
+	DefaultInventoryItem = []UserInventoryItem{}
+)
+
 func WriteItem(num uint32, curitem *uint8) []byte {
 	buf := make([]byte, 5)
 	offset := 0
@@ -39,7 +43,7 @@ func WriteItem(num uint32, curitem *uint8) []byte {
 func CreateNewUserInventory() UserInventory {
 	Inv := UserInventory{
 		0,
-		CreateDefaultInventoryItem(),
+		DefaultInventoryItem,
 		1001,
 		1004,
 		0,
@@ -54,23 +58,6 @@ func CreateNewUserInventory() UserInventory {
 	Inv.NumOfItem = uint16(len(Inv.Items))
 	return Inv
 }
-
-func CreateDefaultInventoryItem() []UserInventoryItem {
-	items := []UserInventoryItem{}
-	var i uint32
-	//默认角色
-	for i = 1001; i <= 1004; i++ {
-		items = append(items, UserInventoryItem{i, 1})
-	}
-	//添加默认武器
-	number := []uint32{2, 3, 4, 6, 8, 13, 14, 15, 18, 19, 21, 23, 27, 34, 36, 37, 80, 128, 101, 49009, 49004}
-	for _, v := range number {
-		items = append(items, UserInventoryItem{v, 1})
-	}
-
-	return items
-}
-
 func IsIllegal(num uint32) bool {
 	switch num {
 	case 2:

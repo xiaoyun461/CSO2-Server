@@ -57,6 +57,7 @@ func OnChatTeamMessage(p *InChatPacket, client net.Conn) {
 		}
 		return
 	}
+
 	msg := BuildChatMessage(uPtr, p, ChatIngameTeam)
 	rm.RoomMutex.Lock()
 	defer rm.RoomMutex.Unlock()
