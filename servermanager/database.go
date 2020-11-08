@@ -71,6 +71,7 @@ func GetUserFromDatabase(loginname string, passwd []byte) (*User, int) {
 		}
 	}
 	u := GetNewUser()
+	u.CheckUpdate = 1
 	u.SetID(GetNewUserID())
 	u.SetUserName(loginname, loginname)
 	u.Password = passwd
