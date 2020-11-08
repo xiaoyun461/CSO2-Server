@@ -50,13 +50,13 @@ func OnAchievementCampaign(p *PacketData, client net.Conn) {
 		SendPacket(rst, uPtr.CurrentConnection)
 		DebugInfo(1, "User", uPtr.UserName, "get achievement campaign id", pkt.CampaignId)
 	case Campaign_3:
-		reward := OutAchievementCampaign{0, 0, 0, 0, 0, 0, uint8(len(RewardCapmgaign3)), RewardCapmgaign3, 0}
-		rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeAchievement), BuildAchievementCampaign(0x40, &reward, pkt.CampaignId))
+		reward := OutAchievementCampaign{0, 0, 0, 0, 0, 8000, uint8(len(RewardCapmgaign3)), RewardCapmgaign3, 0}
+		rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeAchievement), BuildAchievementCampaign(0x60, &reward, pkt.CampaignId))
 		SendPacket(rst, uPtr.CurrentConnection)
 		DebugInfo(1, "User", uPtr.UserName, "get achievement campaign id", pkt.CampaignId)
 	case Campaign_4:
-		reward := OutAchievementCampaign{0, 0, 0, 0, 0, 0, uint8(len(RewardCapmgaign4)), RewardCapmgaign4, 0}
-		rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeAchievement), BuildAchievementCampaign(0x40, &reward, pkt.CampaignId))
+		reward := OutAchievementCampaign{0, 0, 0, 0, 0, 10000, uint8(len(RewardCapmgaign4)), RewardCapmgaign4, 0}
+		rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeAchievement), BuildAchievementCampaign(0x60, &reward, pkt.CampaignId))
 		SendPacket(rst, uPtr.CurrentConnection)
 		DebugInfo(1, "User", uPtr.UserName, "get achievement campaign id", pkt.CampaignId)
 	case Campaign_5:
@@ -115,23 +115,23 @@ func BuildAchievementCampaign(flags uint32, src *OutAchievementCampaign, id uint
 }
 
 func InitCampaignReward() {
-	for _, v := range UnlockList {
-		if v.ItemID <= 0 {
-			continue
-		}
-		switch v.Category {
-		case 1:
-			RewardCapmgaign1 = append(RewardCapmgaign1, OutAchievementCampaignItems{v.NextItemID, 0, 0})
-		case 2:
-			RewardCapmgaign2 = append(RewardCapmgaign2, OutAchievementCampaignItems{v.NextItemID, 0, 0})
-		case 4:
-			RewardCapmgaign3 = append(RewardCapmgaign3, OutAchievementCampaignItems{v.NextItemID, 0, 0})
-		case 5:
-			RewardCapmgaign4 = append(RewardCapmgaign4, OutAchievementCampaignItems{v.NextItemID, 0, 0})
-		default:
-			DebugInfo(2, "Error : Unkown unlock item category", v.Category)
-		}
-	}
+	// for _, v := range UnlockList {
+	// 	if v.ItemID <= 0 {
+	// 		continue
+	// 	}
+	// 	switch v.Category {
+	// 	case 1:
+	// 		RewardCapmgaign1 = append(RewardCapmgaign1, OutAchievementCampaignItems{v.NextItemID, 0, 0})
+	// 	case 2:
+	// 		RewardCapmgaign2 = append(RewardCapmgaign2, OutAchievementCampaignItems{v.NextItemID, 0, 0})
+	// 	case 4:
+	// 		RewardCapmgaign3 = append(RewardCapmgaign3, OutAchievementCampaignItems{v.NextItemID, 0, 0})
+	// 	case 5:
+	// 		RewardCapmgaign4 = append(RewardCapmgaign4, OutAchievementCampaignItems{v.NextItemID, 0, 0})
+	// 	default:
+	// 		DebugInfo(2, "Error : Unkown unlock item category", v.Category)
+	// 	}
+	// }
 	for _, v := range BoxIDs {
 		RewardCapmgaign5 = append(RewardCapmgaign5, OutAchievementCampaignItems{v, 1, 0})
 	}

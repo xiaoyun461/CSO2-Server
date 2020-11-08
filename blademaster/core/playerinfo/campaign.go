@@ -5,7 +5,6 @@ import (
 
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/achievement"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/inventory"
-	. "github.com/KouKouChan/CSO2-Server/blademaster/core/message"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/typestruct"
 	. "github.com/KouKouChan/CSO2-Server/kerlong"
 	. "github.com/KouKouChan/CSO2-Server/servermanager"
@@ -41,7 +40,7 @@ func OnSetCampaign(p *PacketData, client net.Conn) {
 			rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeUserInfo), BuildUserInfo(0x1000, NewUserInfo(uPtr), uPtr.Userid, true))
 			SendPacket(rst, uPtr.CurrentConnection)
 			switch pkt.CampaignId {
-			case 1:
+			case Campaign_1:
 				for _, v := range RewardCapmgaign1 {
 					uPtr.AddItem(v.ItemId)
 					rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeInventory_Create),
@@ -51,8 +50,8 @@ func OnSetCampaign(p *PacketData, client net.Conn) {
 				uPtr.GetExp(3000)
 				rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeUserInfo), BuildUserInfo(0XFFFFFFFF, NewUserInfo(uPtr), uPtr.Userid, true))
 				SendPacket(rst, uPtr.CurrentConnection)
-				OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageDialogBox, GAME_USER_NEW_ITEM_RESTART)
-			case 2:
+				//OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageDialogBox, GAME_USER_NEW_ITEM_RESTART)
+			case Campaign_2:
 				for _, v := range RewardCapmgaign2 {
 					uPtr.AddItem(v.ItemId)
 					rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeInventory_Create),
@@ -62,24 +61,30 @@ func OnSetCampaign(p *PacketData, client net.Conn) {
 				uPtr.GetPoints(5000)
 				rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeUserInfo), BuildUserInfo(0XFFFFFFFF, NewUserInfo(uPtr), uPtr.Userid, true))
 				SendPacket(rst, uPtr.CurrentConnection)
-				OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageDialogBox, GAME_USER_NEW_ITEM_RESTART)
-			case 3:
+				//OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageDialogBox, GAME_USER_NEW_ITEM_RESTART)
+			case Campaign_3:
 				for _, v := range RewardCapmgaign3 {
 					uPtr.AddItem(v.ItemId)
 					rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeInventory_Create),
 						BuildInventoryInfoSingle(uPtr, v.ItemId))
 					SendPacket(rst, uPtr.CurrentConnection)
 				}
-				OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageDialogBox, GAME_USER_NEW_ITEM_RESTART)
-			case 4:
+				uPtr.GetExp(8000)
+				rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeUserInfo), BuildUserInfo(0XFFFFFFFF, NewUserInfo(uPtr), uPtr.Userid, true))
+				SendPacket(rst, uPtr.CurrentConnection)
+				//OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageDialogBox, GAME_USER_NEW_ITEM_RESTART)
+			case Campaign_4:
 				for _, v := range RewardCapmgaign4 {
 					uPtr.AddItem(v.ItemId)
 					rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeInventory_Create),
 						BuildInventoryInfoSingle(uPtr, v.ItemId))
 					SendPacket(rst, uPtr.CurrentConnection)
 				}
-				OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageDialogBox, GAME_USER_NEW_ITEM_RESTART)
-			case 5:
+				uPtr.GetExp(10000)
+				rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeUserInfo), BuildUserInfo(0XFFFFFFFF, NewUserInfo(uPtr), uPtr.Userid, true))
+				SendPacket(rst, uPtr.CurrentConnection)
+				//OnSendMessage(uPtr.CurrentSequence, uPtr.CurrentConnection, MessageDialogBox, GAME_USER_NEW_ITEM_RESTART)
+			case Campaign_5:
 				for _, v := range RewardCapmgaign5 {
 					uPtr.AddItem(v.ItemId)
 					rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeInventory_Create),

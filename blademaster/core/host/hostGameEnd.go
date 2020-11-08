@@ -15,6 +15,10 @@ import (
 	. "github.com/KouKouChan/CSO2-Server/verbose"
 )
 
+var (
+	randSeed = 0
+)
+
 func OnHostGameEnd(p *PacketData, client net.Conn) {
 	//找到对应用户
 	uPtr := GetUserFromConnection(client)
@@ -54,16 +58,21 @@ func OnHostGameEnd(p *PacketData, client net.Conn) {
 			rst = BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeHost), BuildHostStop())
 			SendPacket(rst, v.CurrentConnection)
 			//发送游戏战绩
-			if (rm.Setting.GameModeID == ModeZ_scenario || rm.Setting.GameModeID == ModeZ_scenario_side) && rm.WinnerTeam == v.CurrentTeam {
+			if (rm.Setting.GameModeID == ModeZ_scenario || rm.Setting.GameModeID == ModeZ_scenario_side || rm.Setting.GameModeID == ModeHeroes) && rm.WinnerTeam == v.CurrentTeam {
 				boxid := GetRandomBox()
 				v.AddItem(boxid)
-				rst = BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeRoom), header, BuildGameResult(v, boxid, true))
-				SendPacket(rst, v.CurrentConnection)
-				rst := BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeInventory_Create),
+				rst = BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeInventory_Create),
 					BuildInventoryInfoSingle(v, boxid))
 				SendPacket(rst, v.CurrentConnection)
+				boxid2 := GetRandomBox()
+				v.AddItem(boxid2)
+				rst = BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeInventory_Create),
+					BuildInventoryInfoSingle(v, boxid2))
+				SendPacket(rst, v.CurrentConnection)
+				rst = BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeRoom), header, BuildGameResult(v, boxid, boxid2, true))
+				SendPacket(rst, v.CurrentConnection)
 			} else {
-				rst = BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeRoom), header, BuildGameResult(v, 0, false))
+				rst = BytesCombine(BuildHeader(v.CurrentSequence, PacketTypeRoom), header, BuildGameResult(v, 0, 0, false))
 				SendPacket(rst, v.CurrentConnection)
 			}
 			DebugInfo(2, "Sent game result to User", v.UserName)
@@ -91,7 +100,7 @@ func OnHostGameEnd(p *PacketData, client net.Conn) {
 func BuildHostStop() []byte {
 	return []byte{HostStop}
 }
-func BuildGameResult(u *User, boxid uint32, reward bool) []byte {
+func BuildGameResult(u *User, boxid uint32, boxid2 uint32, reward bool) []byte {
 	buf := make([]byte, 128)
 	offset := 0
 	WriteUint64(&buf, u.CurrentExp+LevelExpTotal[u.Level-1], &offset) //now total EXP
@@ -102,13 +111,17 @@ func BuildGameResult(u *User, boxid uint32, reward bool) []byte {
 	//WriteString(&buf, []byte("Good"), &offset)
 	//WriteString(&buf, []byte("Good"), &offset)
 	if reward {
-		WriteUint8(&buf, 1, &offset)      //num of gifts
-		WriteUint32(&buf, boxid, &offset) //item id
-		WriteUint16(&buf, 1, &offset)     //item count
-		WriteUint64(&buf, 0, &offset)     //unk22
-		WriteUint16(&buf, 0, &offset)     //unk23 ，maybe 2 bytes
-		WriteUint8(&buf, 0, &offset)      //unk24
-		WriteUint16(&buf, 0, &offset)     //unk25 ，maybe 2 bytes
+		WriteUint8(&buf, 2, &offset)       //num of gifts
+		WriteUint32(&buf, boxid, &offset)  //item id
+		WriteUint16(&buf, 1, &offset)      //item count
+		WriteUint64(&buf, 0, &offset)      //unk22
+		WriteUint16(&buf, 0, &offset)      //unk23 ，maybe 2 bytes
+		WriteUint32(&buf, boxid2, &offset) //item id
+		WriteUint16(&buf, 1, &offset)      //item count
+		WriteUint64(&buf, 0, &offset)      //unk22
+		WriteUint16(&buf, 0, &offset)      //unk23 ，maybe 2 bytes
+		WriteUint8(&buf, 0, &offset)       //unk24
+		WriteUint16(&buf, 0, &offset)      //unk25 ，maybe 2 bytes
 	} else {
 		WriteUint32(&buf, 0, &offset)
 	}
@@ -186,8 +199,15 @@ func BuildGameResultHeader(rm *Room) []byte {
 			WriteUint8(&temp, uint8(v.Level), &offset) //current level ?
 
 			v.GetExp(gainexp)
+
 			v.GetPoints(points)
-			v.GetKills(uint32(v.CurrentKillNum))
+			if rm.Setting.GameModeID != ModeZ_scenario &&
+				rm.Setting.GameModeID != ModeZ_scenario_side &&
+				rm.Setting.GameModeID != ModeHeroes {
+
+				v.GetKills(uint32(v.CurrentKillNum))
+
+			}
 			v.GetDeathes(uint32(v.CurrentDeathNum))
 			v.GetAssists(uint32(v.CurrentAssistNum))
 			if v.CurrentTeam == rm.WinnerTeam {
@@ -243,6 +263,11 @@ func GetGainPoints(u *User, bot uint8) uint64 {
 }
 
 func GetRandomBox() uint32 {
-	rand.Seed(time.Now().UnixNano())
-	return BoxIDs[rand.Intn(len(BoxIDs))]
+	rand.Seed(int64(randSeed) + time.Now().UnixNano())
+	idx := rand.Intn(len(BoxIDs))
+	randSeed++
+	if randSeed > 10000 {
+		randSeed = 0
+	}
+	return BoxIDs[idx]
 }

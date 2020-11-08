@@ -28,10 +28,10 @@ func OnSupplyOpenBox(p *PacketData, client net.Conn) {
 		return
 	}
 	//发送数据
-	idx, count := uPtr.DecreaseItem(pkt.BoxID)
+	uPtr.DecreaseItem(pkt.BoxID)
 
 	rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeInventory_Create),
-		BuildInventoryItemUsed(uPtr, pkt.BoxID, idx, count))
+		BuildInventoryInfoSingle(uPtr, pkt.BoxID))
 	SendPacket(rst, uPtr.CurrentConnection)
 
 	itemid := GetBoxItem(pkt.BoxID)
@@ -45,7 +45,7 @@ func OnSupplyOpenBox(p *PacketData, client net.Conn) {
 		BuildInventoryInfoSingle(uPtr, itemid))
 	SendPacket(rst, uPtr.CurrentConnection)
 
-	DebugInfo(2, "User", uPtr.UserName, "got item", ItemList[itemid].Name, "id", itemid, "by openning box")
+	DebugInfo(2, "User", uPtr.UserName, "got item", ItemList[itemid].Name, "id", itemid, "by openning box", BoxList[pkt.BoxID].BoxName)
 
 }
 

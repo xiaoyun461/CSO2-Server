@@ -6,6 +6,8 @@ import (
 	"io"
 	"os"
 	"strconv"
+
+	. "github.com/KouKouChan/CSO2-Server/blademaster/typestruct"
 )
 
 const (
@@ -38,13 +40,15 @@ type UnlockData struct {
 
 type BoxData struct {
 	BoxID      uint32
+	BoxName    string
 	Items      []BoxItem
 	TotalValue int
 }
 
 type BoxItem struct {
-	ItemID uint32
-	Value  int
+	ItemID   uint32
+	ItemName string
+	Value    int
 }
 
 var (
@@ -198,11 +202,13 @@ func readBoxList(path string) {
 			if err != nil {
 				continue
 			}
-			itemid, err := strconv.Atoi(record[1])
+			boxname := record[1]
+			itemid, err := strconv.Atoi(record[2])
 			if err != nil {
 				continue
 			}
-			value, err := strconv.Atoi(record[2])
+			itemname := record[3]
+			value, err := strconv.Atoi(record[4])
 			if err != nil {
 				continue
 			}
@@ -213,6 +219,7 @@ func readBoxList(path string) {
 			}
 			item := BoxItem{
 				uint32(itemid),
+				itemname,
 				value,
 			}
 			if v, ok := BoxList[uint32(boxid)]; ok {
@@ -223,6 +230,7 @@ func readBoxList(path string) {
 			} else {
 				BoxList[uint32(boxid)] = BoxData{
 					uint32(boxid),
+					boxname,
 					[]BoxItem{item},
 					value,
 				}
@@ -232,4 +240,33 @@ func readBoxList(path string) {
 			continue
 		}
 	}
+}
+
+func InitDefaultInventoryItem() []UserInventoryItem {
+	items := []UserInventoryItem{}
+	var i uint32
+	//默认角色
+	for i = 1001; i <= 1004; i++ {
+		items = append(items, UserInventoryItem{i, 1})
+	}
+	//添加默认武器
+	number := []uint32{2, 3, 4, 6, 8, 13, 14, 15, 18, 19, 21, 23, 27, 34, 36, 37, 80, 128, 101, 49009, 49004}
+	for _, v := range number {
+		items = append(items, UserInventoryItem{v, 1})
+	}
+	for _, v := range UnlockList {
+		if IsIllegal(v.NextItemID) {
+			continue
+		}
+		items = append(items, UserInventoryItem{v.NextItemID, 1})
+	}
+	//僵尸技能
+	items = append(items, UserInventoryItem{2019, 1})
+	items = append(items, UserInventoryItem{3, 1})
+	items = append(items, UserInventoryItem{2020, 1})
+	items = append(items, UserInventoryItem{50, 1})
+	for i = 2021; i <= 2023; i++ {
+		items = append(items, UserInventoryItem{i, 1})
+	}
+	return items
 }

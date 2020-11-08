@@ -685,11 +685,10 @@ func (u *User) DecreaseItem(itemid uint32) (int, uint16) {
 	for k, v := range u.Inventory.Items {
 		if v.Id == itemid {
 			u.Inventory.Items[k].Count--
-			count := u.Inventory.Items[k].Count
-			if u.Inventory.Items[k].Count <= 0 {
-				u.Inventory.Items = append(u.Inventory.Items[:k], u.Inventory.Items[k+1:]...)
-				u.Inventory.NumOfItem = uint16(len(u.Inventory.Items))
+			if u.Inventory.Items[k].Count < 0 {
+				u.Inventory.Items[k].Count = 0
 			}
+			count := u.Inventory.Items[k].Count
 			return k, count
 		}
 	}
@@ -704,8 +703,9 @@ func (u *User) RemoveItem(itemid uint32) {
 	defer u.UserMutex.Unlock()
 	for k, v := range u.Inventory.Items {
 		if v.Id == itemid {
-			u.Inventory.Items = append(u.Inventory.Items[:k], u.Inventory.Items[k+1:]...)
-			u.Inventory.NumOfItem = uint16(len(u.Inventory.Items))
+			// u.Inventory.Items = append(u.Inventory.Items[:k], u.Inventory.Items[k+1:]...)
+			// u.Inventory.NumOfItem = uint16(len(u.Inventory.Items))
+			u.Inventory.Items[k].Count = 0
 			return
 		}
 	}

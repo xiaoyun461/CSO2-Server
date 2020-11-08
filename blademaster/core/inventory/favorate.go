@@ -16,7 +16,7 @@ const (
 )
 
 var (
-	DeafaultInventoryItem = BuildDefaultInventoryInfo()
+	DeafaultInventoryInfo = BuildDefaultInventoryInfo()
 )
 
 func OnFavorite(p *PacketData, client net.Conn) {
