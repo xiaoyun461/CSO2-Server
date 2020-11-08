@@ -36,25 +36,32 @@ type CSO2Conf struct {
 }
 
 type CSO2Locales struct {
-	GAME_ROOM_LEAVE_EARLY      string
-	GAME_SERVER_ERROR          string
-	GAME_LOGIN_ALREADY         string
-	GAME_LOGIN_ERROR           string
-	GAME_ROOM_COUNT_MODE_ERROR string
-	GAME_ROOM_JOIN_ERROR       string
-	MAIL_EMPTY                 string
-	MAIL_ERROR                 string
-	MAIL_SENT                  string
-	USERNAME_EMPTY             string
-	USERNAME_EXISTS            string
-	GAMENAME_EMPTY             string
-	GAMENAME_EXISTS            string
-	PASSWORD_EMPTY             string
-	CODE_EMPTY                 string
-	CODE_WRONG                 string
-	NAME_ERROR                 string
-	DATABASE_ERROR             string
-	REGISTER_SUCCESS           string
+	GAME_ROOM_LEAVE_EARLY       string
+	GAME_SERVER_ERROR           string
+	GAME_LOGIN_ALREADY          string
+	GAME_LOGIN_ERROR            string
+	GAME_ROOM_COUNT_MODE_ERROR  string
+	GAME_ROOM_JOIN_ERROR        string
+	GAME_GM_ADD_ALLWEAPONS      string
+	GAME_CHANNEL_MESSAGE_NOT_IN string
+	GAME_GM_NO_AUTHORIZE        string
+	GAME_USER_NEW_ITEM          string
+	GAME_USER_NEW_ITEM_RESTART  string
+	GAME_CHANNEL_MESSAGE        string
+
+	MAIL_EMPTY       string
+	MAIL_ERROR       string
+	MAIL_SENT        string
+	USERNAME_EMPTY   string
+	USERNAME_EXISTS  string
+	GAMENAME_EMPTY   string
+	GAMENAME_EXISTS  string
+	PASSWORD_EMPTY   string
+	CODE_EMPTY       string
+	CODE_WRONG       string
+	NAME_ERROR       string
+	DATABASE_ERROR   string
+	REGISTER_SUCCESS string
 
 	MOTD []byte
 }
@@ -157,6 +164,13 @@ func (locales *CSO2Locales) InitLocales(path string) bool {
 	locales.GAME_LOGIN_ERROR = ini_parser.IniGetString("System", "GAME_LOGIN_ERROR")
 	locales.GAME_ROOM_COUNT_MODE_ERROR = ini_parser.IniGetString("System", "GAME_ROOM_COUNT_MODE_ERROR")
 	locales.GAME_ROOM_JOIN_ERROR = ini_parser.IniGetString("System", "GAME_ROOM_JOIN_ERROR")
+	locales.GAME_GM_ADD_ALLWEAPONS = ini_parser.IniGetString("System", "GAME_GM_ADD_ALLWEAPONS")
+	locales.GAME_CHANNEL_MESSAGE_NOT_IN = ini_parser.IniGetString("System", "GAME_CHANNEL_MESSAGE_NOT_IN")
+	locales.GAME_GM_NO_AUTHORIZE = ini_parser.IniGetString("System", "GAME_GM_NO_AUTHORIZE")
+	locales.GAME_USER_NEW_ITEM = ini_parser.IniGetString("System", "GAME_USER_NEW_ITEM")
+	locales.GAME_USER_NEW_ITEM_RESTART = ini_parser.IniGetString("System", "GAME_USER_NEW_ITEM_RESTART")
+	locales.GAME_CHANNEL_MESSAGE = ini_parser.IniGetString("System", "GAME_CHANNEL_MESSAGE")
+
 	locales.MAIL_EMPTY = ini_parser.IniGetString("Register", "MAIL_EMPTY")
 	locales.MAIL_ERROR = ini_parser.IniGetString("Register", "MAIL_ERROR")
 	locales.USERNAME_EMPTY = ini_parser.IniGetString("Register", "USERNAME_EMPTY")
@@ -196,6 +210,12 @@ func SetLocales() {
 	GAME_LOGIN_ERROR = []byte(Locales.GAME_LOGIN_ERROR)
 	GAME_ROOM_COUNT_MODE_ERROR = []byte(Locales.GAME_ROOM_COUNT_MODE_ERROR)
 	GAME_ROOM_JOIN_ERROR = []byte(Locales.GAME_ROOM_JOIN_ERROR)
+	GAME_GM_ADD_ALLWEAPONS = []byte(Locales.GAME_GM_ADD_ALLWEAPONS)
+	GAME_CHANNEL_MESSAGE_NOT_IN = []byte(Locales.GAME_CHANNEL_MESSAGE_NOT_IN)
+	GAME_GM_NO_AUTHORIZE = []byte(Locales.GAME_GM_NO_AUTHORIZE)
+	GAME_USER_NEW_ITEM = []byte(Locales.GAME_USER_NEW_ITEM)
+	GAME_USER_NEW_ITEM_RESTART = []byte(Locales.GAME_USER_NEW_ITEM_RESTART)
+	GAME_CHANNEL_MESSAGE = Locales.GAME_CHANNEL_MESSAGE
 
 	MAIL_EMPTY = Locales.MAIL_EMPTY
 	MAIL_ERROR = Locales.MAIL_ERROR

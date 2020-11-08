@@ -59,6 +59,7 @@ func OnChangingTeam(p *PacketData, client net.Conn) {
 		// 	}
 		// }
 	}
+	DebugInfo(2, "Host changed User", destUser.UserName, "to team", pkt.NewTeam)
 }
 func BuildChangingTeam(id uint32, team uint8) []byte {
 	buf := make([]byte, 7)

@@ -149,6 +149,9 @@ func main() {
 	InitCSV(path)
 	FullInventoryItem = CreateFullInventoryItem()
 	FullInventoryReply = BuildFullInventoryInfo()
+	DefaultInventoryItem = InitDefaultInventoryItem()
+	InitBoxReply()
+	InitCampaignReward()
 
 	//read locales
 	Locales.InitMotd(path)
@@ -411,3 +414,18 @@ func checkFolder(path string) {
 		}
 	}
 }
+
+// func generate(path string) {
+// 	file := path + "\\supplyList.csv"
+// 	f, _ := os.Create(file)
+// 	defer f.Close()
+// 	f.WriteString(fmt.Sprintf("boxid,boxname,itemid,itemname,value\n"))
+// 	for _, v := range BoxList {
+// 		for _, item := range v.Items {
+// 			if len(ItemList[item.ItemID].Name) <= 0 {
+// 				continue
+// 			}
+// 			f.WriteString(fmt.Sprintf("%d,%s,%d,%s,%d\n", v.BoxID, v.BoxName, item.ItemID, ItemList[item.ItemID].Name, item.Value))
+// 		}
+// 	}
+// }

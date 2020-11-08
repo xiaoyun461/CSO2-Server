@@ -58,6 +58,10 @@ type (
 	InSupplyPacket struct {
 		Type uint8
 	}
+	InOpenBoxPacket struct {
+		BoxID uint32
+		Unk00 uint32
+	}
 	//InRoomListRequestPacket 房间列表请求，用于请求频道
 	InRoomListRequestPacket struct {
 		ChannelServerIndex uint8
@@ -436,6 +440,7 @@ const (
 	PacketTypeGZ               = 95
 	PacketTypeAchievement      = 96
 	PacketTypeSupply           = 102
+	PacketTypeDisassemble      = 104
 	PacketTypeConfigInfo       = 106
 	PacketTypeLobby            = 107
 	PacketTypeUserStart        = 150
@@ -549,6 +554,16 @@ func (p *PacketData) PraseSupplyPacket(dest *InSupplyPacket) bool {
 	return true
 }
 
+func (p *PacketData) PraseOpenBoxPacket(dest *InOpenBoxPacket) bool {
+	// id + type + box + unk = 10 bytes
+	if p.Length < 10 ||
+		dest == nil {
+		return false
+	}
+	dest.BoxID = ReadUint32(p.Data, &p.CurOffset)
+	dest.Unk00 = ReadUint32(p.Data, &p.CurOffset)
+	return true
+}
 func (p *PacketData) PraseFavoriteSetCosmeticsPacket(dest *InFavoriteSetCosmetics) bool {
 	// id + type + slot + itemId = 7 bytes
 	if p.Length < 7 {

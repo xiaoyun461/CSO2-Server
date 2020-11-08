@@ -16,11 +16,41 @@ func BuildInventoryInfo(u *User) []byte {
 		return FullInventoryReply
 	}
 	buf := make([]byte, 5+u.Inventory.NumOfItem*19)
-	offset := 0
-	WriteUint16(&buf, u.Inventory.NumOfItem, &offset)
+	offset, offset_front := 2, 0
+	num := 0
+	//WriteUint16(&buf, u.Inventory.NumOfItem, &offset)
 	for k, v := range u.Inventory.Items {
+		if v.Count <= 0 {
+			continue
+		}
 		WriteUint16(&buf, uint16(k), &offset)
 		WriteUint8(&buf, 1, &offset)
+		WriteUint32(&buf, v.Id, &offset)
+		WriteUint16(&buf, v.Count, &offset)
+		WriteUint8(&buf, 1, &offset)
+		WriteUint8(&buf, 0, &offset)
+		WriteUint64(&buf, 0, &offset)
+
+		num++
+	}
+	WriteUint16(&buf, uint16(num), &offset_front)
+	return buf[:offset]
+}
+
+func BuildInventoryInfoSingle(u *User, itemid uint32) []byte {
+	buf := make([]byte, 25)
+	offset := 0
+	WriteUint16(&buf, 1, &offset)
+	for k, v := range u.Inventory.Items {
+		if v.Id != itemid {
+			continue
+		}
+		WriteUint16(&buf, uint16(k), &offset)
+		if v.Count <= 0 {
+			WriteUint8(&buf, 0, &offset) //existed
+		} else {
+			WriteUint8(&buf, 1, &offset)
+		}
 		WriteUint32(&buf, v.Id, &offset)
 		WriteUint16(&buf, v.Count, &offset)
 		WriteUint8(&buf, 1, &offset)
@@ -29,6 +59,24 @@ func BuildInventoryInfo(u *User) []byte {
 	}
 	return buf[:offset]
 }
+
+// func BuildInventoryItemUsed(u *User, itemid uint32, idx int, count uint16) []byte {
+// 	buf := make([]byte, 25)
+// 	offset := 0
+// 	WriteUint16(&buf, 1, &offset)
+// 	WriteUint16(&buf, uint16(idx), &offset)
+// 	if count <= 0 {
+// 		WriteUint8(&buf, 0, &offset) //existed
+// 	} else {
+// 		WriteUint8(&buf, 1, &offset)
+// 	}
+// 	WriteUint32(&buf, itemid, &offset)
+// 	WriteUint16(&buf, count, &offset)
+// 	WriteUint8(&buf, 1, &offset)
+// 	WriteUint8(&buf, 0, &offset)
+// 	WriteUint64(&buf, 0, &offset)
+// 	return buf[:offset]
+// }
 
 func BuildFullInventoryInfo() []byte {
 	buf := make([]byte, 5+uint16(len(FullInventoryItem))*19)
@@ -47,11 +95,10 @@ func BuildFullInventoryInfo() []byte {
 }
 
 func BuildDefaultInventoryInfo() []byte {
-	DeafaultInventoryItem := CreateDefaultInventoryItem()
-	buf := make([]byte, 5+len(DeafaultInventoryItem)*19)
+	buf := make([]byte, 5+len(DefaultInventoryItem)*19)
 	offset := 0
 	WriteUint16(&buf, 25, &offset)
-	for k, v := range DeafaultInventoryItem {
+	for k, v := range DefaultInventoryItem {
 		WriteUint16(&buf, uint16(k), &offset)
 		WriteUint8(&buf, 1, &offset)
 		WriteUint32(&buf, v.Id, &offset)
@@ -238,7 +285,7 @@ func CreateFullInventoryItem() []UserInventoryItem {
 	// }
 	var i uint32
 	//用户角色
-	for i = 1001; i <= 1060; i++ {
+	for i = 1001; i <= 1058; i++ {
 		items = append(items, UserInventoryItem{i, 1})
 	}
 	//添加默认武器
