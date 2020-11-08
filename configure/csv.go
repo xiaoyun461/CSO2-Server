@@ -222,6 +222,7 @@ func readBoxList(path string) {
 				itemname,
 				value,
 			}
+
 			if v, ok := BoxList[uint32(boxid)]; ok {
 				//如果该box数据已经存在
 				v.Items = append(v.Items, item)
