@@ -72,6 +72,17 @@ func OnLogin(seq *uint8, dataPacket *PacketData, client net.Conn) {
 	default:
 	}
 
+	//检查升级
+	if u.CheckUpdate != 1 {
+		DebugInfo(2, "Updating User", nu, "data ...")
+		//当前版本升级
+		for _, v := range DefaultInventoryItem {
+			u.AddItemSingle(v.Id)
+		}
+		u.Updated()
+		DebugInfo(2, "Updating User", nu, "data done !")
+	}
+	//设置数据
 	ClearCount(clientStr)
 	u.CurrentConnection = client
 	u.CurrentSequence = seq

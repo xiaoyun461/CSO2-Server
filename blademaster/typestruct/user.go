@@ -11,6 +11,7 @@ import (
 type (
 	User struct {
 		//个人信息
+		CheckUpdate          int
 		Userid               uint32 `json:"-"`
 		NexonID              uint64
 		UserName             string
@@ -425,6 +426,7 @@ func GetNewUser() User {
 	var mutex sync.Mutex
 	return User{
 		0,
+		0,
 		0,               //nexonid
 		"",              //loginname
 		"",              //username,looks can change it to another name
@@ -674,6 +676,34 @@ func (u *User) AddItem(itemid uint32) {
 	if u.Inventory.NumOfItem < math.MaxUint16 {
 		u.Inventory.NumOfItem++
 	}
+}
+
+func (u *User) AddItemSingle(itemid uint32) {
+	if u == nil {
+		return
+	}
+	u.UserMutex.Lock()
+	defer u.UserMutex.Unlock()
+	//检查是否已经拥有
+	for _, v := range u.Inventory.Items {
+		if v.Id == itemid {
+			return
+		}
+	}
+	//添加
+	u.Inventory.Items = append(u.Inventory.Items, UserInventoryItem{itemid, 1})
+	if u.Inventory.NumOfItem < math.MaxUint16 {
+		u.Inventory.NumOfItem++
+	}
+}
+
+func (u *User) Updated() {
+	if u == nil {
+		return
+	}
+	u.UserMutex.Lock()
+	defer u.UserMutex.Unlock()
+	u.CheckUpdate = 1
 }
 
 func (u *User) DecreaseItem(itemid uint32) (int, uint16) {
