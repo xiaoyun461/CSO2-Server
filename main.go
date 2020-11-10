@@ -23,6 +23,7 @@ import (
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/message"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/option"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/playerinfo"
+	. "github.com/KouKouChan/CSO2-Server/blademaster/core/pointlotto"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/quick"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/report"
 	. "github.com/KouKouChan/CSO2-Server/blademaster/core/room"
@@ -365,6 +366,8 @@ func RecvMessage(client net.Conn) {
 			OnMail(&dataPacket, client)
 		case PacketTypeSupply:
 			OnSupplyRequest(&dataPacket, client)
+		case PacketTypePointLotto:
+			OnPointLotto(&dataPacket, client)
 		default:
 			DebugInfo(2, "Unknown packet", dataPacket.Id, "from", client.RemoteAddr().String())
 			//DebugInfo(2, "Unknown packet", dataPacket.Id, "from", client.RemoteAddr().String(), dataPacket.Data)

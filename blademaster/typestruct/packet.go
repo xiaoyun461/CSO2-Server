@@ -58,9 +58,15 @@ type (
 	InSupplyPacket struct {
 		Type uint8
 	}
+	InPointLottoPacket struct {
+		Type uint8
+	}
 	InOpenBoxPacket struct {
 		BoxID uint32
 		Unk00 uint32
+	}
+	InPointLottoUsePacket struct {
+		ItemID uint32
 	}
 	//InRoomListRequestPacket 房间列表请求，用于请求频道
 	InRoomListRequestPacket struct {
@@ -429,6 +435,7 @@ const (
 	PacketTypeBan              = 74
 	PacketTypeOption           = 76
 	PacketTypeFavorite         = 77
+	PacketTypePointLotto       = 78
 	PacketTypeQuickJoin        = 80
 	PacketTypeReport           = 83
 	PacketTypeSignature        = 85
@@ -554,6 +561,16 @@ func (p *PacketData) PraseSupplyPacket(dest *InSupplyPacket) bool {
 	return true
 }
 
+func (p *PacketData) PrasePointLottoPacket(dest *InPointLottoPacket) bool {
+	// id + type = 2 bytes
+	if p.Length < 2 ||
+		dest == nil {
+		return false
+	}
+	dest.Type = ReadUint8(p.Data, &p.CurOffset)
+	return true
+}
+
 func (p *PacketData) PraseOpenBoxPacket(dest *InOpenBoxPacket) bool {
 	// id + type + box + unk = 10 bytes
 	if p.Length < 10 ||
@@ -564,6 +581,17 @@ func (p *PacketData) PraseOpenBoxPacket(dest *InOpenBoxPacket) bool {
 	dest.Unk00 = ReadUint32(p.Data, &p.CurOffset)
 	return true
 }
+
+func (p *PacketData) PrasePointLottoUsePacket(dest *InPointLottoUsePacket) bool {
+	// id + type + box + unk = 6 bytes
+	if p.Length < 6 ||
+		dest == nil {
+		return false
+	}
+	dest.ItemID = ReadUint32(p.Data, &p.CurOffset)
+	return true
+}
+
 func (p *PacketData) PraseFavoriteSetCosmeticsPacket(dest *InFavoriteSetCosmetics) bool {
 	// id + type + slot + itemId = 7 bytes
 	if p.Length < 7 {
