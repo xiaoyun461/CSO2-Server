@@ -725,6 +725,18 @@ func (u *User) DecreaseItem(itemid uint32) (int, uint16) {
 	return 0, 0
 }
 
+func (u *User) GetItemIDBySeq(seq uint16) uint32 {
+	if u == nil {
+		return 0
+	}
+	u.UserMutex.Lock()
+	defer u.UserMutex.Unlock()
+	if len(u.Inventory.Items) < int(seq)+1 {
+		return 0
+	}
+	return u.Inventory.Items[seq].Id
+}
+
 func (u *User) RemoveItem(itemid uint32) {
 	if u == nil {
 		return
