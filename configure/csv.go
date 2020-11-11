@@ -35,6 +35,10 @@ type UnlockData struct {
 	Count1         uint32
 	ConditionFlag2 uint32
 	Count2         uint32
+	ConditionFlag3 uint32
+	Count3         uint32
+	ConditionFlag4 uint32
+	Count4         uint32
 	Category       uint32
 }
 
@@ -131,31 +135,47 @@ func readUnlockList(path string) {
 			if err != nil {
 				continue
 			}
-			flag0, err := strconv.Atoi(record[5])
+			flag0, err := strconv.Atoi(record[2])
 			if err != nil {
 				continue
 			}
-			count0, err := strconv.Atoi(record[6])
+			count0, err := strconv.Atoi(record[3])
 			if err != nil {
 				continue
 			}
-			flag1, err := strconv.Atoi(record[11])
+			flag1, err := strconv.Atoi(record[4])
 			if err != nil {
 				continue
 			}
-			count1, err := strconv.Atoi(record[12])
+			count1, err := strconv.Atoi(record[5])
 			if err != nil {
 				continue
 			}
-			flag2, err := strconv.Atoi(record[17])
+			flag2, err := strconv.Atoi(record[6])
 			if err != nil {
 				continue
 			}
-			count2, err := strconv.Atoi(record[18])
+			count2, err := strconv.Atoi(record[7])
 			if err != nil {
 				continue
 			}
-			cat, err := strconv.Atoi(record[31])
+			flag3, err := strconv.Atoi(record[8])
+			if err != nil {
+				continue
+			}
+			count3, err := strconv.Atoi(record[9])
+			if err != nil {
+				continue
+			}
+			flag4, err := strconv.Atoi(record[10])
+			if err != nil {
+				continue
+			}
+			count4, err := strconv.Atoi(record[11])
+			if err != nil {
+				continue
+			}
+			cat, err := strconv.Atoi(record[12])
 			if err != nil {
 				continue
 			}
@@ -168,6 +188,10 @@ func readUnlockList(path string) {
 				uint32(count1),
 				uint32(flag2),
 				uint32(count2),
+				uint32(flag3),
+				uint32(count3),
+				uint32(flag4),
+				uint32(count4),
 				uint32(cat),
 			}
 
