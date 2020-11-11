@@ -66,7 +66,9 @@ type (
 		Unk00 uint32
 	}
 	InPointLottoUsePacket struct {
-		ItemID uint32
+		unk00   uint8
+		ItemSeq uint16
+		unk01   uint8
 	}
 	//InRoomListRequestPacket 房间列表请求，用于请求频道
 	InRoomListRequestPacket struct {
@@ -588,7 +590,9 @@ func (p *PacketData) PrasePointLottoUsePacket(dest *InPointLottoUsePacket) bool 
 		dest == nil {
 		return false
 	}
-	dest.ItemID = ReadUint32(p.Data, &p.CurOffset)
+	dest.unk00 = ReadUint8(p.Data, &p.CurOffset)
+	dest.ItemSeq = ReadUint16(p.Data, &p.CurOffset)
+	dest.unk01 = ReadUint8(p.Data, &p.CurOffset)
 	return true
 }
 

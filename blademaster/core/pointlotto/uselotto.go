@@ -36,27 +36,51 @@ func OnPointLottoUse(p *PacketData, client net.Conn) {
 		return
 	}
 	//发送数据
-	uPtr.DecreaseItem(pkt.ItemID)
+	lottoID := uPtr.GetItemIDBySeq(pkt.ItemSeq)
+	switch lottoID {
+	case 2008: //银币 id 2008
+	case 2013: //铜币
+	case 2014: //金币
+	default:
+		DebugInfo(2, "User", uPtr.UserName, "try using pointlotto but itemid is", lottoID)
+		return
+	}
+	uPtr.DecreaseItem(lottoID)
 
 	rst := BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeInventory_Create),
-		BuildInventoryInfoSingle(uPtr, pkt.ItemID))
+		BuildInventoryInfoSingle(uPtr, lottoID))
 	SendPacket(rst, uPtr.CurrentConnection)
 
-	point := UsePointLotto(pkt.ItemID)
+	point := UsePointLotto(lottoID)
 	uPtr.GetPoints(point)
+
+	rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypePointLotto),
+		buildUsePoint(uint32(point)))
+	SendPacket(rst, uPtr.CurrentConnection)
 
 	//UserInfo部分
 	rst = BytesCombine(BuildHeader(uPtr.CurrentSequence, PacketTypeUserInfo), BuildUserInfo(0XFFFFFFFF, NewUserInfo(uPtr), uPtr.Userid, true))
 	SendPacket(rst, uPtr.CurrentConnection)
 
-	DebugInfo(2, "User", uPtr.UserName, "got point", point, "by using pointlotto", pkt.ItemID)
+	DebugInfo(2, "User", uPtr.UserName, "got point", point, "by using pointlotto", lottoID)
 
+}
+
+func buildUsePoint(point uint32) []byte {
+	buf := make([]byte, 25)
+	offset := 0
+	WriteUint8(&buf, usepoint, &offset)
+	WriteUint8(&buf, 5, &offset)
+	WriteUint8(&buf, 1, &offset)      //unk00
+	WriteUint32(&buf, 0, &offset)     //unk01
+	WriteUint32(&buf, point, &offset) //mpoint
+	return buf[:offset]
 }
 
 func UsePointLotto(itemid uint32) uint64 {
 	rand.Seed(time.Now().UnixNano())
 	switch itemid {
-	case 2008: //银币
+	case 2008: //银币 id 2008
 		return uint64(lotto_base + rand.Intn(lotto_max))
 	case 2013: //铜币
 		return uint64(lotto_event_base + rand.Intn(lotto_event_max))
