@@ -57,30 +57,36 @@ func Utf8ToGbk(str []byte) (b []byte, err error) {
 
 func Utf8ToLocal(str string) (b string, err error) {
 	converterLock.Lock()
-	cv, err := iconv.Open("utf-8", localEncode)
+	cv, err := iconv.Open(localEncode, "utf-8")
 	if err != nil {
 		log.Println("locale converter failed ! code:1")
 		cv.Close()
 		converterLock.Unlock()
-		return b, err
+		return str, err
 	}
 	buf := cv.ConvString(str)
 	cv.Close()
 	converterLock.Unlock()
+	if len(buf) <= 0 {
+		return str, nil
+	}
 	return buf, nil
 }
 
 func LocalToUtf8(str string) (b string, err error) {
 	converterLock.Lock()
-	cv, err := iconv.Open(localEncode, "utf-8")
+	cv, err := iconv.Open("utf-8", localEncode)
 	if err != nil {
 		log.Println("locale converter failed ! code:2")
 		cv.Close()
 		converterLock.Unlock()
-		return b, err
+		return str, err
 	}
 	buf := cv.ConvString(str)
 	cv.Close()
 	converterLock.Unlock()
+	if len(buf) <= 0 {
+		return str, nil
+	}
 	return buf, nil
 }

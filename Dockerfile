@@ -1,5 +1,5 @@
 #镜像
-FROM golang:1.15.3-alpine AS builder
+FROM golang:1.14.2-alpine AS builder
 RUN apk add build-base
 #安全考虑
 #RUN adduser -u 10001 -D app-runner
@@ -15,7 +15,7 @@ RUN go mod download
 #复制项目文件
 COPY . .
 #构建项目
-RUN GOOS=linux GOARCH=amd64 go build -o CSO2-Server-docker .
+RUN go build -o CSO2-Server-docker .
 #设置工作目录
 WORKDIR $GOPATH/src/github.com/KouKouChan/
 #切换可执行文件位置

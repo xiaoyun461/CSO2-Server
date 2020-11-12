@@ -108,7 +108,7 @@ func BuildUserInfo(flags uint32, info UserInfo, id uint32, needID bool) []byte {
 		WriteUint64(&infobuf, info.NexonID, &offset)
 	}
 	if flags&0x2 != 0 {
-		ansiName, _ := Utf8ToLocal(string(info.userName))
+		ansiName, _ := Utf8ToLocal(info.userName)
 		WriteString(&infobuf, []byte(ansiName), &offset)
 	}
 	if flags&0x4 != 0 {
