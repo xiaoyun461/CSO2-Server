@@ -16,7 +16,6 @@ type CSO2Conf struct {
 	MaxUsers         uint32
 	EnableShop       uint32
 	UnlockAllWeapons uint32
-	UnlockAllSkills  uint32
 	RedisIP          string
 	RedisPort        uint32
 	DebugLevel       uint32
@@ -100,7 +99,6 @@ func (conf *CSO2Conf) InitConf(path string) {
 		conf.MaxUsers = 0
 		conf.EnableShop = 0
 		conf.UnlockAllWeapons = 1
-		conf.UnlockAllSkills = 1
 		conf.PORT = 30001
 		conf.HolePunchPort = 30002
 		conf.RedisIP = "127.0.0.1"
@@ -122,7 +120,6 @@ func (conf *CSO2Conf) InitConf(path string) {
 	}
 	conf.EnableShop = ini_parser.IniGetUint32("Server", "EnableShop")
 	conf.UnlockAllWeapons = ini_parser.IniGetUint32("Server", "UnlockAllWeapons")
-	conf.UnlockAllSkills = ini_parser.IniGetUint32("Server", "UnlockAllSkills")
 	conf.PORT = ini_parser.IniGetUint32("Server", "TCPPort")
 	conf.HolePunchPort = ini_parser.IniGetUint32("Server", "UDPPort")
 	conf.RedisIP = ini_parser.IniGetString("Server", "RedisIP")

@@ -64,7 +64,7 @@ func ReadHead(client net.Conn) ([]byte, bool) {
 		if n >= 1 && SeqBuf[0] == PacketTypeSignature {
 			break
 		}
-		DebugInfo(2, "Recived a illegal head sig from", client.RemoteAddr().String())
+		DebugInfo(2, "Recived a illegal head sig", SeqBuf[0], "from", client.RemoteAddr().String())
 	}
 	for {
 		//DebugInfo(2, "Prepare head", client.RemoteAddr().String())
