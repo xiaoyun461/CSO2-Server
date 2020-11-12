@@ -2,8 +2,9 @@ package encode
 
 import (
 	"bytes"
-	"fmt"
 	"io/ioutil"
+	"log"
+	"sync"
 
 	iconv "github.com/qiniu/iconv"
 	"golang.org/x/text/encoding/simplifiedchinese"
@@ -11,23 +12,26 @@ import (
 )
 
 var (
-	CVtolocal iconv.Iconv
-	CVtoutf8  iconv.Iconv
+	CVtolocal     iconv.Iconv
+	CVtoutf8      iconv.Iconv
+	localEncode   string
+	converterLock sync.Mutex
 )
 
 func InitConverter(local string) bool {
-	cv, err := iconv.Open("utf-8", local)
-	if err != nil {
-		fmt.Println("Init locale converter failed ! code:1")
-		panic(err)
-	}
-	CVtolocal = cv
-	cv, err = iconv.Open(local, "utf-8")
-	if err != nil {
-		fmt.Println("Init locale converter failed ! code:2")
-		panic(err)
-	}
-	CVtoutf8 = cv
+	// cv, err := iconv.Open("utf-8", local)
+	// if err != nil {
+	// 	fmt.Println("Init locale converter failed ! code:1")
+	// 	panic(err)
+	// }
+	// CVtolocal = cv
+	// cv, err = iconv.Open(local, "utf-8")
+	// if err != nil {
+	// 	fmt.Println("Init locale converter failed ! code:2")
+	// 	panic(err)
+	// }
+	// CVtoutf8 = cv
+	localEncode = local
 	return true
 }
 
@@ -52,11 +56,31 @@ func Utf8ToGbk(str []byte) (b []byte, err error) {
 }
 
 func Utf8ToLocal(str string) (b string, err error) {
-	buf := CVtolocal.ConvString(str)
-	return string(buf), nil
+	converterLock.Lock()
+	cv, err := iconv.Open("utf-8", localEncode)
+	if err != nil {
+		log.Println("locale converter failed ! code:1")
+		cv.Close()
+		converterLock.Unlock()
+		return b, err
+	}
+	buf := cv.ConvString(str)
+	cv.Close()
+	converterLock.Unlock()
+	return buf, nil
 }
 
 func LocalToUtf8(str string) (b string, err error) {
-	buf := CVtoutf8.ConvString(str)
-	return string(buf), nil
+	converterLock.Lock()
+	cv, err := iconv.Open(localEncode, "utf-8")
+	if err != nil {
+		log.Println("locale converter failed ! code:2")
+		cv.Close()
+		converterLock.Unlock()
+		return b, err
+	}
+	buf := cv.ConvString(str)
+	cv.Close()
+	converterLock.Unlock()
+	return buf, nil
 }
