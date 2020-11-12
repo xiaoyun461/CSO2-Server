@@ -1,5 +1,7 @@
 #镜像
 FROM golang:1.14.2-alpine AS builder
+#加速
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories 
 RUN apk add build-base
 #安全考虑
 #RUN adduser -u 10001 -D app-runner
