@@ -11,11 +11,12 @@ import (
 )
 
 const (
-	WeaponListCSV = "/CSO2-Server/assert/cstrike/scripts/item_list.csv"
-	ExpLevelCSV   = "/CSO2-Server/assert/cstrike/scripts/exp_level.csv"
-	UnlockCSV     = "/CSO2-Server/assert/cstrike/scripts/item_unlock.csv"
-	BoxCSV        = "/CSO2-Server/assert/cstrike/scripts/supplyList.csv"
-	VipCSV        = "/CSO2-Server/assert/cstrike/scripts/vip_info.csv"
+	WeaponListCSV  = "/CSO2-Server/assert/cstrike/scripts/item_list.csv"
+	ExpLevelCSV    = "/CSO2-Server/assert/cstrike/scripts/exp_level.csv"
+	UnlockCSV      = "/CSO2-Server/assert/cstrike/scripts/item_unlock.csv"
+	BoxCSV         = "/CSO2-Server/assert/cstrike/scripts/supplyList.csv"
+	VipCSV         = "/CSO2-Server/assert/cstrike/scripts/vip_info.csv"
+	DefaultItemCSV = "/CSO2-Server/assert/cstrike/scripts/defaultItemList.csv"
 )
 
 type ItemData struct {
@@ -204,6 +205,71 @@ func readUnlockList(path string) {
 
 func readBoxList(path string) {
 	//读取箱子数据
+	filepath := path + BoxCSV
+
+	file, err := os.Open(filepath)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	reader := csv.NewReader(file)
+
+	for {
+		record, err := reader.Read()
+		if err == io.EOF {
+			break
+		} else if err != nil {
+			panic(err)
+		}
+		if err == nil {
+			boxid, err := strconv.Atoi(record[0])
+			if err != nil {
+				continue
+			}
+			boxname := record[1]
+			itemid, err := strconv.Atoi(record[2])
+			if err != nil {
+				continue
+			}
+			itemname := record[3]
+			value, err := strconv.Atoi(record[4])
+			if err != nil {
+				continue
+			}
+			//保存当前物品数据
+			if value <= 0 {
+				fmt.Println("Warning ! illeagal value", value, "for item", itemid, "in box", boxid)
+				continue
+			}
+			item := BoxItem{
+				uint32(itemid),
+				itemname,
+				value,
+			}
+
+			if v, ok := BoxList[uint32(boxid)]; ok {
+				//如果该box数据已经存在
+				v.Items = append(v.Items, item)
+				v.TotalValue += value
+				BoxList[uint32(boxid)] = v
+			} else {
+				BoxList[uint32(boxid)] = BoxData{
+					uint32(boxid),
+					boxname,
+					[]BoxItem{item},
+					value,
+				}
+				BoxIDs = append(BoxIDs, uint32(boxid))
+			}
+		} else {
+			continue
+		}
+	}
+}
+
+func readDefaultItemList(path string) {
+	//读取数据
 	filepath := path + BoxCSV
 
 	file, err := os.Open(filepath)

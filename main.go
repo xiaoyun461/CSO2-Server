@@ -138,8 +138,8 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	DBPath = path + "\\CSO2-Server\\database\\json\\"
-	ReportPath = path + "\\CSO2-Server\\database\\report\\"
+	DBPath = path + "/CSO2-Server/database/json/"
+	ReportPath = path + "/CSO2-Server/database/report/"
 
 	//check folder
 	checkFolder(path)
@@ -197,7 +197,7 @@ func main() {
 
 	//Init Database
 	if Conf.EnableDataBase != 0 {
-		DB, err = InitDatabase(path + "\\CSO2-Server\\database\\sqlite\\cso2.db")
+		DB, err = InitDatabase(path + "/CSO2-Server/database/sqlite/cso2.db")
 		if err != nil {
 			fmt.Println("Init database failed !")
 			Conf.EnableDataBase = 0
@@ -406,7 +406,7 @@ func checkFolder(path string) {
 		}
 	}
 
-	folderpath := path + "\\CSO2-Server\\database\\report\\"
+	folderpath := path + "/CSO2-Server/database/report/"
 	rst, _ = PathExists(folderpath)
 	if !rst {
 		err := os.Mkdir(folderpath, os.ModePerm)
@@ -419,16 +419,14 @@ func checkFolder(path string) {
 }
 
 // func generate(path string) {
-// 	file := path + "\\supplyList.csv"
+// 	file := path + "\\defaultWeaponList.csv"
 // 	f, _ := os.Create(file)
 // 	defer f.Close()
-// 	f.WriteString(fmt.Sprintf("boxid,boxname,itemid,itemname,value\n"))
-// 	for _, v := range BoxList {
-// 		for _, item := range v.Items {
-// 			if len(ItemList[item.ItemID].Name) <= 0 {
-// 				continue
-// 			}
-// 			f.WriteString(fmt.Sprintf("%d,%s,%d,%s,%d\n", v.BoxID, v.BoxName, item.ItemID, ItemList[item.ItemID].Name, item.Value))
+// 	f.WriteString(fmt.Sprintf("itemid,itemname\n"))
+// 	for _, v := range DefaultInventoryItem {
+// 		if len(ItemList[v.Id].Name) <= 0 {
+// 			continue
 // 		}
+// 		f.WriteString(fmt.Sprintf("%d,%s\n", v.Id, ItemList[v.Id].Name))
 // 	}
 // }

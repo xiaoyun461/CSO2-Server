@@ -82,6 +82,10 @@ var (
 	NAME_ERROR       = "提示：用户名或昵称含有非法字符！"
 	DATABASE_ERROR   = "提示：数据库错误,注册失败！"
 	REGISTER_SUCCESS = "注册成功!"
+
+	configPath  = "/CSO2-Server/configure/server.conf"
+	localesPath = "/CSO2-Server/locales/"
+	mothPath    = "/CSO2-Server/locales/motd.txt"
 )
 
 func (conf *CSO2Conf) InitConf(path string) {
@@ -90,7 +94,7 @@ func (conf *CSO2Conf) InitConf(path string) {
 	}
 	fmt.Printf("Reading configure file ...\n")
 	ini_parser := IniParser{}
-	file := path + "\\CSO2-Server\\configure\\server.conf"
+	file := path + configPath
 	if err := ini_parser.LoadIni(file); err != nil {
 		fmt.Printf("Loading config file error[%s]\n", err.Error())
 		fmt.Printf("Using default data ...\n")
@@ -149,7 +153,7 @@ func (locales *CSO2Locales) InitLocales(path string) bool {
 	}
 	fmt.Printf("Reading locale < " + Conf.LocaleFile + " > ...\n")
 	ini_parser := IniParser{}
-	file := path + "\\CSO2-Server\\locales\\" + Conf.LocaleFile
+	file := path + localesPath + Conf.LocaleFile
 	if err := ini_parser.LoadIni(file); err != nil {
 		fmt.Printf("Loading locale file error[%s]\n", err.Error())
 		fmt.Printf("Using default data ...\n")
@@ -188,7 +192,7 @@ func (locales *CSO2Locales) InitMotd(path string) {
 		return
 	}
 	fmt.Printf("Reading motd ...\n")
-	filepath := path + "\\CSO2-Server\\locales\\motd.txt"
+	filepath := path + mothPath
 	dataEncoded, err := ioutil.ReadFile(filepath)
 	if err != nil {
 		fmt.Printf("Using default motd ...\n")

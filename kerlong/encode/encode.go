@@ -2,26 +2,29 @@ package encode
 
 import (
 	"bytes"
+	"fmt"
 	"io/ioutil"
 
-	iconv "github.com/djimenez/iconv-go"
+	iconv "github.com/qiniu/iconv"
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"golang.org/x/text/transform"
 )
 
 var (
-	CVtolocal *iconv.Converter
-	CVtoutf8  *iconv.Converter
+	CVtolocal iconv.Iconv
+	CVtoutf8  iconv.Iconv
 )
 
 func InitConverter(local string) bool {
-	cv, err := iconv.NewConverter("utf-8", local)
+	cv, err := iconv.Open("utf-8", local)
 	if err != nil {
+		fmt.Println("Init locale converter failed ! code:1")
 		panic(err)
 	}
 	CVtolocal = cv
-	cv, err = iconv.NewConverter(local, "utf-8")
+	cv, err = iconv.Open(local, "utf-8")
 	if err != nil {
+		fmt.Println("Init locale converter failed ! code:2")
 		panic(err)
 	}
 	CVtoutf8 = cv
@@ -49,11 +52,11 @@ func Utf8ToGbk(str []byte) (b []byte, err error) {
 }
 
 func Utf8ToLocal(str string) (b string, err error) {
-	buf, err := CVtolocal.ConvertString(str)
-	return string(buf), err
+	buf := CVtolocal.ConvString(str)
+	return string(buf), nil
 }
 
 func LocalToUtf8(str string) (b string, err error) {
-	buf, err := CVtoutf8.ConvertString(str)
-	return string(buf), err
+	buf := CVtoutf8.ConvString(str)
+	return string(buf), nil
 }
