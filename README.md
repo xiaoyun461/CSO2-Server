@@ -30,11 +30,11 @@ CSOL2 服务器 v0.3.15
 
 ### 三、基本已完成的功能
 
-    登录、频道、房间、仓库、UDP、角色战绩(游戏结果界面)、数据库、个人信息、聊天、命令行和数据库、新手教程
+    登录、频道、房间、仓库、UDP、角色战绩(游戏结果界面)、数据库、个人信息、聊天、命令行和数据库、新手教程、开箱子
 
 ### 四、正在编写的功能
 
-    开箱子
+    
 
 ### 五、已知问题
 
@@ -139,6 +139,8 @@ Usage of CSO2-Server.exe:
 
 ### 十二、Docker下使用方法
 
+**注意！DockerHub上的版本过旧，建议自行编译**
+
 1.首先你需要拥有Docker,请下载并安装Docker,同时配置好Docker,比如Docker源
 
 2.输入以下命令拉取最新版的服务端:
@@ -179,13 +181,15 @@ docker run -p 30001:30001 -p 30002:30002 koukouchan/cso2-server:latest
 2.在终端下进入项目目录，输入以下命令:
 
 ```shell
+go get github.com/KouKouChan/CSO2-Server
+cd GOPATH目录/src/github.com/KouKouChan/CSO2-Server
 docker build -t cso2-server .
 ```
 
 3.在第2步后，如果运行正常，会显示所有步骤都运行完毕。接下来是运行服务端，为了能够让游戏和Docker容器里面的服务端相连，你需要打开相应的端口映射，使用以下命令运行：
 
 ```shell
-docker run -p 30001:30001 -p 30002:30002 cso2-server
+docker run -p 30001:30001 -p 30002:30002 -p 1314:1314 -p 1315:1315 cso2-server
 ```
 
 4.接下来打开客户端，连接服务器
